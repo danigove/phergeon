@@ -85,3 +85,14 @@ CREATE TABLE historial_medico
    ,id_animal bigint NOT NULL REFERENCES animales (id) ON DELETE NO ACTION ON UPDATE CASCADE
    ,descripcion varchar(255) NOT NULL
 );
+
+DROP TABLE IF EXISTS adopciones CASCADE;
+
+CREATE TABLE adopciones
+(
+    id bigserial PRIMARY KEY
+   ,id_usuario_donante bigint NOT NULL REFERENCES usuarios (id) ON DELETE NO ACTION ON UPDATE CASCADE
+   ,id_usuario_adoptante bigint NOT NULL REFERENCES usuarios (id) ON DELETE NO ACTION ON UPDATE CASCADE
+   ,id_animal bigint NOT NULL REFERENCES animales (id) ON DELETE NO ACTION ON UPDATE CASCADE
+   ,fecha_adopcion timestamp(0) NOT NULL DEFAULT localtimestamp
+);
