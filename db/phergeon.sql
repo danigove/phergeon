@@ -77,9 +77,9 @@ CREATE TABLE facturas
    ,importe numeric(5,2) NOT NULL
 );
 
-DROP TABLE IF EXISTS historial_medico CASCADE;
+DROP TABLE IF EXISTS historiales CASCADE;
 
-CREATE TABLE historial_medico
+CREATE TABLE historiales
 (
     id bigserial PRIMARY KEY
    ,id_animal bigint NOT NULL REFERENCES animales (id) ON DELETE NO ACTION ON UPDATE CASCADE

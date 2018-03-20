@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\HistorialMedico;
-use app\models\HistorialMedicoSearch;
+use app\models\Historiales;
+use app\models\HistorialesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * HistorialMedicoController implements the CRUD actions for HistorialMedico model.
+ * HistorialesController implements the CRUD actions for Historiales model.
  */
-class HistorialMedicoController extends Controller
+class HistorialesController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -30,12 +30,12 @@ class HistorialMedicoController extends Controller
     }
 
     /**
-     * Lists all HistorialMedico models.
+     * Lists all Historiales models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new HistorialMedicoSearch();
+        $searchModel = new HistorialesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class HistorialMedicoController extends Controller
     }
 
     /**
-     * Displays a single HistorialMedico model.
+     * Displays a single Historiales model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -58,13 +58,13 @@ class HistorialMedicoController extends Controller
     }
 
     /**
-     * Creates a new HistorialMedico model.
+     * Creates a new Historiales model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new HistorialMedico();
+        $model = new Historiales();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -76,7 +76,7 @@ class HistorialMedicoController extends Controller
     }
 
     /**
-     * Updates an existing HistorialMedico model.
+     * Updates an existing Historiales model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -96,7 +96,7 @@ class HistorialMedicoController extends Controller
     }
 
     /**
-     * Deletes an existing HistorialMedico model.
+     * Deletes an existing Historiales model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -110,15 +110,15 @@ class HistorialMedicoController extends Controller
     }
 
     /**
-     * Finds the HistorialMedico model based on its primary key value.
+     * Finds the Historiales model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return HistorialMedico the loaded model
+     * @return Historiales the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = HistorialMedico::findOne($id)) !== null) {
+        if (($model = Historiales::findOne($id)) !== null) {
             return $model;
         }
 

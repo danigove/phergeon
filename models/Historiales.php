@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "historial_medico".
+ * This is the model class for table "historiales".
  *
  * @property int $id
  * @property int $id_animal
@@ -13,14 +13,14 @@ use Yii;
  *
  * @property Animales $animal
  */
-class HistorialMedico extends \yii\db\ActiveRecord
+class Historiales extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'historial_medico';
+        return 'historiales';
     }
 
     /**
@@ -54,6 +54,6 @@ class HistorialMedico extends \yii\db\ActiveRecord
      */
     public function getAnimal()
     {
-        return $this->hasOne(Animales::className(), ['id' => 'id_animal'])->inverseOf('historialMedicos');
+        return $this->hasOne(Animales::className(), ['id' => 'id_animal'])->inverseOf('historiales');
     }
 }

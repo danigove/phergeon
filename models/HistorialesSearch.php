@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\HistorialMedico;
+use app\models\Historiales;
 
 /**
- * HistorialMedicoSearch represents the model behind the search form of `app\models\HistorialMedico`.
+ * HistorialesSearch represents the model behind the search form of `app\models\Historiales`.
  */
-class HistorialMedicoSearch extends HistorialMedico
+class HistorialesSearch extends Historiales
 {
     /**
      * {@inheritdoc}
@@ -41,7 +41,7 @@ class HistorialMedicoSearch extends HistorialMedico
      */
     public function search($params)
     {
-        $query = HistorialMedico::find();
+        $query = Historiales::find();
 
         // add conditions that should always apply here
 
