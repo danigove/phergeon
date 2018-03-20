@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "usuarios".
@@ -20,7 +21,7 @@ use Yii;
  * @property Animales[] $animales
  * @property Roles $rol0
  */
-class Usuarios extends \yii\db\ActiveRecord
+class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
 {
     /**
      * {@inheritdoc}
@@ -63,7 +64,37 @@ class Usuarios extends \yii\db\ActiveRecord
             'rol' => 'Rol',
         ];
     }
+    public static function findIdentity($id)
+    {
+        return static::findOne($id);
+    }
 
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getAuthKey()
+    {
+        // return $this->authKey;
+    }
+
+    public function validateAuthKey($authKey)
+    {
+        // return $this->authKey === $authKey;
+    }
+
+    public function validatePassword($password)
+    {
+        return Yii::$app->security->validatePassword(
+            $password,
+            $this->password
+        );
+    }
     /**
      * @return \yii\db\ActiveQuery
      */
