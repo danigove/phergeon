@@ -17,6 +17,7 @@ CREATE TABLE usuarios
 
     id bigserial PRIMARY KEY
    ,nombre_usuario varchar(255) NOT NULL UNIQUE
+   ,nombre_real varchar(255) NOT NULL
    ,email varchar(255) NOT NULL
    ,password varchar(255) NOT NULL
    ,created_at timestamp(0)
@@ -26,6 +27,8 @@ CREATE TABLE usuarios
 
 );
 
+CREATE INDEX idx_usuarios_email ON usuarios (email);
+CREATE INDEX idx_usuarios_nombre_real ON usuarios (nombre_real);
 
 DROP TABLE IF EXISTS tipos CASCADE;
 
@@ -56,7 +59,11 @@ CREATE TABLE animales
    ,raza bigint NOT NULL REFERENCES razas (id) ON DELETE NO ACTION ON UPDATE CASCADE
    ,descripcion varchar(255) NOT NULL
    ,edad varchar(255) NOT NULL
+   ,sexo varchar(255) NOT NULL
 );
+
+CREATE INDEX idx_animales_sexo ON animales (sexo);
+CREATE INDEX idx_animales_sexo ON animales (edad);
 
 DROP TABLE IF EXISTS facturas CASCADE;
 
