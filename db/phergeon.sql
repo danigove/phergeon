@@ -22,7 +22,7 @@ CREATE TABLE usuarios
    ,password varchar(255) NOT NULL
    ,created_at timestamp(0)
    ,sesskey varchar(255)
-   ,token_val varchar(255)
+   ,token_val varchar(255) UNIQUE
    ,rol bigint NOT NULL REFERENCES roles (id) ON DELETE NO ACTION ON UPDATE CASCADE DEFAULT 1
 
 );
@@ -77,11 +77,30 @@ CREATE TABLE facturas
    ,importe numeric(5,2) NOT NULL
 );
 
-DROP TABLE IF EXISTS historial_medico CASCADE;
+DROP TABLE IF EXISTS historiales CASCADE;
 
-CREATE TABLE historial_medico
+CREATE TABLE historiales
 (
     id bigserial PRIMARY KEY
    ,id_animal bigint NOT NULL REFERENCES animales (id) ON DELETE NO ACTION ON UPDATE CASCADE
    ,descripcion varchar(255) NOT NULL
 );
+
+DROP TABLE IF EXISTS adopciones CASCADE;
+
+CREATE TABLE adopciones
+(
+    id bigserial PRIMARY KEY
+   ,id_usuario_donante bigint NOT NULL REFERENCES usuarios (id) ON DELETE NO ACTION ON UPDATE CASCADE
+   ,id_usuario_adoptante bigint NOT NULL REFERENCES usuarios (id) ON DELETE NO ACTION ON UPDATE CASCADE
+   ,id_animal bigint NOT NULL REFERENCES animales (id) ON DELETE NO ACTION ON UPDATE CASCADE
+   ,fecha_adopcion timestamp(0) NOT NULL DEFAULT localtimestamp
+);
+
+INSERT INTO roles (denominacion)
+    VALUES ('usuario')
+         , ('asociacion');
+
+INSERT INTO usuarios (nombre_usuario, nombre_real, email, password, created_at, rol)
+    VALUES ('danigove', 'Daniel Gómez Vela', 'dani5002@hotmail.com', crypt('danigove', gen_salt('bf', 13)), current_timestamp(0),1)
+          ,('briganimalista', 'Brigada Animalista Sanlúcar', 'brigada@gmail.com',crypt('brigada', gen_salt('bf', 13)), current_timestamp(0),2);
