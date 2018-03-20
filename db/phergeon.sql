@@ -2,3 +2,86 @@
 -- Archivo de base de datos --
 ------------------------------
 
+DROP TABLE IF EXISTS roles CASCADE;
+
+CREATE TABLE roles
+(
+    id bigserial PRIMARY KEY
+   ,denominacion varchar(255) NOT NULL UNIQUE
+);
+
+DROP TABLE IF EXISTS usuarios CASCADE;
+
+CREATE TABLE usuarios
+(
+
+    id bigserial PRIMARY KEY
+   ,nombre_usuario varchar(255) NOT NULL UNIQUE
+   ,nombre_real varchar(255) NOT NULL
+   ,email varchar(255) NOT NULL
+   ,password varchar(255) NOT NULL
+   ,created_at timestamp(0)
+   ,sesskey varchar(255)
+   ,token_val varchar(255)
+   ,rol bigint NOT NULL REFERENCES roles (id) ON DELETE NO ACTION ON UPDATE CASCADE DEFAULT 1
+
+);
+
+CREATE INDEX idx_usuarios_email ON usuarios (email);
+CREATE INDEX idx_usuarios_nombre_real ON usuarios (nombre_real);
+
+DROP TABLE IF EXISTS tipos CASCADE;
+
+CREATE TABLE tipos
+(
+    id bigserial PRIMARY KEY
+   ,denominacion_tipo varchar(255) NOT NULL UNIQUE
+
+);
+
+DROP TABLE IF EXISTS razas CASCADE;
+
+CREATE TABLE razas
+(
+    id bigserial PRIMARY KEY
+   ,tipo_animal bigint NOT NULL REFERENCES tipos (id) ON DELETE NO ACTION ON UPDATE CASCADE
+   ,denominacion_raza varchar(255) NOT NULL UNIQUE
+);
+
+DROP TABLE IF EXISTS animales CASCADE;
+
+CREATE TABLE animales
+(
+    id bigserial PRIMARY KEY
+   ,id_usuario bigint NOT NULL REFERENCES usuarios (id) ON DELETE NO ACTION ON UPDATE CASCADE
+   ,nombre varchar(255) NOT NULL
+   ,tipo_animal bigint NOT NULL REFERENCES tipos (id) ON DELETE NO ACTION ON UPDATE CASCADE
+   ,raza bigint NOT NULL REFERENCES razas (id) ON DELETE NO ACTION ON UPDATE CASCADE
+   ,descripcion varchar(255) NOT NULL
+   ,edad varchar(255) NOT NULL
+   ,sexo varchar(255) NOT NULL
+);
+
+CREATE INDEX idx_animales_sexo ON animales (sexo);
+CREATE INDEX idx_animales_sexo ON animales (edad);
+
+DROP TABLE IF EXISTS facturas CASCADE;
+
+CREATE TABLE facturas
+(
+    id bigserial PRIMARY KEY
+   ,id_animal bigint NOT NULL REFERENCES animales (id) ON DELETE NO ACTION ON UPDATE CASCADE
+   ,fecha_emision timestamp(0) NOT NULL DEFAULT localtimestamp
+   ,centro_veterinario varchar(255) NOT NULL
+   ,descripcion varchar(255) NOT NULL
+   ,importe numeric(5,2) NOT NULL
+);
+
+DROP TABLE IF EXISTS historial_medico CASCADE;
+
+CREATE TABLE historial_medico
+(
+    id bigserial PRIMARY KEY
+   ,id_animal bigint NOT NULL REFERENCES animales (id) ON DELETE NO ACTION ON UPDATE CASCADE
+   ,descripcion varchar(255) NOT NULL
+);
