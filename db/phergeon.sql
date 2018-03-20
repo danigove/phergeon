@@ -22,7 +22,7 @@ CREATE TABLE usuarios
    ,password varchar(255) NOT NULL
    ,created_at timestamp(0)
    ,sesskey varchar(255)
-   ,token_val varchar(255)
+   ,token_val varchar(255) UNIQUE
    ,rol bigint NOT NULL REFERENCES roles (id) ON DELETE NO ACTION ON UPDATE CASCADE DEFAULT 1
 
 );
@@ -96,3 +96,11 @@ CREATE TABLE adopciones
    ,id_animal bigint NOT NULL REFERENCES animales (id) ON DELETE NO ACTION ON UPDATE CASCADE
    ,fecha_adopcion timestamp(0) NOT NULL DEFAULT localtimestamp
 );
+
+INSERT INTO roles (denominacion)
+    VALUES ('usuario')
+         , ('asociacion');
+
+INSERT INTO usuarios (nombre_usuario, nombre_real, email, password, created_at, rol)
+    VALUES ('danigove', 'Daniel Gómez Vela', 'dani5002@hotmail.com', crypt('danigove', gen_salt('bf', 13)), current_timestamp(0),1)
+          ,('briganimalista', 'Brigada Animalista Sanlúcar', 'brigada@gmail.com',crypt('brigada', gen_salt('bf', 13)), current_timestamp(0),2);
