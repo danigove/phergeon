@@ -20,13 +20,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
+    <?= $form->field($model, 'password_repeat')->passwordInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'sesskey')->textInput(['maxlength' => true]) ?>
+    <!-- <?= $form->field($model, 'created_at')->textInput() ?> -->
 
-    <?= $form->field($model, 'token_val')->textInput(['maxlength' => true]) ?>
+    <!-- <?= $form->field($model, 'sesskey')->textInput(['maxlength' => true]) ?> -->
 
-    <?= $form->field($model, 'rol')->textInput() ?>
+    <!-- <?= $form->field($model, 'token_val')->textInput(['maxlength' => true]) ?> -->
+
+    <!-- <?= $form->field($model, 'rol')->textInput() ?> -->
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
