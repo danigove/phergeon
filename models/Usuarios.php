@@ -23,6 +23,9 @@ use yii\web\IdentityInterface;
  */
 class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
 {
+    const ESCENARIO_CREATE = 'create';
+    const ESCENARIO_UPDATE = 'update';
+    public $password_repeat;
     /**
      * {@inheritdoc}
      */
@@ -37,14 +40,32 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['nombre_usuario', 'nombre_real', 'email', 'password'], 'required'],
+            [['nombre_usuario', 'nombre_real', 'email'], 'required'],
+            [['password', 'password_repeat'], 'required', 'on' => self::ESCENARIO_CREATE],
             [['created_at'], 'safe'],
-            [['rol'], 'default', 'value' => null],
+            [
+                ['password_repeat'],
+                'compare',
+                'compareAttribute' => 'password',
+                'skipOnEmpty' => false,
+                'on' => [self::ESCENARIO_CREATE, self::ESCENARIO_UPDATE],
+            ],
+            [['rol'], 'default', 'value' => 1],
             [['rol'], 'integer'],
             [['nombre_usuario', 'nombre_real', 'email', 'password', 'sesskey', 'token_val'], 'string', 'max' => 255],
             [['nombre_usuario'], 'unique'],
             [['rol'], 'exist', 'skipOnError' => true, 'targetClass' => Roles::className(), 'targetAttribute' => ['rol' => 'id']],
         ];
+    }
+
+    public function attributes()
+    {
+        return array_merge(
+            parent::attributes(),
+            [
+                'password_repeat',
+            ]
+        );
     }
 
     /**
@@ -58,6 +79,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             'nombre_real' => 'Nombre Real',
             'email' => 'Email',
             'password' => 'Password',
+            'password_repeat' => 'Repetir contraseña',
             'created_at' => 'Created At',
             'sesskey' => 'Sesskey',
             'token_val' => 'Token Val',
@@ -109,5 +131,27 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     public function getRol0()
     {
         return $this->hasOne(Roles::className(), ['id' => 'rol'])->inverseOf('usuarios');
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            if ($insert) {
+                $this->token_val = Yii::$app->security->generateRandomString();
+                if ($this->scenario === self::ESCENARIO_CREATE) {
+                    $this->password = Yii::$app->security->generatePasswordHash($this->password);
+                }
+            } else {
+                if ($this->scenario === self::ESCENARIO_UPDATE) {
+                    if ($this->password === '') {
+                        $this->password = $this->getOldAttribute('password');
+                    } else {
+                        $this->password = Yii::$app->security->generatePasswordHash($this->password);
+                    }
+                }
+            }
+            return true;
+        }
+        return false;
     }
 }
