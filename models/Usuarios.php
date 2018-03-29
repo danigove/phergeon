@@ -3,6 +3,9 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+use yii\db\Expression;
 use yii\web\IdentityInterface;
 
 /**
@@ -23,8 +26,21 @@ use yii\web\IdentityInterface;
  */
 class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
 {
+    /**
+     * Escenario en el que declaramos que el usuario se está CREANDO.
+     * @var string
+     */
     const ESCENARIO_CREATE = 'create';
+    /**
+     * Escenario en el que declaramos que el usuario se esta MODIFICANDO.
+     * @var string
+     */
     const ESCENARIO_UPDATE = 'update';
+    /**
+     * Variable en la que el usuario tendrá que repetir la contraseña para que
+     * no haya equivocaciones.
+     * @var string
+     */
     public $password_repeat;
     /**
      * {@inheritdoc}
@@ -86,6 +102,22 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             'rol' => 'Rol',
         ];
     }
+
+    public function behaviors()
+    {
+        return [
+                [
+                    'class' => TimestampBehavior::className(),
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['created_at'],
+                        // ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                    ],
+                    // if you're using datetime instead of UNIX timestamp:
+                    'value' => new Expression('NOW()'),
+                ],
+            ];
+    }
+
     public static function findIdentity($id)
     {
         return static::findOne($id);
@@ -110,6 +142,11 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         // return $this->authKey === $authKey;
     }
 
+    /**
+     * Función que autentica la contraseña del usuario.
+     * @param  string $password Contraseña que introduce el usuario.
+     * @return bool             Devuelve si la contraseña es o no correcta.
+     */
     public function validatePassword($password)
     {
         return Yii::$app->security->validatePassword(
