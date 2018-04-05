@@ -37,6 +37,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'sesskey',
             'token_val',
             'rol',
+            [
+                'attribute' => 'foto',
+                'value' => $model->rutaImagen,
+                'format' => 'image',
+            ],
         ],
     ]) ?>
 

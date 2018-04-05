@@ -22,6 +22,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'password_repeat')->passwordInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'foto')->fileInput() ?>
+
     <!-- <?= $form->field($model, 'created_at')->textInput() ?> -->
 
     <!-- <?= $form->field($model, 'sesskey')->textInput(['maxlength' => true]) ?> -->

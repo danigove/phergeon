@@ -6,6 +6,8 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
+use yii\helpers\Url;
+use yii\imagine\Image;
 use yii\web\IdentityInterface;
 
 /**
@@ -42,6 +44,12 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
      * @var string
      */
     public $password_repeat;
+
+    /**
+     * Variable en la que el usuario tendrá guardada la foto de perfil.
+     * @var [type]
+     */
+    public $foto;
     /**
      * {@inheritdoc}
      */
@@ -66,6 +74,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
                 'skipOnEmpty' => false,
                 'on' => [self::ESCENARIO_CREATE, self::ESCENARIO_UPDATE],
             ],
+            [['foto'], 'file', 'extensions' => 'jpg'],
             [['rol'], 'default', 'value' => 1],
             [['rol'], 'integer'],
             [['nombre_usuario', 'nombre_real', 'email', 'password', 'sesskey', 'token_val'], 'string', 'max' => 255],
@@ -79,6 +88,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         return array_merge(
             parent::attributes(),
             [
+                'foto',
                 'password_repeat',
             ]
         );
@@ -100,6 +110,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             'sesskey' => 'Sesskey',
             'token_val' => 'Token Val',
             'rol' => 'Rol',
+            'foto' => 'Foto de perfil',
         ];
     }
 
@@ -143,6 +154,51 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
     /**
+     * Función en la que subimos nuestra foto a la carpeta de Dropbox de la aplicación.
+     * @return [type] [description]
+     */
+    public function upload()
+    {
+        if ($this->foto === null) {
+            return true;
+        }
+        $nombre = Yii::getAlias('@uploads/') . $this->id . '.jpg';
+        // $nombre = './uploads/' . $this->id . '.jpg';
+        $res = $this->foto->saveAs($nombre);
+        if ($res) {
+            Image::thumbnail($nombre, 80, null)->save($nombre);
+        }
+
+        $client = new \Spatie\Dropbox\Client(getenv('DROPBOX_TOKEN'));
+
+        $client->upload($nombre, file_get_contents($nombre), 'overwrite');
+
+        $res = $client->createSharedLinkWithSettings($nombre, ['requested_visibility' => 'public']);
+
+        $url = $res['url'][mb_strlen($res['url']) - 1] = 1;
+        $this->foto = $res['url'];
+        $this->save();
+        return $res;
+    }
+
+    /**
+     * Método con el que accedemos a la ruta de la imagen de la fotografia.
+     * @return [type] [description]
+     */
+    public function getRutaImagen()
+    {
+        $nombre = Yii::getAlias('@uploads/') . $this->id . '.jpg';
+        // $nombre = Yii::getAlias();
+        if (file_exists($nombre)) {
+            // return Url::to('/uploads/') . $this->id . '.jpg';
+            return 'https://www.dropbox.com/s/ah5x0gfk1tybrak/' . $this->id . '.jpg?dl=1';
+        }
+        return 'https://www.dropbox.com/s/qq1kje0eet6gwrg/default.jpg?dl=1';
+        // return Url::to('/uploads/') . 'default.jpg';
+    }
+
+
+    /**
      * Función que autentica la contraseña del usuario.
      * @param  string $password Contraseña que introduce el usuario.
      * @return bool             Devuelve si la contraseña es o no correcta.
@@ -174,7 +230,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     {
         if (parent::beforeSave($insert)) {
             if ($insert) {
-                $this->token_val = Yii::$app->security->generateRandomString();
+                // $this->token_val = Yii::$app->security->generateRandomString();
                 if ($this->scenario === self::ESCENARIO_CREATE) {
                     $this->password = Yii::$app->security->generatePasswordHash($this->password);
                 }
