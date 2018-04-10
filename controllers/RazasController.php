@@ -48,14 +48,13 @@ class RazasController extends Controller
      * Metodo que devuelve todas las razas del tipo animal que haya mandado el usuario mediante la petición Ajax.
      * @return array Devuelve todas las razas.
      */
-    public function actionRazasAjax()
+    public function actionRazasion()
     {
-        if (Yii::$app->request->isAjax()) {
+        if (Yii::$app->request->isAjax) {
             \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return [
-                'ole' => 'tus huevos',
-            ];
+            echo json_encode('mis huevos');
         }
+        // $this->redirect('site/index');
     }
 
     /**
