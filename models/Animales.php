@@ -159,6 +159,19 @@ class Animales extends \yii\db\ActiveRecord
     }
 
     /**
+     * Método que nos devuelve los tipos de género que puede tener el animal.
+     * @return [type] [description]
+     */
+    public function getSexosPosibles()
+    {
+        $sexos = [
+            '0' => 'Macho',
+            '1' => 'Hembra',
+        ];
+        return $sexos;
+    }
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getHistorialMedicos()
