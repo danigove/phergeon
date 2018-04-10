@@ -44,7 +44,8 @@ class Animales extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_usuario', 'nombre', 'tipo_animal', 'raza', 'descripcion', 'edad', 'sexo'], 'required'],
+            ['id_usuario', 'safe'],
+            [['nombre', 'tipo_animal', 'raza', 'descripcion', 'edad', 'sexo'], 'required'],
             [['id_usuario', 'tipo_animal', 'raza'], 'default', 'value' => null],
             [['id_usuario', 'tipo_animal', 'raza'], 'integer'],
             [['foto'], 'file', 'extensions' => 'jpg'],
@@ -92,7 +93,7 @@ class Animales extends \yii\db\ActiveRecord
         if ($this->foto === null) {
             return true;
         }
-        $nombre = Yii::getAlias('@uploads/') . $this->id . '.jpg';
+        $nombre = Yii::getAlias('@uploads/') . 'animales-' . $this->id . '.jpg';
         // $nombre = './uploads/' . $this->id . '.jpg';
         $res = $this->foto->saveAs($nombre);
         if ($res) {
@@ -117,13 +118,14 @@ class Animales extends \yii\db\ActiveRecord
      */
     public function getRutaImagen()
     {
-        $nombre = Yii::getAlias('@uploads/') . $this->id . '.jpg';
+        $nombre = Yii::getAlias('@uploads/') . 'animales-' . $this->id . '.jpg';
         // $nombre = Yii::getAlias();
         if (file_exists($nombre)) {
             // return Url::to('/uploads/') . $this->id . '.jpg';
-            return 'https://www.dropbox.com/s/ah5x0gfk1tybrak/' . $this->id . '.jpg?dl=1';
+            return 'https://www.dropbox.com/s/ah5x0gfk1tybrak/' . 'animales-' . $this->id . '.jpg?dl=1';
         }
-        return 'https://www.dropbox.com/s/qq1kje0eet6gwrg/default.jpg?dl=1';
+        return 'https://www.dropbox.com/s/aek3h7057e88v2d/animal-default.jpg?dl=1';
+        // https://www.dropbox.com/s/qq1kje0eet6gwrg/animal-default.jpg?dl=1';
         // return Url::to('/uploads/') . 'default.jpg';
     }
     /**

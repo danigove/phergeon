@@ -110,3 +110,10 @@ INSERT INTO tipos (denominacion_tipo)
     VALUES ('Perro'),
            ('Gato'),
            ('Exótico');
+
+INSERT INTO razas (tipo_animal, denominacion_raza)
+    VALUES ('1', 'Labrador'),
+            ('1', 'Mastín'),
+            ('2', 'Mainecoon'),
+            ('2', 'Siamés'),
+            ('3', 'Hurón');

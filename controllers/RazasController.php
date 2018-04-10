@@ -46,15 +46,21 @@ class RazasController extends Controller
 
     /**
      * Metodo que devuelve todas las razas del tipo animal que haya mandado el usuario mediante la petición Ajax.
-     * @return array Devuelve todas las razas.
+     * @return array Devuelve todas las razas del numero que le pasamos.
      */
     public function actionRazasion()
     {
         if (Yii::$app->request->isAjax) {
-            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            echo json_encode('mis huevos');
+            $numero = Yii::$app->request->post('tipo');
+            // \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            $razas = Razas::find()->where(['tipo_animal' => $numero])->all();
+            $aux;
+            for ($i = 0; $i < count($razas); $i++) {
+                $aux[$razas[$i]['id']] = $razas[$i]['denominacion_raza'];
+            }
+            return json_encode($aux);
         }
-        // $this->redirect('site/index');
+        $this->redirect('site/index');
     }
 
     /**

@@ -36,6 +36,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'descripcion',
             'edad',
             'sexo',
+            [
+                'attribute' => 'foto',
+                'value' => $model->rutaImagen,
+                'format' => 'image',
+            ],
         ],
     ]) ?>
 

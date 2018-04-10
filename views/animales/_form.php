@@ -9,15 +9,13 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 
 $url = Url::to(['razas/razasion']);
-echo $url;
-
 $js = <<<EOT
 $('#animales-tipo_animal').on('change', function(){
     $.ajax({
         url: "$url",
         type: 'POST',
         dataType: 'json',
-        data: $('#animales-tipo_animal').val(),
+        data: {tipo: $('#animales-tipo_animal').val()},
         success: function(data){
             console.log(data);
         },
@@ -60,7 +58,7 @@ $this->registerJs($js);
     <div class="form-group">
         <?= Html::submitButton('Subir', ['class' => 'btn btn-success']) ?>
     </div>
-    <!-- <?= Html::a('¡Registrate!', ['razas/razasion'], ['class' => 'btn btn-success']) ?> -->
+    <?= Html::a('¡Registrate!', ['razas/razasion'], ['class' => 'btn btn-success']) ?>
 
     <?php ActiveForm::end(); ?>
 
