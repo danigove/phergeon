@@ -104,3 +104,9 @@ INSERT INTO roles (denominacion)
 INSERT INTO usuarios (nombre_usuario, nombre_real, email, password, created_at, rol)
     VALUES ('danigove', 'Daniel Gómez Vela', 'dani5002@hotmail.com', crypt('danigove', gen_salt('bf', 13)), current_timestamp(0),1)
           ,('briganimalista', 'Brigada Animalista Sanlúcar', 'brigada@gmail.com',crypt('brigada', gen_salt('bf', 13)), current_timestamp(0),2);
+
+
+INSERT INTO tipos (denominacion_tipo)
+    VALUES ('Perro'),
+           ('Gato'),
+           ('Exótico');

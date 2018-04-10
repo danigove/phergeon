@@ -6,6 +6,17 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\Animales */
 /* @var $form yii\widgets\ActiveForm */
+
+$js = <<<EOT
+
+
+
+
+
+
+EOT;
+
+$this->registerJs($js);
 ?>
 
 <div class="animales-form">
@@ -16,7 +27,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'tipo_animal')->textInput() ?>
+    <?= $form->field($model, 'foto')->fileInput() ?>
+
+    <?= $form->field($model, 'tipo_animal')->dropDownList($model->tipos) ?>
 
     <?= $form->field($model, 'raza')->textInput() ?>
 
@@ -26,10 +39,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'sexo')->dropDownList($model->sexosPosibles) ?>
 
-    <?= $form->field($model, 'foto')->fileInput() ?>
-
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Subir', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

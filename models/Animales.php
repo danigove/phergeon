@@ -159,8 +159,25 @@ class Animales extends \yii\db\ActiveRecord
     }
 
     /**
-     * Método que nos devuelve los tipos de género que puede tener el animal.
+     * Método que devuelve todos los tipos de animales posibles.
      * @return [type] [description]
+     */
+    public function getTipos()
+    {
+        $tipos = Tipos::find()->all();
+
+
+        $aux;
+        for ($i = 0; $i < count($tipos); $i++) {
+            $aux[$tipos[$i]['id']] = $tipos[$i]['denominacion_tipo'];
+        }
+
+        return $aux;
+    }
+
+    /**
+     * Método que nos devuelve los tipos de género que puede tener el animal.
+     * @return array Array con todos los sexos posibles del animal.
      */
     public function getSexosPosibles()
     {
