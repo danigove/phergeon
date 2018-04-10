@@ -176,8 +176,8 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         $res = $client->createSharedLinkWithSettings($nombre, ['requested_visibility' => 'public']);
 
         $url = $res['url'][mb_strlen($res['url']) - 1] = 1;
-        $this->foto = $res['url'];
-        $this->save();
+        // $this->foto = $res['url'];
+        // $this->save();
         return $res;
     }
 
