@@ -10,6 +10,7 @@ use yii\widgets\ActiveForm;
 
 $url = Url::to(['razas/razasion']);
 $js = <<<EOT
+$('.field-animales-raza').hide();
 $('#animales-tipo_animal').on('change', function(){
     $.ajax({
         url: "$url",
@@ -17,7 +18,16 @@ $('#animales-tipo_animal').on('change', function(){
         dataType: 'json',
         data: {tipo: $('#animales-tipo_animal').val()},
         success: function(data){
-            console.log(data);
+            var longitud = Object.keys(data);
+            $('#animales-raza').empty();
+            $('.field-animales-raza').show();
+            for(i = 0; i < longitud.length; i++){
+                console.log(longitud[i] + ' - ' +data[longitud[i]]);
+                $('#animales-raza').append('<option value="'+longitud[i]+'">' + data[longitud[i]] +' </option>');
+            }
+
+
+
         },
         error: function(error){
             console.log(error);
@@ -47,9 +57,9 @@ $this->registerJs($js);
 
     <?= $form->field($model, 'tipo_animal')->dropDownList($model->tipos) ?>
 
-    <?= $form->field($model, 'raza')->textInput() ?>
+    <?= $form->field($model, 'raza')->dropDownList($model->tipos) ?>
 
-    <?= $form->field($model, 'descripcion')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'descripcion')?>
 
     <?= $form->field($model, 'edad')->textInput(['type' => 'number', 'min'=>0]) ?>
 
