@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -7,9 +8,24 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\Animales */
 /* @var $form yii\widgets\ActiveForm */
 
+$url = Url::to('razas/razasAjax');
 $js = <<<EOT
+$('#animales-tipo_animal').on('change', function(){
+    $.ajax({
+        url: '$url',
+        type: 'POST',
+        dataType: 'json',
+        data: $('#animales-tipo_animal').val(),
+        success: function(data){
+            console.log(data);
+        },
+        error: function(error){
+            console.log(error);
+        }
+    });
 
 
+});
 
 
 
