@@ -6,7 +6,6 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
-use yii\helpers\Url;
 use yii\imagine\Image;
 use yii\web\IdentityInterface;
 
@@ -121,7 +120,6 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
                     'class' => TimestampBehavior::className(),
                     'attributes' => [
                         ActiveRecord::EVENT_BEFORE_INSERT => ['created_at'],
-                        // ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                     ],
                     // if you're using datetime instead of UNIX timestamp:
                     'value' => new Expression('NOW()'),
@@ -176,8 +174,8 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         $res = $client->createSharedLinkWithSettings($nombre, ['requested_visibility' => 'public']);
 
         $url = $res['url'][mb_strlen($res['url']) - 1] = 1;
-        $this->foto = $res['url'];
-        $this->save();
+        // $this->foto = $res['url'];
+        // $this->save();
         return $res;
     }
 

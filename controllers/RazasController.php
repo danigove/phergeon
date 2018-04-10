@@ -2,12 +2,12 @@
 
 namespace app\controllers;
 
-use Yii;
 use app\models\Razas;
 use app\models\RazasSearch;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * RazasController implements the CRUD actions for Razas model.
@@ -45,8 +45,27 @@ class RazasController extends Controller
     }
 
     /**
+     * Metodo que devuelve todas las razas del tipo animal que haya mandado el usuario mediante la petición Ajax.
+     * @return array Devuelve todas las razas del numero que le pasamos.
+     */
+    public function actionRazasion()
+    {
+        if (Yii::$app->request->isAjax) {
+            $numero = Yii::$app->request->post('tipo');
+            // \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            $razas = Razas::find()->where(['tipo_animal' => $numero])->all();
+            $aux;
+            for ($i = 0; $i < count($razas); $i++) {
+                $aux[$razas[$i]['id']] = $razas[$i]['denominacion_raza'];
+            }
+            return json_encode($aux);
+        }
+        $this->redirect('site/index');
+    }
+
+    /**
      * Displays a single Razas model.
-     * @param integer $id
+     * @param int $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -78,7 +97,7 @@ class RazasController extends Controller
     /**
      * Updates an existing Razas model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
+     * @param int $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -98,7 +117,7 @@ class RazasController extends Controller
     /**
      * Deletes an existing Razas model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * @param int $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -112,7 +131,7 @@ class RazasController extends Controller
     /**
      * Finds the Razas model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
+     * @param int $id
      * @return Razas the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */

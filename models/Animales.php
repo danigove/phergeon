@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\imagine\Image;
 
 /**
  * This is the model class for table "animales".
@@ -25,6 +26,11 @@ use Yii;
 class Animales extends \yii\db\ActiveRecord
 {
     /**
+     * Foto del animal.
+     * @var [type]
+     */
+    public $foto;
+    /**
      * {@inheritdoc}
      */
     public static function tableName()
@@ -38,9 +44,11 @@ class Animales extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_usuario', 'nombre', 'tipo_animal', 'raza', 'descripcion', 'edad', 'sexo'], 'required'],
+            ['id_usuario', 'safe'],
+            [['nombre', 'tipo_animal', 'raza', 'descripcion', 'edad', 'sexo'], 'required'],
             [['id_usuario', 'tipo_animal', 'raza'], 'default', 'value' => null],
             [['id_usuario', 'tipo_animal', 'raza'], 'integer'],
+            [['foto'], 'file', 'extensions' => 'jpg'],
             [['nombre', 'descripcion', 'edad', 'sexo'], 'string', 'max' => 255],
             [['raza'], 'exist', 'skipOnError' => true, 'targetClass' => Razas::className(), 'targetAttribute' => ['raza' => 'id']],
             [['tipo_animal'], 'exist', 'skipOnError' => true, 'targetClass' => Tipos::className(), 'targetAttribute' => ['tipo_animal' => 'id']],
@@ -62,9 +70,64 @@ class Animales extends \yii\db\ActiveRecord
             'descripcion' => 'Descripcion',
             'edad' => 'Edad',
             'sexo' => 'Sexo',
+            'foto' => 'Foto del animal',
         ];
     }
 
+    public function attributes()
+    {
+        return array_merge(
+            parent::attributes(),
+            [
+                'foto',
+            ]
+        );
+    }
+
+    /**
+     * Funcion para subir fotos de animales.
+     * @return [type] [description]
+     */
+    public function upload()
+    {
+        if ($this->foto === null) {
+            return true;
+        }
+        $nombre = Yii::getAlias('@uploads/') . 'animales-' . $this->id . '.jpg';
+        // $nombre = './uploads/' . $this->id . '.jpg';
+        $res = $this->foto->saveAs($nombre);
+        if ($res) {
+            Image::thumbnail($nombre, 80, null)->save($nombre);
+        }
+
+        $client = new \Spatie\Dropbox\Client(getenv('DROPBOX_TOKEN'));
+
+        $client->upload($nombre, file_get_contents($nombre), 'overwrite');
+
+        $res = $client->createSharedLinkWithSettings($nombre, ['requested_visibility' => 'public']);
+
+        $url = $res['url'][mb_strlen($res['url']) - 1] = 1;
+        // $this->foto = $res['url'];
+        // $this->save();
+        return $res;
+    }
+
+    /**
+     * Método con el que accedemos a la ruta de la imagen de la fotografia del animal.
+     * @return [type] [description]
+     */
+    public function getRutaImagen()
+    {
+        $nombre = Yii::getAlias('@uploads/') . 'animales-' . $this->id . '.jpg';
+        // $nombre = Yii::getAlias();
+        if (file_exists($nombre)) {
+            // return Url::to('/uploads/') . $this->id . '.jpg';
+            return 'https://www.dropbox.com/s/ah5x0gfk1tybrak/' . 'animales-' . $this->id . '.jpg?dl=1';
+        }
+        return 'https://www.dropbox.com/s/aek3h7057e88v2d/animal-default.jpg?dl=1';
+        // https://www.dropbox.com/s/qq1kje0eet6gwrg/animal-default.jpg?dl=1';
+        // return Url::to('/uploads/') . 'default.jpg';
+    }
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -98,10 +161,40 @@ class Animales extends \yii\db\ActiveRecord
     }
 
     /**
+     * Método que devuelve todos los tipos de animales posibles.
+     * @return [type] [description]
+     */
+    public function getTipos()
+    {
+        $tipos = Tipos::find()->all();
+
+
+        $aux;
+        for ($i = 0; $i < count($tipos); $i++) {
+            $aux[$tipos[$i]['id']] = $tipos[$i]['denominacion_tipo'];
+        }
+
+        return $aux;
+    }
+
+    /**
+     * Método que nos devuelve los tipos de género que puede tener el animal.
+     * @return array Array con todos los sexos posibles del animal.
+     */
+    public function getSexosPosibles()
+    {
+        $sexos = [
+            '0' => 'Macho',
+            '1' => 'Hembra',
+        ];
+        return $sexos;
+    }
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getHistorialMedicos()
     {
-        return $this->hasMany(HistorialMedico::className(), ['id_animal' => 'id'])->inverseOf('animal');
+        return $this->hasMany(Historiales::className(), ['id_animal' => 'id'])->inverseOf('animal');
     }
 }

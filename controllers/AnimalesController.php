@@ -2,12 +2,13 @@
 
 namespace app\controllers;
 
-use Yii;
 use app\models\Animales;
 use app\models\AnimalesSearch;
+use Yii;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * AnimalesController implements the CRUD actions for Animales model.
@@ -24,6 +25,25 @@ class AnimalesController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['create', 'update', 'delete'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['create'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['update', 'delete'],
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            return $_GET['id'] == Yii::$app->user->identity->id;
+                        },
+                    ],
                 ],
             ],
         ];
@@ -46,7 +66,7 @@ class AnimalesController extends Controller
 
     /**
      * Displays a single Animales model.
-     * @param integer $id
+     * @param int $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -66,6 +86,8 @@ class AnimalesController extends Controller
     {
         $model = new Animales();
 
+        $model->id_usuario = Yii::$app->user->id;
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -78,7 +100,7 @@ class AnimalesController extends Controller
     /**
      * Updates an existing Animales model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
+     * @param int $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -98,7 +120,7 @@ class AnimalesController extends Controller
     /**
      * Deletes an existing Animales model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * @param int $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -112,7 +134,7 @@ class AnimalesController extends Controller
     /**
      * Finds the Animales model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
+     * @param int $id
      * @return Animales the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
