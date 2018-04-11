@@ -168,7 +168,6 @@ class Animales extends \yii\db\ActiveRecord
     {
         $tipos = Tipos::find()->all();
 
-
         $aux;
         for ($i = 0; $i < count($tipos); $i++) {
             $aux[$tipos[$i]['id']] = $tipos[$i]['denominacion_tipo'];

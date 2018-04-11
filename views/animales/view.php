@@ -29,10 +29,19 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'id_usuario',
+            [
+                'attribute' => 'foto',
+                'value' => $model->usuario->nombre_usuario,
+            ],
             'nombre',
-            'tipo_animal',
-            'raza',
+            [
+                'attribute' => 'tipo_animal',
+                'value' => $model->tipoAnimal->denominacion_tipo,
+            ],
+            [
+                'attribute' => 'raza',
+                'value' => $model->raza0->denominacion_raza,
+            ],
             'descripcion',
             'edad',
             'sexo',

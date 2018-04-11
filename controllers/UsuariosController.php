@@ -165,6 +165,11 @@ class UsuariosController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
+    /**
+     * Encuentra un animal.
+     * @param  int $id id de animal que queremos encontrar
+     * @return Animales Devuelve la instancia de animal con ese id.
+     */
     protected function encontrarAnimal($id)
     {
         if (($model = Animales::findOne($id)) !== null) {
