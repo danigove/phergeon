@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::a('Darte de baja', ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
-                    'confirm' => '¿Seguro que quieres darte de baja de la plataforma?',
+                    'confirm' => '¿Seguro que quieres darte de baja de la plataforma? Recuerda que los animales que has subido a la plataforma también se borrarán.',
                     'method' => 'post',
                 ],
             ]) ?>
