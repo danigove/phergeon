@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Animales;
 use app\models\Usuarios;
 use app\models\UsuariosSearch;
 use Yii;
@@ -138,6 +139,11 @@ class UsuariosController extends Controller
      */
     public function actionDelete($id)
     {
+        $animales = Animales::findAll(['id_usuario' => $id]);
+        for ($i = 0; $i < count($animales); $i++) {
+            $this->encontrarAnimal($animales[$i]['id'])->delete();
+        }
+
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -153,6 +159,20 @@ class UsuariosController extends Controller
     protected function findModel($id)
     {
         if (($model = Usuarios::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    /**
+     * Encuentra un animal.
+     * @param  int $id id de animal que queremos encontrar
+     * @return Animales Devuelve la instancia de animal con ese id.
+     */
+    protected function encontrarAnimal($id)
+    {
+        if (($model = Animales::findOne($id)) !== null) {
             return $model;
         }
 

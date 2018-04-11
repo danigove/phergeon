@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Animales */
 
-$this->title = $model->id;
+$this->title = 'Perfil de ' . $model->nombre;
 $this->params['breadcrumbs'][] = ['label' => 'Animales', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -29,10 +29,21 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'id_usuario',
+            [
+                'label' => 'Enviado por',
+                'format' => 'raw',
+                'value' => Html::a($model->usuario->nombre_usuario, ['usuarios/view', 'id' => $model->usuario->id]),
+                // 'value' => $model->usuario->nombre_usuario,
+            ],
             'nombre',
-            'tipo_animal',
-            'raza',
+            [
+                'attribute' => 'tipo_animal',
+                'value' => $model->tipoAnimal->denominacion_tipo,
+            ],
+            [
+                'attribute' => 'raza',
+                'value' => $model->raza0->denominacion_raza,
+            ],
             'descripcion',
             'edad',
             'sexo',

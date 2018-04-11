@@ -56,7 +56,7 @@ CREATE TABLE animales
    ,id_usuario bigint NOT NULL REFERENCES usuarios (id) ON DELETE NO ACTION ON UPDATE CASCADE
    ,nombre varchar(255) NOT NULL
    ,tipo_animal bigint NOT NULL REFERENCES tipos (id) ON DELETE NO ACTION ON UPDATE CASCADE
-   ,raza bigint NOT NULL REFERENCES razas (id) ON DELETE NO ACTION ON UPDATE CASCADE
+   ,raza bigint NOT NULL REFERENCES razas (id) ON DELETE NO ACTION ON UPDATE CASCADE DEFAULT 1
    ,descripcion varchar(255) NOT NULL
    ,edad varchar(255) NOT NULL
    ,sexo varchar(255) NOT NULL
@@ -112,8 +112,19 @@ INSERT INTO tipos (denominacion_tipo)
            ('Exótico');
 
 INSERT INTO razas (tipo_animal, denominacion_raza)
-    VALUES ('1', 'Labrador'),
+    VALUES  ('1', 'Mestizo'),
+            ('1', 'Labrador'),
             ('1', 'Mastín'),
             ('2', 'Mainecoon'),
             ('2', 'Siamés'),
+            ('3', 'Otros'),
             ('3', 'Hurón');
+
+INSERT INTO animales (id_usuario, nombre, tipo_animal, raza, descripcion, edad, sexo)
+    VALUES (1, 'Toby', '1', '2', 'Precioso labrador de 2 años', 2, 'Macho'),
+           (1, 'Batman', '2', '2', 'Precioso siames de 4 años', 1, 'Macho'),
+           (2, 'Rafaela', '1', '3', 'Precioso mastín de 2 años', 2, 'Macho'),
+           (2, 'Chawarma', '1', '1', 'Precioso perrete de 2 años', 2, 'Macho'),
+           (2, 'Ronaldinho', '1', '3', 'Precioso perrete de 6 años', 6, 'Macho'),
+           (2, 'Carla', '2', '2', 'Precioso gatete de 2 años', 2, 'Hembra'),
+           (2, 'Trinity', '3', '2', 'Precioso hurón de 2 años', 2, 'Hembra');
