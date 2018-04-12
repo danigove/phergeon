@@ -72,8 +72,30 @@ class AnimalesController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        \Yii::$app->view->registerMetaTag([
+            'property' => 'og:url',
+            'content' => $model->rutaAnimal($id),
+        ]);
+        \Yii::$app->view->registerMetaTag([
+            'property' => 'og:type',
+            'content' => 'website',
+        ]);
+        \Yii::$app->view->registerMetaTag([
+            'property' => 'og:title',
+            'content' => 'Ayudalo',
+        ]);
+        \Yii::$app->view->registerMetaTag([
+            'property' => 'og:url',
+            'content' => $model->rutaAnimal($id),
+        ]);
+        \Yii::$app->view->registerMetaTag([
+            'property' => 'og:description',
+            'content' => $model->descripcion,
+        ]);
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 

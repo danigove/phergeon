@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\Url;
 use yii\imagine\Image;
 
 /**
@@ -195,6 +196,17 @@ class Animales extends \yii\db\ActiveRecord
     public function getHistorialMedicos()
     {
         return $this->hasMany(Historiales::className(), ['id_animal' => 'id'])->inverseOf('animal');
+    }
+
+    /**
+     * Devuelve la ruta del animal.
+     * @param  int      $id id del animal que queremos saber la ruta.
+     * @return string   Ruta en la que se encuentra el perfil del usuario.
+     */
+    public function rutaAnimal($id)
+    {
+        $ruta = Url::toRoute(['animales/view', 'id' => $id], true);
+        return  $ruta;
     }
 
     /**
