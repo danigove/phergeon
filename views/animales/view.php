@@ -9,10 +9,27 @@ use yii\widgets\DetailView;
 $this->title = 'Perfil de ' . $model->nombre;
 $this->params['breadcrumbs'][] = ['label' => 'Animales', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+$js = <<<EOT
+EOT;
+
+$this->registerJs($js);
+
 ?>
+<div id="tweet-container">
+
+</div>
 <div class="animales-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
+
+    <a target="_blank" href="https://twitter.com/share?url=https%3A%2F%2Fdev.twitter.com%2Fweb%2Ftweet-button
+    &via=twitterdev
+    &related=twitterapi%2Ctwitter
+    &hashtags=<?= urlencode("pepe,obama")?>
+    &text=<?= urlencode("Ayudame a encontrarle una familia a $model->nombre ");?>">
+    Tweet
+    </a>
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
