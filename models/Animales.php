@@ -196,4 +196,15 @@ class Animales extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Historiales::className(), ['id_animal' => 'id'])->inverseOf('animal');
     }
+
+    /**
+     * Metódo que da como resultado una cadena con las categorías del animal para mandarlas correctamente via Twitter
+     * TODO Que pase las etiquetas de verdad, de momento es una prueba.
+     * @return string String con todas las categorías separadas por comas.
+     */
+    public function etiquetasAnimal()
+    {
+        $string = 'perro,gato,meme';
+        return $string;
+    }
 }

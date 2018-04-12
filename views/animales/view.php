@@ -11,6 +11,12 @@ $this->params['breadcrumbs'][] = ['label' => 'Animales', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 $js = <<<EOT
+    $('.twitter').on('click', function(e){
+        e.preventDefault();
+        console.log(e.target);
+        window.open($(this).data('href'), 'Peep');
+    });
+
 EOT;
 
 $this->registerJs($js);
@@ -23,13 +29,13 @@ $this->registerJs($js);
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <a target="_blank" href="https://twitter.com/share?url=https%3A%2F%2Fdev.twitter.com%2Fweb%2Ftweet-button
+    <button class="twitter" data-href='https://twitter.com/share?url=https%3A%2F%2Fdev.twitter.com%2Fweb%2Ftweet-button
     &via=twitterdev
     &related=twitterapi%2Ctwitter
-    &hashtags=<?= urlencode("pepe,obama")?>
-    &text=<?= urlencode("Ayudame a encontrarle una familia a $model->nombre ");?>">
-    Tweet
-    </a>
+    &hashtags=<?= urlencode($model->etiquetasAnimal())?>
+    &text=<?= urlencode("Ayudame a encontrarle una familia a $model->nombre ");?>'>
+    Twitter
+    </button>
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
