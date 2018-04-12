@@ -4,10 +4,6 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\helpers\Url;
 
-\Yii::$app->view->registerMetaTag([
-'name' => 'description',
-'content' => 'Description of the page...',
-]);
 /* @var $this yii\web\View */
 /* @var $model app\models\Animales */
 
@@ -19,7 +15,7 @@ $js = <<<EOT
     $('.twitter').on('click', function(e){
         e.preventDefault();
         console.log(e.target);
-        window.open($(this).data('href'), '');
+        window.open($(this).data('href'), '', 'width=700, height=500, top=400, left=500');
     });
 
 EOT;
@@ -35,17 +31,13 @@ $this->registerJs($js);
     <h1><?= Html::encode($this->title) ?></h1>
 
     <button class="twitter" data-href='https://twitter.com/share?url=https%3A%2F%2Fdev.twitter.com%2Fweb%2Ftweet-button
-    &via=phergeon
-    &related=twitterapi%2Ctwitter
+    &via=Phergeon
+    &related=Phergeon%2Ctwitter
     &hashtags=<?= urlencode($model->etiquetasAnimal())?>
-    &text=<?= urlencode("Ayudame a encontrarle una familia a $model->nombre ");?>'>
+    &text=<?= urlencode("Ayudame a encontrarle una familia a $model->nombre ");?><?= $model->rutaAnimal($model->id)?>'>
     Twitter
     </button>
 
-    <!-- <iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&layout=button_count&size=small&mobile_iframe=true&width=123&height=20&appId" width="123" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
-
-    <div id="fb-root"></div>
-    <div class="fb-share-button" data-href="https://www.google.com" data-layout="button_count"> </div> -->
     <?php if(Yii::$app->user->id == $model->usuario->id): ?>
         <p>
             <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -67,7 +59,7 @@ $this->registerJs($js);
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));</script>
     <div class="fb-share-button"
-        data-href="<?= $model->rutaAnimal($model->id) ?> "
+        data-href="<?= $model->rutaAnimal($model->id) ?>"
          data-layout="button"
          data-size="small"
          data-mobile-iframe="true">
@@ -87,7 +79,6 @@ $this->registerJs($js);
                 'label' => 'Enviado por',
                 'format' => 'raw',
                 'value' => Html::a($model->usuario->nombre_usuario, ['usuarios/view', 'id' => $model->usuario->id]),
-                // 'value' => $model->usuario->nombre_usuario,
             ],
             'nombre',
             [
