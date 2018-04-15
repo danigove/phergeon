@@ -8,6 +8,7 @@ use app\models\AdopcionesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * AdopcionesController implements the CRUD actions for Adopciones model.
@@ -24,6 +25,25 @@ class AdopcionesController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['create', 'update', 'delete'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['create'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['update', 'delete'],
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            return $_GET['id'] == Yii::$app->user->identity->id;
+                        },
+                    ],
                 ],
             ],
         ];
@@ -46,7 +66,7 @@ class AdopcionesController extends Controller
 
     /**
      * Displays a single Adopciones model.
-     * @param integer $id
+     * @param int $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -78,7 +98,7 @@ class AdopcionesController extends Controller
     /**
      * Updates an existing Adopciones model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
+     * @param int $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -98,7 +118,7 @@ class AdopcionesController extends Controller
     /**
      * Deletes an existing Adopciones model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * @param int $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -112,7 +132,7 @@ class AdopcionesController extends Controller
     /**
      * Finds the Adopciones model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
+     * @param int $id
      * @return Adopciones the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */

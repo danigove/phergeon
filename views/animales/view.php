@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use kartik\detail\DetailView;
 
 // use yii\widgets\DetailView;
-use yii\helpers\Url;
+// use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Animales */
