@@ -10,6 +10,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
+use yii\helpers\Url;
+
 /**
  * AdopcionesController implements the CRUD actions for Adopciones model.
  */
@@ -40,9 +42,9 @@ class AdopcionesController extends Controller
                         'allow' => true,
                         'actions' => ['update', 'delete'],
                         'roles' => ['@'],
-                        'matchCallback' => function ($rule, $action) {
-                            return $_GET['id'] == Yii::$app->user->identity->id;
-                        },
+                        // 'matchCallback' => function ($rule, $action) {
+                        //     return $_GET['id'] == Yii::$app->user->identity->id;
+                        // },
                     ],
                 ],
             ],
@@ -143,5 +145,28 @@ class AdopcionesController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    /**
+     * [actionSolicitar description]
+     * @return [type] [description]
+     */
+    public function actionSolicitar()
+    {
+        // var_dump(Yii::$app->request->post());
+        // die();
+        $model = new Adopciones();
+        $model->id_usuario_donante = Yii::$app->request->post()['id_donante'];
+        $model->id_animal = Yii::$app->request->post()['id_animal'];
+        $model->id_usuario_adoptante = Yii::$app->user->identity->id;
+        if ($model->id_usuario_donante == $model->id_usuario_adoptante) {
+            Yii::$app->session->setFlash('Ojo no');
+            Url::goHome();
+        }
+        // var_dump($model);
+        // die();
+        $model->save();
+
+        return $this->redirect(['view', 'id' => $model->id]);
     }
 }
