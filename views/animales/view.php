@@ -1,6 +1,9 @@
 <?php
 
+use yii\helpers\Url;
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+
 use kartik\detail\DetailView;
 
 // use yii\widgets\DetailView;
@@ -153,10 +156,27 @@ $this->registerJs($js);
                    Compartir
                </a>
         </div>
-        <?= Html::a('Adóptame', ['adopciones/create'], ['class' => 'btn btn-primary']) ?>
+        <!-- <?= Html::a('Adóptame', ['adopciones/create'], ['class' => 'btn btn-primary']) ?> -->
 
         <a class="twitter-share-button"
           href="https://twitter.com/intent/tweet">
         Tweet</a>
+
+        <div>
+            <?php $form = ActiveForm::begin([
+             'id' => 'solicitar-adopcion-form',
+             'method' => 'post',
+             'action' => ['adopciones/solicitar'],
+             ])
+             ?>
+             <?= $form->field($solicitarAdopcionForm, 'id_donante')->hiddenInput(['value'=> $model->id_usuario])->label(false) ?>
+             <?= $form->field($solicitarAdopcionForm, 'id_animal')->hiddenInput(['value'=> $model->id])->label(false) ?>
+             <div class="form-group">
+                 <?= Html::submitButton('Adóptame', ['class' => 'btn btn-success']) ?>
+             </div>
+         <?php ActiveForm::end() ?>
+
+
+        </div>
     </p>
 </div>
