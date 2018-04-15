@@ -1,10 +1,13 @@
 <?php
 
+use yii\helpers\Url;
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+
 use kartik\detail\DetailView;
 
 // use yii\widgets\DetailView;
-use yii\helpers\Url;
+// use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Animales */
@@ -131,7 +134,7 @@ $this->registerJs($js);
         &via=Phergeon
         &related=Phergeon%2Ctwitter
         &hashtags=<?= urlencode($model->etiquetasAnimal())?>
-        &text=<?= urlencode("Ayudame a encontrarle una familia a $model->nombre ");?><?= $model->rutaAnimal($model->id)?>'>
+        &text=<?= urlencode("Ayudame a encontrarle una familia a $model->nombre ") .  $model->rutaAnimal($model->id)?>'>
         Twitter
         </button>
         <div id="fb-root"></div>
@@ -153,8 +156,27 @@ $this->registerJs($js);
                    Compartir
                </a>
         </div>
-        <?= Html::a('Adóptame', ['adopciones/create'], ['class' => 'btn btn-primary']) ?>
+        <!-- <?= Html::a('Adóptame', ['adopciones/create'], ['class' => 'btn btn-primary']) ?> -->
+
+        <a class="twitter-share-button"
+          href="https://twitter.com/intent/tweet">
+        Tweet</a>
+
+        <div>
+            <?php $form = ActiveForm::begin([
+             'id' => 'solicitar-adopcion-form',
+             'method' => 'post',
+             'action' => ['adopciones/solicitar'],
+             ])
+             ?>
+             <?= $form->field($solicitarAdopcionForm, 'id_donante')->hiddenInput(['value'=> $model->id_usuario])->label(false) ?>
+             <?= $form->field($solicitarAdopcionForm, 'id_animal')->hiddenInput(['value'=> $model->id])->label(false) ?>
+             <div class="form-group">
+                 <?= Html::submitButton($model->estaSolicitado($model->id) ? 'Ya has solicitado este animal' : 'Adóptame', ['class' => 'btn btn-success']) ?>
+             </div>
+         <?php ActiveForm::end() ?>
 
 
+        </div>
     </p>
 </div>

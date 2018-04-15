@@ -5,6 +5,8 @@ namespace app\controllers;
 use app\models\Animales;
 use app\models\AnimalesSearch;
 use Yii;
+use app\models\SolicitarAdopcionForm;
+
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -41,7 +43,7 @@ class AnimalesController extends Controller
                         'actions' => ['update', 'delete'],
                         'roles' => ['@'],
                         'matchCallback' => function ($rule, $action) {
-                            return $_GET['id'] == Yii::$app->user->identity->id;
+                            return Animales::findOne($_GET['id'])->id_usuario  == Yii::$app->user->identity->id;
                         },
                     ],
                 ],
@@ -94,7 +96,13 @@ class AnimalesController extends Controller
             'content' => $model->descripcion,
         ]);
 
+        $solicitarAdopcionForm = new SolicitarAdopcionForm([
+            'id_donante' => $model->id_usuario,
+            'id_animal' => $model->id,
+        ]);
+
         return $this->render('view', [
+            'solicitarAdopcionForm' => $solicitarAdopcionForm,
             'model' => $model,
         ]);
     }

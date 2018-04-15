@@ -3,11 +3,15 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\Animales;
 use app\models\Adopciones;
 use app\models\AdopcionesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+
+use yii\helpers\Url;
 
 /**
  * AdopcionesController implements the CRUD actions for Adopciones model.
@@ -24,6 +28,25 @@ class AdopcionesController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['create', 'update', 'delete', 'solicitar'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['create','solicitar'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['update', 'delete'],
+                        'roles' => ['@'],
+                        // 'matchCallback' => function ($rule, $action) {
+                        //     return $_GET['id'] == Yii::$app->user->identity->id;
+                        // },
+                    ],
                 ],
             ],
         ];
@@ -46,7 +69,7 @@ class AdopcionesController extends Controller
 
     /**
      * Displays a single Adopciones model.
-     * @param integer $id
+     * @param int $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -78,7 +101,7 @@ class AdopcionesController extends Controller
     /**
      * Updates an existing Adopciones model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
+     * @param int $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -98,7 +121,7 @@ class AdopcionesController extends Controller
     /**
      * Deletes an existing Adopciones model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * @param int $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -112,7 +135,7 @@ class AdopcionesController extends Controller
     /**
      * Finds the Adopciones model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
+     * @param int $id
      * @return Adopciones the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -123,5 +146,32 @@ class AdopcionesController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    /**
+     * Manda una solicitud de adopción al usuario que subió el animal
+     * @return mixed Redirecciona a Home si ha habido un error.
+     */
+    public function actionSolicitar()
+    {
+        if (Yii::$app->request->post()) {
+            $id_animal = Yii::$app->request->post()['id_animal'];
+            $animal = Animales::findOne(['id' => $id_animal]);
+            if (!$animal->estaSolicitado($id_animal)) {
+                $model = new Adopciones();
+                $model->id_usuario_donante = Yii::$app->request->post()['id_donante'];
+                $model->id_animal = $id_animal;
+                $model->id_usuario_adoptante = Yii::$app->user->identity->id;
+                if ($model->id_usuario_donante == $model->id_usuario_adoptante) {
+                    Yii::$app->session->setFlash('error', '¡No puedes adoptar los animales que TÚ has subido!');
+                    return $this->goHome();
+                }
+                $model->save();
+
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+            Yii::$app->session->setFlash('error', '¡Ya has solicitado este animal!');
+            $this->redirect(['animales/view', 'id' => $id_animal]);
+        }
     }
 }

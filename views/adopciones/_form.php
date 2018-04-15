@@ -18,6 +18,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id_animal')->textInput() ?>
 
+    <?= $form->field($model, 'aprobado')->checkbox() ?>
+
     <?= $form->field($model, 'fecha_adopcion')->textInput() ?>
 
     <div class="form-group">

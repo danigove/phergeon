@@ -11,6 +11,7 @@ use Yii;
  * @property int $id_usuario_donante
  * @property int $id_usuario_adoptante
  * @property int $id_animal
+ * @property bool $aprobado
  * @property string $fecha_adopcion
  *
  * @property Animales $animal
@@ -36,7 +37,9 @@ class Adopciones extends \yii\db\ActiveRecord
             [['id_usuario_donante', 'id_usuario_adoptante', 'id_animal'], 'required'],
             [['id_usuario_donante', 'id_usuario_adoptante', 'id_animal'], 'default', 'value' => null],
             [['id_usuario_donante', 'id_usuario_adoptante', 'id_animal'], 'integer'],
+            [['aprobado'], 'boolean'],
             [['fecha_adopcion'], 'safe'],
+            [['id_usuario_donante', 'id_usuario_adoptante', 'id_animal'], 'unique', 'targetAttribute' => ['id_usuario_donante', 'id_usuario_adoptante', 'id_animal']],
             [['id_animal'], 'exist', 'skipOnError' => true, 'targetClass' => Animales::className(), 'targetAttribute' => ['id_animal' => 'id']],
             [['id_usuario_donante'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['id_usuario_donante' => 'id']],
             [['id_usuario_adoptante'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['id_usuario_adoptante' => 'id']],
@@ -53,6 +56,7 @@ class Adopciones extends \yii\db\ActiveRecord
             'id_usuario_donante' => 'Id Usuario Donante',
             'id_usuario_adoptante' => 'Id Usuario Adoptante',
             'id_animal' => 'Id Animal',
+            'aprobado' => 'Aprobado',
             'fecha_adopcion' => 'Fecha Adopcion',
         ];
     }
