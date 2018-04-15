@@ -19,6 +19,7 @@ class AdopcionesSearch extends Adopciones
     {
         return [
             [['id', 'id_usuario_donante', 'id_usuario_adoptante', 'id_animal'], 'integer'],
+            [['aprobado'], 'boolean'],
             [['fecha_adopcion'], 'safe'],
         ];
     }
@@ -63,6 +64,7 @@ class AdopcionesSearch extends Adopciones
             'id_usuario_donante' => $this->id_usuario_donante,
             'id_usuario_adoptante' => $this->id_usuario_adoptante,
             'id_animal' => $this->id_animal,
+            'aprobado' => $this->aprobado,
             'fecha_adopcion' => $this->fecha_adopcion,
         ]);
 

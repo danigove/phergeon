@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id_usuario_donante',
             'id_usuario_adoptante',
             'id_animal',
+            'aprobado:boolean',
             'fecha_adopcion',
         ],
     ]) ?>

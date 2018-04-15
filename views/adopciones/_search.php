@@ -23,7 +23,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id_animal') ?>
 
-    <?= $form->field($model, 'fecha_adopcion') ?>
+    <?= $form->field($model, 'aprobado')->checkbox() ?>
+
+    <?php // echo $form->field($model, 'fecha_adopcion') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
