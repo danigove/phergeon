@@ -31,11 +31,11 @@ class AdopcionesController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create', 'update', 'delete'],
+                'only' => ['create', 'update', 'delete', 'solicitar'],
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['create'],
+                        'actions' => ['create','solicitar'],
                         'roles' => ['@'],
                     ],
                     [
@@ -148,25 +148,23 @@ class AdopcionesController extends Controller
     }
 
     /**
-     * [actionSolicitar description]
-     * @return [type] [description]
+     * Manda una solicitud de adopción al usuario que subió el animal
+     * @return mixed Redirecciona a Home si ha habido un error.
      */
     public function actionSolicitar()
     {
-        // var_dump(Yii::$app->request->post());
-        // die();
-        $model = new Adopciones();
-        $model->id_usuario_donante = Yii::$app->request->post()['id_donante'];
-        $model->id_animal = Yii::$app->request->post()['id_animal'];
-        $model->id_usuario_adoptante = Yii::$app->user->identity->id;
-        if ($model->id_usuario_donante == $model->id_usuario_adoptante) {
-            Yii::$app->session->setFlash('Ojo no');
-            Url::goHome();
-        }
-        // var_dump($model);
-        // die();
-        $model->save();
+        if (Yii::$app->request->post()) {
+            $model = new Adopciones();
+            $model->id_usuario_donante = Yii::$app->request->post()['id_donante'];
+            $model->id_animal = Yii::$app->request->post()['id_animal'];
+            $model->id_usuario_adoptante = Yii::$app->user->identity->id;
+            if ($model->id_usuario_donante == $model->id_usuario_adoptante) {
+                Yii::$app->session->setFlash('error', '¡No puedes adoptar los animales que TÚ has subido!');
+                return $this->goHome();
+            }
+            $model->save();
 
-        return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
     }
 }

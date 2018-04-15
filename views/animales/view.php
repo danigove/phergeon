@@ -172,7 +172,7 @@ $this->registerJs($js);
              <?= $form->field($solicitarAdopcionForm, 'id_donante')->hiddenInput(['value'=> $model->id_usuario])->label(false) ?>
              <?= $form->field($solicitarAdopcionForm, 'id_animal')->hiddenInput(['value'=> $model->id])->label(false) ?>
              <div class="form-group">
-                 <?= Html::submitButton('Adóptame', ['class' => 'btn btn-success']) ?>
+                 <?= Html::submitButton($model->estaSolicitado($model->id) ? 'Ya has solicitado este animal' : 'Adóptame', ['class' => 'btn btn-success']) ?>
              </div>
          <?php ActiveForm::end() ?>
 

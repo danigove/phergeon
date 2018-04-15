@@ -219,4 +219,17 @@ class Animales extends \yii\db\ActiveRecord
         $string = 'perro,gato,meme';
         return $string;
     }
+
+    /**
+     * Comprueba si un animal ya está solicitado por el usuario o no.
+     * @param  int $id numero del animal
+     * @return bool si esta o no solicitado ya por el usuario
+     */
+    public function estaSolicitado($id)
+    {
+        if (Yii::$app->user->isGuest) {
+            return false;
+        }
+        return Adopciones::findOne(['id_usuario_adoptante' => Yii::$app->user->identity->id, 'id_animal' => $id]);
+    }
 }
