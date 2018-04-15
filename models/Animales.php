@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\Url;
 use yii\imagine\Image;
 
 /**
@@ -195,5 +196,27 @@ class Animales extends \yii\db\ActiveRecord
     public function getHistorialMedicos()
     {
         return $this->hasMany(Historiales::className(), ['id_animal' => 'id'])->inverseOf('animal');
+    }
+
+    /**
+     * Devuelve la ruta del animal.
+     * @param  int      $id id del animal que queremos saber la ruta.
+     * @return string   Ruta en la que se encuentra el perfil del usuario.
+     */
+    public function rutaAnimal($id)
+    {
+        $ruta = Url::toRoute(['animales/view', 'id' => $id], true);
+        return  $ruta;
+    }
+
+    /**
+     * Metódo que da como resultado una cadena con las categorías del animal para mandarlas correctamente via Twitter
+     * TODO Que pase las etiquetas de verdad, de momento es una prueba.
+     * @return string String con todas las categorías separadas por comas.
+     */
+    public function etiquetasAnimal()
+    {
+        $string = 'perro,gato,meme';
+        return $string;
     }
 }
