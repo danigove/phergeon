@@ -1,7 +1,9 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\DetailView;
+use kartik\detail\DetailView;
+
+// use yii\widgets\DetailView;
 use yii\helpers\Url;
 
 /* @var $this yii\web\View */
@@ -70,7 +72,7 @@ $this->registerJs($js);
            </a>
     </div>
     <!-- <?= $model->rutaAnimal($model->id) ?> -->
-
+<!-- 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -98,6 +100,42 @@ $this->registerJs($js);
                 'format' => 'image',
             ],
         ],
-    ]) ?>
+    ]) ?> -->
 
+
+    <?php
+    echo DetailView::widget([
+    'model'=>$model,
+    'condensed'=>false,
+    'responsive' => true,
+    'hover'=>true,
+    'mode'=>DetailView::MODE_VIEW,
+    'attributes'=>[
+       [
+           'group'=>true,
+           'label'=>'Información general del animal',
+           'rowOptions'=>['class'=>'info']
+       ],
+       [
+           'columns' => [
+               [
+                   'attribute' => 'foto',
+                   'value' => $model->rutaImagen,
+                   'format' => 'image',
+               ],
+                   'nombre',
+
+           ],
+       ],
+       'descripcion',
+
+        [
+            'label' => 'Enviado por',
+            'format' => 'raw',
+            'value' => Html::a($model->usuario->nombre_usuario, ['usuarios/view', 'id' => $model->usuario->id]),
+        ],
+    ]
+    ]);
+
+    ?>
 </div>
