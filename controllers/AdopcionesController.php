@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\Animales;
 use app\models\Adopciones;
 use app\models\AdopcionesSearch;
 use yii\web\Controller;
@@ -154,17 +155,23 @@ class AdopcionesController extends Controller
     public function actionSolicitar()
     {
         if (Yii::$app->request->post()) {
-            $model = new Adopciones();
-            $model->id_usuario_donante = Yii::$app->request->post()['id_donante'];
-            $model->id_animal = Yii::$app->request->post()['id_animal'];
-            $model->id_usuario_adoptante = Yii::$app->user->identity->id;
-            if ($model->id_usuario_donante == $model->id_usuario_adoptante) {
-                Yii::$app->session->setFlash('error', '¡No puedes adoptar los animales que TÚ has subido!');
-                return $this->goHome();
-            }
-            $model->save();
+            $id_animal = Yii::$app->request->post()['id_animal'];
+            $animal = Animales::findOne(['id' => $id_animal]);
+            if (!$animal->estaSolicitado($id_animal)) {
+                $model = new Adopciones();
+                $model->id_usuario_donante = Yii::$app->request->post()['id_donante'];
+                $model->id_animal = $id_animal;
+                $model->id_usuario_adoptante = Yii::$app->user->identity->id;
+                if ($model->id_usuario_donante == $model->id_usuario_adoptante) {
+                    Yii::$app->session->setFlash('error', '¡No puedes adoptar los animales que TÚ has subido!');
+                    return $this->goHome();
+                }
+                $model->save();
 
-            return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+            Yii::$app->session->setFlash('error', '¡Ya has solicitado este animal!');
+            $this->redirect(['animales/view', 'id' => $id_animal]);
         }
     }
 }
