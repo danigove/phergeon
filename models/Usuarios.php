@@ -216,11 +216,18 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->hasMany(Animales::className(), ['id_usuario' => 'id'])->inverseOf('usuario');
     }
 
-
+    /**
+     * Obtiene el numero de adopciones que tiene el usuario.
+     * @return [type] [description]
+     */
     public function getAdopciones0()
     {
         return $this->hasMany(Adopciones::className(), ['id_usuario_adoptante' => 'id'])->inverseOf('usuario');
     }
+    /**
+     * Obtiene el numero de adopciones que tiene el usuario.
+     * @return [type] [description]
+     */
     public function getAdopciones()
     {
         return $this->hasMany(Adopciones::className(), ['id_usuario_donante' => 'id'])->inverseOf('usuario');
@@ -233,7 +240,11 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return $this->hasOne(Roles::className(), ['id' => 'rol'])->inverseOf('usuarios');
     }
-
+    /**
+     * Obtiene el numero de solicitudes que tiene el usuario.
+     * @param  int $id  El id del usuario
+     * @return int El numero de solicitudes que tiene.
+     */
     public function getNumSolicitudes($id)
     {
         // $solicitudes = Adopciones::find(['id_usuario_donante' => 'id', 'aprobado' => false]);
