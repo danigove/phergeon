@@ -1,13 +1,13 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\UsuariosSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Solicitudes';
+$this->title = 'Solicitudes de ' . $model->nombre_usuario;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="solicitudes-index">
@@ -18,17 +18,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <!-- <p>
         <?= Html::a('Create Usuarios', ['create'], ['class' => 'btn btn-success']) ?>
     </p> -->
-
-    <?= GridView::widget([
+    <?= ListView::widget([
         'dataProvider' => $dataProvider,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id_usuario_adoptante',
-            'id_usuario_donante',
-            'id_animal',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+        'itemView' => '_solicitud',
+        'summary' => '',
+    ]) ?>
 </div>

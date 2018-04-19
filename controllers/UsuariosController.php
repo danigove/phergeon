@@ -139,8 +139,9 @@ class UsuariosController extends Controller
      */
     public function actionSolicitudes($id)
     {
+        $usuario = Usuarios::findOne(['id' => $id]);
         $dataProvider = new ActiveDataProvider([
-            'query' => Adopciones::find()->joinWith(['animal', 'usuarioAdoptante'])->where(['id_usuario_donante' => $id]),
+            'query' => Adopciones::find()->joinWith(['animal', 'usuarioAdoptante'])->where(['id_usuario_donante' => $id, 'aprobado' => false]),
             'pagination' => [
                 'pageSize' => 10,
             ],
@@ -150,6 +151,7 @@ class UsuariosController extends Controller
         ]);
 
         return $this->render('solicitudes', [
+            'model' => $usuario,
             'dataProvider' => $dataProvider,
         ]);
     }

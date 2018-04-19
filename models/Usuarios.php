@@ -221,6 +221,10 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return $this->hasMany(Adopciones::className(), ['id_usuario_adoptante' => 'id'])->inverseOf('usuario');
     }
+    public function getAdopciones()
+    {
+        return $this->hasMany(Adopciones::className(), ['id_usuario_donante' => 'id'])->inverseOf('usuario');
+    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -228,6 +232,12 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     public function getRol0()
     {
         return $this->hasOne(Roles::className(), ['id' => 'rol'])->inverseOf('usuarios');
+    }
+
+    public function getNumSolicitudes()
+    {
+        $solicitudes = Adopciones::find(['id_usuario_donante' => 'id', 'aprobado' => false])->all();
+        return count($solicitudes);
     }
 
     public function beforeSave($insert)
