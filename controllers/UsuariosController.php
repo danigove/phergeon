@@ -33,7 +33,7 @@ class UsuariosController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['update', 'create', 'delete'],
+                'only' => ['update', 'create', 'delete', 'solicitudes'],
                 'rules' => [
                     [
                         'allow' => true,
@@ -47,6 +47,14 @@ class UsuariosController extends Controller
                         'allow' => true,
                         'actions' => ['create'],
                         'roles' => ['?'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['solicitudes'],
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            return $_GET['id'] == Yii::$app->user->id;
+                        },
                     ],
                     [
                         'allow' => true,
