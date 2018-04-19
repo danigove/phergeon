@@ -160,6 +160,14 @@ class Animales extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Facturas::className(), ['id_animal' => 'id'])->inverseOf('animal');
     }
+    /**
+     * [getAdopciones description].
+     * @return [type] [description]
+     */
+    public function getAdopciones()
+    {
+        return $this->hasMany(Adopciones::className(), ['id_animal' => 'id'])->inverseOf('animal');
+    }
 
     /**
      * Método que devuelve todos los tipos de animales posibles.

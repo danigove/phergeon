@@ -25,6 +25,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     'method' => 'post',
                 ],
             ]) ?>
+            <?php if($model->getNumSolicitudes($model->id) >= 0) : ?>
+                <?= Html::a('Tienes ' . $model->getNumSolicitudes($model->id) . ' solicitudes de adopcion pendientes.', ['solicitudes', 'id' => $model->id], ['class' => 'btn info']) ?>
+            <?php else: ?>
+                <?= '<span>No tienes solicitudes ahora mismo.</span>' ?>
+            <?php endif ?>
         <?php else: ?>
         <?= '' ?>
         <?php endif ?>

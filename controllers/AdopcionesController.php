@@ -2,16 +2,14 @@
 
 namespace app\controllers;
 
-use Yii;
-use app\models\Animales;
 use app\models\Adopciones;
 use app\models\AdopcionesSearch;
+use app\models\Animales;
+use Yii;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-
-use yii\helpers\Url;
 
 /**
  * AdopcionesController implements the CRUD actions for Adopciones model.
@@ -32,11 +30,16 @@ class AdopcionesController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create', 'update', 'delete', 'solicitar'],
+                'only' => ['create', 'update', 'delete', 'solicitar', 'aprobar'],
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['create','solicitar'],
+                        'actions' => ['create', 'solicitar'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['aprobar'],
                         'roles' => ['@'],
                     ],
                     [
@@ -149,7 +152,7 @@ class AdopcionesController extends Controller
     }
 
     /**
-     * Manda una solicitud de adopción al usuario que subió el animal
+     * Manda una solicitud de adopción al usuario que subió el animal.
      * @return mixed Redirecciona a Home si ha habido un error.
      */
     public function actionSolicitar()
@@ -172,6 +175,26 @@ class AdopcionesController extends Controller
             }
             Yii::$app->session->setFlash('error', '¡Ya has solicitado este animal!');
             $this->redirect(['animales/view', 'id' => $id_animal]);
+        }
+    }
+
+    /**
+     * El usuario que donó el animal aprueba la solicitud de adopción para la
+     * posterior entrega del animal.
+     * @param  int $id  id de la adopcion
+     * @return [type]     [description]
+     */
+    public function actionAprobar($id)
+    {
+        $model = Adopciones::findOne(['id' => $id]);
+        if ($model->usuarioDonante->id == Yii::$app->user->id) {
+            $model->aprobado = true;
+            $model->save();
+            Yii::$app->session->setFlash('success', '¡Enhorabuena, le has encontrado a ' . $model->animal->nombre . ' un buen hogar!');
+            $this->goBack();
+        } else {
+            Yii::$app->session->setFlash('error', 'No tienes permiso para aprobar esa adopción.');
+            $this->redirect('animales/index');
         }
     }
 }
