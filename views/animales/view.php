@@ -134,7 +134,7 @@ $this->registerJs($js);
         &via=Phergeon
         &related=Phergeon%2Ctwitter
         &hashtags=<?= urlencode($model->etiquetasAnimal())?>
-        &text=<?= urlencode("Ayudame a encontrarle una familia a $model->nombre ") .  $model->rutaAnimal($model->id)?>'>
+        &text=<?= urlencode("Ayudame a encontrarle una familia a $model->nombre ") .  urlencode($model->rutaAnimal($model->id))?>'>
         Twitter
         </button>
         <div id="fb-root"></div>
@@ -157,11 +157,6 @@ $this->registerJs($js);
                </a>
         </div>
         <!-- <?= Html::a('Adóptame', ['adopciones/create'], ['class' => 'btn btn-primary']) ?> -->
-
-        <a class="twitter-share-button"
-          href="https://twitter.com/intent/tweet">
-        Tweet</a>
-
         <div>
             <?php $form = ActiveForm::begin([
              'id' => 'solicitar-adopcion-form',
