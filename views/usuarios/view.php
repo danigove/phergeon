@@ -25,6 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'method' => 'post',
                 ],
             ]) ?>
+        <?= Html::a('Tienes solicitudes de adopcion pendientes.', ['solicitudes', 'id' => $model->id], ['class' => 'btn info']) ?>    
         <?php else: ?>
         <?= '' ?>
         <?php endif ?>

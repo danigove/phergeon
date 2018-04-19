@@ -216,6 +216,12 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->hasMany(Animales::className(), ['id_usuario' => 'id'])->inverseOf('usuario');
     }
 
+
+    public function getAdopciones0()
+    {
+        return $this->hasMany(Adopciones::className(), ['id_usuario_adoptante' => 'id'])->inverseOf('usuario');
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

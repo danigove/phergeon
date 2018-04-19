@@ -2,10 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\Adopciones;
 use app\models\Animales;
 use app\models\Usuarios;
 use app\models\UsuariosSearch;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -127,6 +129,28 @@ class UsuariosController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+        ]);
+    }
+
+    /**
+     * [actionSolicitudes description].
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    public function actionSolicitudes($id)
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' => Adopciones::find()->joinWith(['animal', 'usuarioAdoptante'])->where(['id_usuario_donante' => $id]),
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+            'sort' => [
+                'defaultOrder' => ['id_usuario_adoptante' => SORT_DESC],
+            ],
+        ]);
+
+        return $this->render('solicitudes', [
+            'dataProvider' => $dataProvider,
         ]);
     }
 
