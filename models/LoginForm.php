@@ -12,10 +12,27 @@ use yii\base\Model;
  */
 class LoginForm extends Model
 {
+    /**
+     * Nombre de usuario.
+     * @var [type]
+     */
     public $username;
+    /**
+     * Contraseña del usuario.
+     * @var [type]
+     */
     public $password;
+    /**
+     * Coordenada x de la posicion en la que se loguea el usuario.
+     * @var [type]
+     */
     public $posx;
+    /**
+     * Coordenada y de la posicion en la que se loguea el usuario.
+     * @var [type]
+     */
     public $posy;
+
     public $rememberMe = true;
 
     private $_user = false;
