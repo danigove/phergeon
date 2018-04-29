@@ -108,7 +108,13 @@ $this->registerJs($js);
         [
             'label' => 'Edad',
             'value' => $model->edad . ' años.',
-        ]
+        ],
+        [
+            'label' => 'Distancia',
+            'value' => $model->distancia() . ' kms.',
+        ],
+        'distancia',
+
     ]
     ]);
 
