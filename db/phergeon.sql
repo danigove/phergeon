@@ -21,6 +21,8 @@ CREATE TABLE usuarios
    ,email varchar(255) NOT NULL
    ,password varchar(255) NOT NULL
    ,created_at timestamp(0)
+   ,posx numeric (5,5)
+   ,posy numeric (5,5)
    ,sesskey varchar(255)
    ,token_val varchar(255) UNIQUE
    ,rol bigint NOT NULL REFERENCES roles (id) ON DELETE NO ACTION ON UPDATE CASCADE DEFAULT 1
