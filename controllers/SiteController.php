@@ -2,13 +2,13 @@
 
 namespace app\controllers;
 
+use app\models\ContactForm;
+use app\models\LoginForm;
 use Yii;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\Response;
-use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\ContactForm;
 
 class SiteController extends Controller
 {
@@ -74,9 +74,16 @@ class SiteController extends Controller
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-
         $model = new LoginForm();
+        // if (Yii::$app->request->post()) {
+        //     var_dump(Yii::$app->request->post());
+        //     die();
+        // }
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            $usuario = $model->getUser();
+            $usuario->posx = $model->posx;
+            $usuario->posy = $model->posy;
+            $usuario->save();
             return $this->goBack();
         }
 
