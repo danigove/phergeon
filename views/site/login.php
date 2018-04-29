@@ -9,6 +9,41 @@ use yii\bootstrap\ActiveForm;
 
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
+
+$js = <<<EOT
+
+
+    function getLocation(){
+        if(navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(obtenerPosicion, errorPosicion);
+        }else{
+            alert("quillo esto hace falta");
+        }
+    }
+
+    function errorPosicion(){
+        alert('Es necesario que permitas el acceso al localizador para que la aplicacion funcione correctamente, por favor, recarga la pagina y acepta los permisos.')
+    }
+
+    function obtenerPosicion(position) {
+        if(position != null){
+            $('#login-posy').attr('value', position.coords.latitude);
+            $('#login-posx').attr('value', position.coords.longitude);
+            $('.btn-success').submit();
+
+        }else{
+            console.log(position);
+        }
+    }
+
+    $('#login').on('click', function(e){
+        e.preventDefault();
+        getLocation();
+    })
+
+EOT;
+
+$this->registerJs($js);
 ?>
 <div class="site-login">
     <h1><?= Html::encode($this->title) ?></h1>
@@ -28,23 +63,23 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?= $form->field($model, 'password')->passwordInput() ?>
 
+        <?= $form->field($model, 'posx')->hiddenInput(['maxlength' => true, 'id' => 'login-posy'])->label(false) ?>
+
+        <?= $form->field($model, 'posy')->hiddenInput(['maxlength' => true, 'id' => 'login-posx'])->label(false) ?>
+
         <?= $form->field($model, 'rememberMe')->checkbox([
             'template' => "<div class=\"col-lg-offset-1 col-lg-3\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
         ]) ?>
 
+
+
         <div class="form-group">
             <div class="col-lg-offset-1 col-lg-11">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button', 'id' => 'login']) ?>
 
                 <?= Html::a('¡Registrate!', ['usuarios/create'], ['class' => 'btn btn-success']) ?>
             </div>
         </div>
 
     <?php ActiveForm::end(); ?>
-
-
-    <div class="col-lg-offset-1" style="color:#999;">
-        You may login with <strong>admin/admin</strong> or <strong>demo/demo</strong>.<br>
-        To modify the username/password, please check out the code <code>app\models\User::$users</code>.
-    </div>
 </div>

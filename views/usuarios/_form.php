@@ -62,7 +62,7 @@ $this->registerJs($js);
 
     <?= $form->field($model, 'posx')->hiddenInput(['maxlength' => true])->label(false) ?>
 
-    <?= $form->field($model, 'posy')->textInput(['maxlength' => true])->label(false) ?>
+    <?= $form->field($model, 'posy')->hiddenInput(['maxlength' => true])->label(false) ?>
 
     <?= $form->field($model, 'foto')->fileInput() ?>
 
