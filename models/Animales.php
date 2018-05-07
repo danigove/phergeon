@@ -264,7 +264,7 @@ class Animales extends \yii\db\ActiveRecord
         $restalong = Yii::$app->user->identity->posx - $this->usuario->posx;
         $restalat = Yii::$app->user->identity->posy - $this->usuario->posy;
         //TODO Que la vista haga la peticion con las dos distancias.
-        return $restalong - $restalat;
+        return abs($restalong - $restalat);
     }
 
     public function getDistancia()
