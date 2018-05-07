@@ -57,13 +57,15 @@ class AnimalesController extends Controller
      */
     public function actionIndex()
     {
-        // $searchModel = new AnimalesSearch();
-        // $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchModel = new AnimalesSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => Animales::find(),
-            'sort' => ['defaultOrder' => ['nombre' => SORT_ASC]],
-        ]);
+        // $dataProvider = new ActiveDataProvider([
+        //     'query' => Animales::find(),
+        //     'sort' => [
+        //         'defaultOrder' => ['nombre' => SORT_ASC],
+        //     ],
+        // ]);
         //  $dataProvider->sort->attributes['animal.distancia'] = [
         //     'asc' => ['animal.distancia' => SORT_ASC],
         //     'desc' => ['animal.distancia' => SORT_DESC],
@@ -71,7 +73,7 @@ class AnimalesController extends Controller
 
 
         return $this->render('index', [
-            // 'searchModel' => $searchModel,
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }

@@ -2,24 +2,21 @@
 
 namespace app\models;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Animales;
 
 /**
  * AnimalesSearch represents the model behind the search form of `app\models\Animales`.
  */
 class AnimalesSearch extends Animales
 {
-    /**
-     * {@inheritdoc}
-     */
+    public $distancia;
+
     public function rules()
     {
         return [
             [['id', 'id_usuario', 'tipo_animal', 'raza'], 'integer'],
-            [['nombre', 'descripcion', 'edad', 'sexo'], 'safe'],
+            [['nombre', 'distancia', 'descripcion', 'edad', 'sexo'], 'safe'],
         ];
     }
 
@@ -32,8 +29,15 @@ class AnimalesSearch extends Animales
         return Model::scenarios();
     }
 
+    public function attributes()
+    {
+        return array_merge(parent::attributes(), ['distancia']);
+    }
+
+
+
     /**
-     * Creates data provider instance with search query applied
+     * Creates data provider instance with search query applied.
      *
      * @param array $params
      *
@@ -41,7 +45,7 @@ class AnimalesSearch extends Animales
      */
     public function search($params)
     {
-        $query = Animales::find();
+        $query = Animales::find()->joinWith('usuario');
 
         // add conditions that should always apply here
 
@@ -63,12 +67,14 @@ class AnimalesSearch extends Animales
             'id_usuario' => $this->id_usuario,
             'tipo_animal' => $this->tipo_animal,
             'raza' => $this->raza,
+            'distancia' => $this->distancia,
         ]);
 
         $query->andFilterWhere(['ilike', 'nombre', $this->nombre])
             ->andFilterWhere(['ilike', 'descripcion', $this->descripcion])
             ->andFilterWhere(['ilike', 'edad', $this->edad])
-            ->andFilterWhere(['ilike', 'sexo', $this->sexo]);
+            ->andFilterWhere(['ilike', 'sexo', $this->sexo])
+            ->andFilterWhere(['=', 'distancia', $this->distancia]);
 
         return $dataProvider;
     }

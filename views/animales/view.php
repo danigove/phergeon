@@ -110,7 +110,7 @@ $this->registerJs($js);
             'value' => $model->edad . ' años.',
         ],
         [
-            'label' => 'Distancia',
+            'label' => 'Distancia por metodo',
             'value' => $model->distancia() . ' kms.',
         ],
         'distancia',

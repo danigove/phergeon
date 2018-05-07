@@ -17,6 +17,7 @@ use yii\imagine\Image;
  * @property string $descripcion
  * @property string $edad
  * @property string $sexo
+ * @property float $distancia
  *
  * @property Razas $raza0
  * @property Tipos $tipoAnimal
@@ -39,6 +40,7 @@ class Animales extends \yii\db\ActiveRecord
      * @var [type]
      */
     public $distancia;
+
     public static function tableName()
     {
         return 'animales';
@@ -77,7 +79,7 @@ class Animales extends \yii\db\ActiveRecord
             'edad' => 'Edad',
             'sexo' => 'Sexo',
             'foto' => 'Foto del animal',
-            'distancia' => 'Distancia',
+            'distancia' => 'Distancia del usuario',
         ];
     }
 
@@ -263,5 +265,10 @@ class Animales extends \yii\db\ActiveRecord
         $restalat = Yii::$app->user->identity->posy - $this->usuario->posy;
         //TODO Que la vista haga la peticion con las dos distancias.
         return $restalong - $restalat;
+    }
+
+    public function getDistancia()
+    {
+        return 0;
     }
 }
