@@ -269,6 +269,6 @@ class Animales extends \yii\db\ActiveRecord
 
     public function getDistancia()
     {
-        return 0;
+        return 150;
     }
 }

@@ -51,7 +51,17 @@ class AnimalesSearch extends Animales
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                   'defaultOrder' => ['nombre' => SORT_ASC],
+               ],
         ]);
+
+        $dataProvider->sort->attributes['distancia'] = [
+            'asc' => ['distancia' => SORT_ASC],
+            'desc' => ['distancia' => SORT_DESC],
+        ];
+
+
 
         $this->load($params);
 

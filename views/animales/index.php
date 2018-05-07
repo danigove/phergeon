@@ -1,5 +1,7 @@
 <?php
 
+use app\models\Animales;
+
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -32,7 +34,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'nombre',
             'tipo_animal',
             'raza',
-            'distancia',
+            [
+                'label' => 'Distancia del animal',
+                'attribute' => 'distancia',
+                'value' => function($model){
+                    return $model->distancia();
+                }
+            ],
             // [
             //     'label' => 'distancia',
             //     'value' => $model->distanciaAnimal(),
