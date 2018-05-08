@@ -5,6 +5,8 @@ use app\models\Animales;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
+use yii\widgets\ListView;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\AnimalesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -23,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
     <?php endif?>
 
-    <?= GridView::widget([
+    <!-- <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -51,5 +53,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
+    ]); ?> -->
+
+    <?= ListView::widget([
+        'dataProvider' => $dataProvider,
+        'itemView' => '_animal',
+        'summary' => '',
     ]); ?>
 </div>
