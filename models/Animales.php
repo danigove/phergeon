@@ -267,8 +267,13 @@ class Animales extends \yii\db\ActiveRecord
         return abs($restalong - $restalat);
     }
 
-    public function getDistancia()
-    {
-        return 150;
-    }
+    // public function getDistancia()
+    // {
+    //     return 150;
+    // }
+
+    // public function afterFind()
+    // {
+    //     $this->distancia = $this->distancia();
+    // }
 }
