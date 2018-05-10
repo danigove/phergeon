@@ -132,4 +132,18 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
+    /**
+     * Busca y devuelve todos los animales cuya raza y/o tipo coincidan con el criterio de búsqueda
+     * y/o todas las asociaciones que contengan en su nombre dicho criterio.
+     * @return dataProvider   Todos los objetos
+     */
+    public function actionBuscar()
+    {
+        $criterio = Yii::$app->request->get('criterio');
+
+        return $this->render('resultado', [
+            'string' => $criterio,
+        ]);
+    }
 }
