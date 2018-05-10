@@ -4,9 +4,9 @@ namespace app\controllers;
 
 use app\models\Animales;
 use app\models\AnimalesSearch;
-use Yii;
 use app\models\SolicitarAdopcionForm;
-
+use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -43,7 +43,7 @@ class AnimalesController extends Controller
                         'actions' => ['update', 'delete'],
                         'roles' => ['@'],
                         'matchCallback' => function ($rule, $action) {
-                            return Animales::findOne($_GET['id'])->id_usuario  == Yii::$app->user->identity->id;
+                            return Animales::findOne($_GET['id'])->id_usuario == Yii::$app->user->identity->id;
                         },
                     ],
                 ],
@@ -59,6 +59,18 @@ class AnimalesController extends Controller
     {
         $searchModel = new AnimalesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        // $dataProvider = new ActiveDataProvider([
+        //     'query' => Animales::find(),
+        //     'sort' => [
+        //         'defaultOrder' => ['nombre' => SORT_ASC],
+        //     ],
+        // ]);
+        //  $dataProvider->sort->attributes['animal.distancia'] = [
+        //     'asc' => ['animal.distancia' => SORT_ASC],
+        //     'desc' => ['animal.distancia' => SORT_DESC],
+        // ];
+
 
         return $this->render('index', [
             'searchModel' => $searchModel,

@@ -18,6 +18,8 @@ use yii\web\IdentityInterface;
  * @property string $email
  * @property string $password
  * @property string $created_at
+ * @property float $posx
+ * @property float $posy
  * @property string $sesskey
  * @property string $token_val
  * @property int $rol
@@ -65,7 +67,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         return [
             [['nombre_usuario', 'nombre_real', 'email'], 'required'],
             [['password', 'password_repeat'], 'required', 'on' => self::ESCENARIO_CREATE],
-            [['created_at'], 'safe'],
+            [['created_at', 'posx', 'posy'], 'safe'],
             [
                 ['password_repeat'],
                 'compare',
@@ -87,6 +89,8 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         return array_merge(
             parent::attributes(),
             [
+                'posx',
+                'posy',
                 'foto',
                 'password_repeat',
             ]
@@ -106,6 +110,8 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             'password' => 'Password',
             'password_repeat' => 'Repetir contraseña',
             'created_at' => 'Created At',
+            'posx' => 'Coordenada X',
+            'posy' => 'Coordenada Y',
             'sesskey' => 'Sesskey',
             'token_val' => 'Token Val',
             'rol' => 'Rol',

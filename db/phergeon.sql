@@ -21,6 +21,8 @@ CREATE TABLE usuarios
    ,email varchar(255) NOT NULL
    ,password varchar(255) NOT NULL
    ,created_at timestamp(0)
+   ,posx double precision
+   ,posy double precision
    ,sesskey varchar(255)
    ,token_val varchar(255) UNIQUE
    ,rol bigint NOT NULL REFERENCES roles (id) ON DELETE NO ACTION ON UPDATE CASCADE DEFAULT 1
@@ -103,9 +105,9 @@ INSERT INTO roles (denominacion)
     VALUES ('usuario')
          , ('asociacion');
 
-INSERT INTO usuarios (nombre_usuario, nombre_real, email, password, created_at, rol)
-    VALUES ('danigove', 'Daniel Gómez Vela', 'dani5002@hotmail.com', crypt('danigove', gen_salt('bf', 13)), current_timestamp(0),1)
-          ,('briganimalista', 'Brigada Animalista Sanlúcar', 'brigada@gmail.com',crypt('brigada', gen_salt('bf', 13)), current_timestamp(0),2);
+INSERT INTO usuarios (nombre_usuario, nombre_real, email, posx, posy,  password, created_at, rol)
+    VALUES ('danigove', 'Daniel Gómez Vela', 'dani5002@hotmail.com', -3.2313 , 2.91823 ,crypt('danigove', gen_salt('bf', 13)), current_timestamp(0),1)
+          ,('briganimalista', 'Brigada Animalista Sanlúcar', 'brigada@gmail.com', 5.231 , -7.91 , crypt('brigada', gen_salt('bf', 13)), current_timestamp(0),2);
 
 
 INSERT INTO tipos (denominacion_tipo)

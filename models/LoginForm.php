@@ -12,8 +12,27 @@ use yii\base\Model;
  */
 class LoginForm extends Model
 {
+    /**
+     * Nombre de usuario.
+     * @var [type]
+     */
     public $username;
+    /**
+     * Contraseña del usuario.
+     * @var [type]
+     */
     public $password;
+    /**
+     * Coordenada x de la posicion en la que se loguea el usuario.
+     * @var [type]
+     */
+    public $posx;
+    /**
+     * Coordenada y de la posicion en la que se loguea el usuario.
+     * @var [type]
+     */
+    public $posy;
+
     public $rememberMe = true;
 
     private $_user = false;
@@ -26,7 +45,7 @@ class LoginForm extends Model
     {
         return [
             // username and password are both required
-            [['username', 'password'], 'required'],
+            [['username', 'password', 'posx', 'posy'], 'required'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()

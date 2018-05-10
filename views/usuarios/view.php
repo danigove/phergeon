@@ -47,6 +47,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'created_at',
             'sesskey',
             'token_val',
+            'posx',
+            'posy',
             [
                 'attribute' => 'rol',
                 'value' => $model->rol0->denominacion,

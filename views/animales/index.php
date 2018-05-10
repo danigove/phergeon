@@ -1,7 +1,11 @@
 <?php
 
+use app\models\Animales;
+
 use yii\helpers\Html;
 use yii\grid\GridView;
+
+use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\AnimalesSearch */
@@ -21,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
     <?php endif?>
 
-    <?= GridView::widget([
+    <!-- <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -32,11 +36,28 @@ $this->params['breadcrumbs'][] = $this->title;
             'nombre',
             'tipo_animal',
             'raza',
+            [
+                'label' => 'Distancia del animal',
+                'attribute' => 'distancia',
+                'value' => function($model){
+                    return $model->distancia();
+                }
+            ],
+            // [
+            //     'label' => 'distancia',
+            //     'value' => $model->distanciaAnimal(),
+            // ],
             //'descripcion',
             //'edad',
             //'sexo',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
+    ]); ?> -->
+
+    <?= ListView::widget([
+        'dataProvider' => $dataProvider,
+        'itemView' => '_animal',
+        'summary' => '',
     ]); ?>
 </div>

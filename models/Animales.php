@@ -17,6 +17,7 @@ use yii\imagine\Image;
  * @property string $descripcion
  * @property string $edad
  * @property string $sexo
+ * @property float $distancia
  *
  * @property Razas $raza0
  * @property Tipos $tipoAnimal
@@ -34,6 +35,12 @@ class Animales extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+    /**
+     * Calculo de la distancia en la que se encuentra el animal.
+     * @var [type]
+     */
+    public $distancia;
+
     public static function tableName()
     {
         return 'animales';
@@ -45,7 +52,7 @@ class Animales extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            ['id_usuario', 'safe'],
+            [['id_usuario', 'distancia'], 'safe'],
             [['nombre', 'tipo_animal', 'raza', 'descripcion', 'edad', 'sexo'], 'required'],
             [['id_usuario', 'tipo_animal', 'raza'], 'default', 'value' => null],
             [['id_usuario', 'tipo_animal', 'raza'], 'integer'],
@@ -72,6 +79,7 @@ class Animales extends \yii\db\ActiveRecord
             'edad' => 'Edad',
             'sexo' => 'Sexo',
             'foto' => 'Foto del animal',
+            'distancia' => 'Distancia del usuario',
         ];
     }
 
@@ -81,6 +89,7 @@ class Animales extends \yii\db\ActiveRecord
             parent::attributes(),
             [
                 'foto',
+                'distancia',
             ]
         );
     }
@@ -240,4 +249,31 @@ class Animales extends \yii\db\ActiveRecord
         }
         return Adopciones::findOne(['id_usuario_adoptante' => Yii::$app->user->identity->id, 'id_animal' => $id]);
     }
+
+    /**
+     * Método que sin la ayuda de las peticiones de calculos de distancias a la API de Google Maps nos permitirá saber
+     * dónde está el animal mediante la diferencia de los puntos cardinales en el que se encuentra tanto el usuario como el
+     * solicitante de la adopción.
+     * @return [type] [description]
+     */
+    public function distancia()
+    {
+        if (Yii::$app->user->isGuest) {
+            return 0;
+        }
+        $restalong = Yii::$app->user->identity->posx - $this->usuario->posx;
+        $restalat = Yii::$app->user->identity->posy - $this->usuario->posy;
+        //TODO Que la vista haga la peticion con las dos distancias.
+        return abs($restalong - $restalat);
+    }
+
+    // public function getDistancia()
+    // {
+    //     return 150;
+    // }
+
+    // public function afterFind()
+    // {
+    //     $this->distancia = $this->distancia();
+    // }
 }
