@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -46,19 +47,23 @@ class AnimalesSearch extends Animales
     public function search($params)
     {
         $query = Animales::find()->joinWith('usuario');
+        $x = Yii::$app->user->identity->posx;
+        $y = Yii::$app->user->identity->posy;
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
-                   'defaultOrder' => ['nombre' => SORT_ASC],
+                   'defaultOrder' => [
+                       'distancia' => SORT_ASC,
+                   ],
                ],
         ]);
 
         $dataProvider->sort->attributes['distancia'] = [
-            'asc' => ['distancia' => SORT_ASC],
-            'desc' => ['distancia' => SORT_DESC],
+            'asc' => ["abs(($x-posx) - ($y-posy))" => SORT_ASC],
+            'desc' => ["abs(($x-posx) - ($y-posy))" => SORT_DESC],
         ];
 
 
