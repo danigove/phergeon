@@ -9,3 +9,6 @@ RewriteCond %{REQUEST_FILENAME} !-d
 
 # otherwise forward it to index.php
 RewriteRule . index.php
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP:X-Forwarded-PROTO} !https
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
