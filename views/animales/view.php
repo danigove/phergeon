@@ -26,6 +26,38 @@ EOT;
 
 $this->registerJs($js);
 
+
+if(!Yii::$app->user->isGuest){
+
+    $js = <<<EOT
+
+        $.ajax({
+            url:'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=40.6655101,-73.89188969999998&destinations=40.6905615%2C-73.9976592%7C40.6905615%2C-73.9976592%7C40.6905615%2C-73.9976592%7C40.6905615%2C-73.9976592%7C40.6905615%2C-73.9976592%7C40.6905615%2C-73.9976592%7C40.659569%2C-73.933783%7C40.729029%2C-73.851524%7C40.6860072%2C-73.6334271%7C40.598566%2C-73.7527626%7C40.659569%2C-73.933783%7C40.729029%2C-73.851524%7C40.6860072%2C-73.6334271%7C40.598566%2C-73.7527626&key=AIzaSyDFbHuskLMwZpQLzAltPFzS_XgJffOHcOs',
+            method: 'POST',
+            dataType: 'json',
+            success: function(data){
+                console.log(data);
+            },
+            error: function(error){
+                console.log(error);
+            }
+        });
+
+EOT;
+
+    $this->registerJs($js);
+}
+else {
+
+    $js = <<<EOT
+
+        alert('No porque vas de guest');
+EOT;
+
+    $this->registerJs($js);
+
+}
+
 ?>
 <div id="tweet-container">
 
