@@ -40,7 +40,7 @@ AppAsset::register($this);
         'items' => [
             ('<li>'.
             Html::beginForm(['/site/buscar'], 'get').
-            Html::textInput('criterio', '', ['placeholder'=>'Introduzca lo que quiere buscar aquí']).
+            Html::textInput('criterio', Yii::$app->request->get('criterio') , ['placeholder'=>'Introduzca lo que quiere buscar aquí']).
             Html::submitButton('Buscar', ['class' => 'btn btn-link logout']) .
             Html::endForm()
 

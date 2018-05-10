@@ -2,6 +2,7 @@
 
 /* @var $this yii\web\View */
 
+use yii\widgets\ListView;
 use yii\helpers\Html;
 
 $this->title = 'Resultados de la búsqueda';
@@ -16,6 +17,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 Resultados de la búsqueda con <?= $string ?>
             </p>
         <?php endif ?>
-        This is the About page. You may modify the following file to customize its content:
-    </p>
+        <?php if(count($dataProvider)>0): ?>
+            <?= ListView::widget([
+                'dataProvider' => $dataProvider,
+                'itemView' => '../usuarios/_usuario',
+                'summary' => '',
+            ]); ?>
+        <?php endif?>
+        </p>
 </div>
