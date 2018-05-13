@@ -11,6 +11,7 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 
 /**
  * AnimalesController implements the CRUD actions for Animales model.
@@ -130,14 +131,18 @@ class AnimalesController extends Controller
 
         $model->id_usuario = Yii::$app->user->id;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->foto = UploadedFile::getInstance($model, 'foto');
+            if ($model->save() && $model->upload()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('create', [
             'model' => $model,
         ]);
     }
+
 
     /**
      * Updates an existing Animales model.

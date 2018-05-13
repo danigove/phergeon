@@ -47,24 +47,40 @@ class AnimalesSearch extends Animales
     public function search($params)
     {
         $query = Animales::find()->joinWith('usuario');
-        $x = Yii::$app->user->identity->posx;
-        $y = Yii::$app->user->identity->posy;
+
+        if (!Yii::$app->user->isGuest) {
+            $x = Yii::$app->user->identity->posx;
+            $y = Yii::$app->user->identity->posy;
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+                'sort' => [
+                       'defaultOrder' => [
+                           'distancia' => SORT_ASC,
+                       ],
+                   ],
+            ]);
+
+
+            $dataProvider->sort->attributes['distancia'] = [
+                'asc' => ["abs(($x-posx) - ($y-posy))" => SORT_ASC],
+                'desc' => ["abs(($x-posx) - ($y-posy))" => SORT_DESC],
+            ];
+        } else {
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+                'sort' => [
+                       'defaultOrder' => [
+                           'nombre' => SORT_ASC,
+                       ],
+                   ],
+            ]);
+        }
+
 
         // add conditions that should always apply here
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'sort' => [
-                   'defaultOrder' => [
-                       'distancia' => SORT_ASC,
-                   ],
-               ],
-        ]);
 
-        $dataProvider->sort->attributes['distancia'] = [
-            'asc' => ["abs(($x-posx) - ($y-posy))" => SORT_ASC],
-            'desc' => ["abs(($x-posx) - ($y-posy))" => SORT_DESC],
-        ];
+
 
 
 

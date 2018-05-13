@@ -132,7 +132,7 @@ class Animales extends \yii\db\ActiveRecord
         // $nombre = Yii::getAlias();
         if (file_exists($nombre)) {
             // return Url::to('/uploads/') . $this->id . '.jpg';
-            return 'https://www.dropbox.com/s/ah5x0gfk1tybrak/' . 'animales-' . $this->id . '.jpg?dl=1';
+            return 'https://www.dropbox.com/s/p2wk6t5r6vphtgd/' . 'animales-' . $this->id . '.jpg?dl=1';
         }
         return 'https://www.dropbox.com/s/aek3h7057e88v2d/animal-default.jpg?dl=1';
         // https://www.dropbox.com/s/qq1kje0eet6gwrg/animal-default.jpg?dl=1';

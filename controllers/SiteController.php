@@ -2,16 +2,16 @@
 
 namespace app\controllers;
 
+use app\models\Animales;
 use app\models\ContactForm;
 use app\models\LoginForm;
+use app\models\Usuarios;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\Response;
-use app\models\Usuarios;
-use app\models\Animales;
-use app\models\UsuariosSearch;
 
 class SiteController extends Controller
 {
@@ -144,10 +144,12 @@ class SiteController extends Controller
     public function actionBuscar()
     {
         $criterio = Yii::$app->request->get('criterio');
-        // var_dump($criterio); die();
-        $searchModel = new UsuariosSearch();
-        $prueba = ['UsuariosSearch[nombre_usuario]' => $criterio];
-        $dataProvider = $searchModel->search($prueba);
+
+        $dataProvider = new ActiveDataProvider([
+               'query' => Usuarios::find()->where(['ilike', 'nombre_usuario', $criterio]),
+           ]);
+
+
 
         return $this->render('resultado', [
             'string' => $criterio,
