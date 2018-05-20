@@ -146,7 +146,7 @@ class SiteController extends Controller
         $criterio = Yii::$app->request->get('criterio');
 
         $dataProvider = new ActiveDataProvider([
-               'query' => Usuarios::find()->where(['ilike', 'nombre_usuario', $criterio]),
+               'query' => Usuarios::find()->joinWith('rol0')->where(['ilike', 'nombre_usuario', $criterio])->andWhere(['denominacion' => 'asociacion']),
            ]);
 
 
