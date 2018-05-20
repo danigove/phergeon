@@ -38,6 +38,13 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
+            ('<li>'.
+            Html::beginForm(['/site/buscar'], 'get').
+            Html::textInput('criterio', Yii::$app->request->get('criterio') , ['placeholder'=>'Introduzca lo que quiere buscar aquí']).
+            Html::submitButton('Buscar', ['class' => 'btn btn-link logout']) .
+            Html::endForm()
+
+            .'</li>'),
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
             ['label' => 'Animales', 'url' => ['/animales/index']],

@@ -31,19 +31,23 @@ if(!Yii::$app->user->isGuest){
 
     $js = <<<EOT
 
-        $.ajax({
+        var prueba = $.ajax({
             url:'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=40.6655101,-73.89188969999998&destinations=40.6905615%2C-73.9976592&key=AIzaSyDFbHuskLMwZpQLzAltPFzS_XgJffOHcOs',
-            method: 'GET',
-            dataType: 'jsonp',
-            success: function(data){
-                alert('entra');
-                console.log(data);
-            },
-            error: function(error){
-                alert('no');
-                console.log(error);
-            }
-        });
+            method: 'POST',
+            dataType: 'json',
+            crossDomain: 'true',
+            headers: {
+                   "Access-Control-Allow-Origin":"*",
+               },
+            // success: function(data){
+            //     alert('entra');
+            //     console.log(data);
+            // },
+            // error: function(error){
+            //     console.log(error);
+            // }
+        }).responseJSON;
+        console.log(prueba);
 
 EOT;
 

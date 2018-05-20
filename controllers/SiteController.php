@@ -2,9 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\Animales;
 use app\models\ContactForm;
 use app\models\LoginForm;
+use app\models\Usuarios;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -131,5 +134,30 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    /**
+     * Busca y devuelve todos los animales cuya raza y/o tipo coincidan con el criterio de búsqueda
+     * y/o todas las asociaciones que contengan en su nombre dicho criterio.
+     * @return dataProvider   Todos los objetos
+     */
+    public function actionBuscar()
+    {
+        $criterio = Yii::$app->request->get('criterio');
+
+        $dataProviderAso = new ActiveDataProvider([
+               'query' => Usuarios::find()->joinWith('rol0')->where(['ilike', 'nombre_usuario', $criterio])->andWhere(['denominacion' => 'asociacion']),
+           ]);
+
+        $dataProviderAni = new ActiveDataProvider([
+            'query' => Animales::find()->joinWith(['raza0', 'tipoAnimal'])->where(['ilike', 'denominacion_raza', $criterio])->orWhere(['ilike', 'denominacion_tipo', $criterio]),
+        ]);
+
+
+        return $this->render('resultado', [
+            'string' => $criterio,
+            'dataProviderAso' => $dataProviderAso,
+            'dataProviderAni' => $dataProviderAni,
+        ]);
     }
 }
