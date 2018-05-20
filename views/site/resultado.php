@@ -17,12 +17,26 @@ $this->params['breadcrumbs'][] = $this->title;
                 Resultados de la búsqueda con <?= $string ?>
             </p>
         <?php endif ?>
-        <?php if(count($dataProvider)>0): ?>
+        <?php if(count($dataProviderAso)>0): ?>
             <?= ListView::widget([
-                'dataProvider' => $dataProvider,
+                'dataProvider' => $dataProviderAso,
                 'itemView' => '../usuarios/_usuario',
-                'summary' => '',
+                'summary' => 'Usuarios',
             ]); ?>
         <?php endif?>
-        </p>
+    </p>
+    <p>
+        <?php if ($string != ''):?>
+            <p>
+                Resultados de la búsqueda con <?= $string ?>
+            </p>
+        <?php endif ?>
+        <?php if(count($dataProviderAso)>0): ?>
+            <?= ListView::widget([
+                'dataProvider' => $dataProviderAni,
+                'itemView' => '../animales/_animal',
+                'summary' => 'Animales',
+            ]); ?>
+        <?php endif?>
+    </p>
 </div>

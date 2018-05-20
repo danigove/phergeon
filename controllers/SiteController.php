@@ -145,15 +145,19 @@ class SiteController extends Controller
     {
         $criterio = Yii::$app->request->get('criterio');
 
-        $dataProvider = new ActiveDataProvider([
+        $dataProviderAso = new ActiveDataProvider([
                'query' => Usuarios::find()->joinWith('rol0')->where(['ilike', 'nombre_usuario', $criterio])->andWhere(['denominacion' => 'asociacion']),
            ]);
 
+        $dataProviderAni = new ActiveDataProvider([
+            'query' => Animales::find()->joinWith(['raza0', 'tipoAnimal'])->where(['ilike', 'denominacion_raza', $criterio])->orWhere(['ilike', 'denominacion_tipo', $criterio]),
+        ]);
 
 
         return $this->render('resultado', [
             'string' => $criterio,
-            'dataProvider' => $dataProvider,
+            'dataProviderAso' => $dataProviderAso,
+            'dataProviderAni' => $dataProviderAni,
         ]);
     }
 }
