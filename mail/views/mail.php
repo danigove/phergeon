@@ -10,9 +10,7 @@ use yii\helpers\Url;
 <p>
     Para terminar de validar necesitamos que le des al siguiente enlace:
 </p>
-<p>
-    <?= $enlaceAutenticacion ?>
-</p>
+<a href="<?= $enlaceAutenticacion ?>">Pulse en este enlace para autenticarse.</a>
 <p>
     Una vez terminado su cuenta ya funcionará como una asociación animalista, con todas sus correspondientes ventajas.
     Un cordial saludo.
