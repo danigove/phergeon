@@ -3,7 +3,6 @@
 namespace app\controllers;
 
 use app\models\Animales;
-use app\models\Usuarios;
 use app\models\ContactForm;
 use app\models\LoginForm;
 use app\models\Usuarios;
@@ -13,6 +12,7 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\Response;
+use yii\helpers\Url;
 
 class SiteController extends Controller
 {
@@ -74,7 +74,12 @@ class SiteController extends Controller
     */
     public function actionAutenticar()
     {
-        $result = Yii::$app->mailer->compose('views/mail', ['content' => 'La vida loca'])
+        $usuario = Usuarios::findOne(Yii::$app->user->identity->id);
+        $token_val = Yii::$app->security->generateRandomString();
+        $usuario->token_val = $token_val;
+        $usuario->save();
+        $enlace  = Url::to(['usuarios/asociacion', 'token' => $token_val], true);
+        $result = Yii::$app->mailer->compose('views/mail', ['nombre' => Yii::$app->user->identity->nombre_real , 'enlaceAutenticacion' => $enlace ,])
             ->setFrom(Yii::$app->params['adminEmail'])
             ->setTo(Yii::$app->user->identity->email)
             ->setSubject('Autenticación de asociación animalista')
@@ -84,7 +89,9 @@ class SiteController extends Controller
         if (!$result) {
             // No se ha enviado correctamente
         }
-        return 'Hecho';
+        Yii::$app->session->setFlash('success', 'Se le acaba de mandar un email de autenticación. Por favor mire el correo.');
+
+        $this->redirect(['usuarios/view', 'id' => Yii::$app->user->identity->id]);
     }
 
     /**

@@ -165,6 +165,29 @@ class UsuariosController extends Controller
     }
 
     /**
+     * [public description]
+     * @var [type]
+     */
+    public function actionAsociacion()
+    {
+        $token_val = Yii::$app->request->get('token');
+        $usuario = Usuarios::findOne(['token_val' => $token_val]);
+        if (!Yii::$app->user->isGuest && $usuario->id === Yii::$app->user->id) {
+            if ($usuario->rol == 2) {
+                Yii::$app->session->setFlash('error', 'El usuario ya era una asociación animalista');
+            } else {
+                $usuario->rol = 2;
+                $usuario->save();
+                Yii::$app->session->setFlash('success', '¡Felicidades! Ya estás establecido como una asociación.');
+            }
+        } else {
+            Yii::$app->session->setFlash('error', 'Necesitas estar logueado como el usuario que se quiere validar para completar esta acción.');
+            $this->redirect(['site/login']);
+        }
+        $this->redirect(['usuarios/view', 'id' => $usuario->id]);
+    }
+
+    /**
      * Deletes an existing Usuarios model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id
