@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\widgets\ListView;
+
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Usuarios */
@@ -9,6 +11,29 @@ use yii\widgets\DetailView;
 $this->title = 'Perfil de ' . $model->nombre_usuario;
 $this->params['breadcrumbs'][] = ['label' => 'Usuarios', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+$css = <<<EOT
+    #animalesUsuario div div{
+        display: none;
+    }
+EOT;
+
+$this->registerCss($css);
+
+$js = <<<EOT
+
+    $('#mostrarAni').on('click', function(e){
+        e.preventDefault();
+        $('#animalesUsuario div div').fadeToggle(600);
+    });
+
+
+EOT;
+
+$this->registerJs($js);
+
+
+
 ?>
 <div class="usuarios-view">
 
@@ -63,3 +88,20 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
 </div>
+
+<?php if(count($animales) > 0): ?>
+    <div class="cabecera">
+        <h3>Animales que tiene o ha tenido el usuario.</h3>
+    </div>
+    <?= Html::a('Mostrar','',['id' => 'mostrarAni', 'class' => 'btn btn-primary']) ?>
+    <div id="animalesUsuario">
+        <?= ListView::widget([
+            'dataProvider' => $animales,
+            'itemView' => '../animales/_animal',
+            'summary' => '',
+        ]); ?>
+    </div>
+<?php else: ?>
+    <div class="cabecera">
+        <h3>El usuario aún no ha subido ningún animal.</h3>
+    </div><?php endif ?>
