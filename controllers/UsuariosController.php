@@ -92,8 +92,15 @@ class UsuariosController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $animales = new ActiveDataProvider([
+                'query' => Animales::find()->where(['id_usuario' => $model->id]),
+            ]);
+
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'animales' => $animales,
         ]);
     }
 
@@ -165,7 +172,7 @@ class UsuariosController extends Controller
     }
 
     /**
-     * [public description]
+     * [public description].
      * @var [type]
      */
     public function actionAsociacion()
