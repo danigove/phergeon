@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Animales;
+use app\models\Usuarios;
 use app\models\ContactForm;
 use app\models\LoginForm;
 use app\models\Usuarios;
@@ -73,11 +74,11 @@ class SiteController extends Controller
     */
     public function actionAutenticar()
     {
-        $result = Yii::$app->mailer->compose()
+        $result = Yii::$app->mailer->compose('views/mail', ['content' => 'La vida loca'])
             ->setFrom(Yii::$app->params['adminEmail'])
-            ->setTo(Yii::$app->session->user->email);
-            ->setSubject('Este es un mensaje de prueba')
-            ->setTextBody('Este es un mensaje de prueba que escribo para ver si llega el correo al Doñana desde el Yii2.')
+            ->setTo(Yii::$app->user->identity->email)
+            ->setSubject('Autenticación de asociación animalista')
+            // ->setTextBody('Este es un mensaje de prueba que escribo para ver si llega el correo al Doñana desde el Yii2.')
             // ->setHtmlBody('<b>HTML content</b>')
             ->send();
         if (!$result) {

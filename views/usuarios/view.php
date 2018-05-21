@@ -25,6 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'method' => 'post',
                 ],
             ]) ?>
+            <?= Html::a('Autentícate', ['site/autenticar'], ['class' => 'btn btn-success']) ?>
             <?php if($model->getNumSolicitudes($model->id) >= 0) : ?>
                 <?= Html::a('Tienes ' . $model->getNumSolicitudes($model->id) . ' solicitudes de adopcion pendientes.', ['solicitudes', 'id' => $model->id], ['class' => 'btn info']) ?>
             <?php else: ?>
