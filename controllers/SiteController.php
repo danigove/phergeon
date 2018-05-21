@@ -12,6 +12,7 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\Response;
+use yii\helpers\Url;
 
 class SiteController extends Controller
 {
@@ -23,10 +24,10 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
+                'only' => ['logout', 'autenticar'],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'autenticar'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -65,6 +66,32 @@ class SiteController extends Controller
     public function actionIndex()
     {
         return $this->render('index');
+    }
+
+    /**
+    *
+    * @return [type] [description]
+    */
+    public function actionAutenticar()
+    {
+        $usuario = Usuarios::findOne(Yii::$app->user->identity->id);
+        $token_val = Yii::$app->security->generateRandomString();
+        $usuario->token_val = $token_val;
+        $usuario->save();
+        $enlace  = Url::to(['usuarios/asociacion', 'token' => $token_val], true);
+        $result = Yii::$app->mailer->compose('views/mail', ['nombre' => Yii::$app->user->identity->nombre_real , 'enlaceAutenticacion' => $enlace ,])
+            ->setFrom(Yii::$app->params['adminEmail'])
+            ->setTo(Yii::$app->user->identity->email)
+            ->setSubject('Autenticación de asociación animalista')
+            // ->setTextBody('Este es un mensaje de prueba que escribo para ver si llega el correo al Doñana desde el Yii2.')
+            // ->setHtmlBody('<b>HTML content</b>')
+            ->send();
+        if (!$result) {
+            // No se ha enviado correctamente
+        }
+        Yii::$app->session->setFlash('success', 'Se le acaba de mandar un email de autenticación. Por favor mire el correo.');
+
+        $this->redirect(['usuarios/view', 'id' => Yii::$app->user->identity->id]);
     }
 
     /**
