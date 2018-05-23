@@ -75,16 +75,6 @@ EOT;
 
     $this->registerJs($js);
 }
-else {
-
-    $js = <<<EOT
-
-        alert('No porque vas de guest');
-EOT;
-
-    $this->registerJs($js);
-
-}
 
 ?>
 <div id="tweet-container">
@@ -93,39 +83,6 @@ EOT;
 <div class="animales-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
-
-    <!-- <?= $model->rutaAnimal($model->id) ?> -->
-<!--
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            [
-                'label' => 'Enviado por',
-                'format' => 'raw',
-                'value' => Html::a($model->usuario->nombre_usuario, ['usuarios/view', 'id' => $model->usuario->id]),
-            ],
-            'nombre',
-            [
-                'attribute' => 'tipo_animal',
-                'value' => $model->tipoAnimal->denominacion_tipo,
-            ],
-            [
-                'attribute' => 'raza',
-                'value' => $model->raza0->denominacion_raza,
-            ],
-            'descripcion',
-            'edad',
-            'sexo',
-            [
-                'attribute' => 'foto',
-                'value' => $model->rutaImagen,
-                'format' => 'image',
-            ],
-        ],
-    ]) ?> -->
-
 
     <?php
     echo DetailView::widget([
