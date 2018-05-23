@@ -15,6 +15,11 @@ $config = [
     ],
     'language' => 'es-ES',
     'components' => [
+        'session' => [
+            'class' => 'yii\web\DbSession',
+            // 'db' => 'mydb',  // el identificador del componente de aplicación DB connection. Por defecto'db'.
+            // 'sessionTable' => 'my_session', // nombre de la tabla de sesión. Por defecto 'session'.
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => '6K0G8kzVBf2yoUJkJvKZqGzYaJ3V30Os',

@@ -1,6 +1,15 @@
 ------------------------------
 -- Archivo de base de datos --
 ------------------------------
+DROP TABLE IF EXISTS session CASCADE;
+
+CREATE TABLE session
+(
+    id CHAR(40) NOT NULL PRIMARY KEY,
+    expire INTEGER,
+    data BYTEA
+);
+
 
 DROP TABLE IF EXISTS roles CASCADE;
 
