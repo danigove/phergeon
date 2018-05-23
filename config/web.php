@@ -17,6 +17,11 @@ $config = [
     'components' => [
         'session' => [
             'class' => 'yii\web\DbSession',
+            'writeCallback' => function ($session) {
+                return [
+                'user_id' => Yii::$app->user->isGuest ? '' : Yii::$app->user->id,
+                ];
+            },
             // 'db' => 'mydb',  // el identificador del componente de aplicación DB connection. Por defecto'db'.
             // 'sessionTable' => 'my_session', // nombre de la tabla de sesión. Por defecto 'session'.
         ],

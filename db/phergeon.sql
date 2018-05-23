@@ -7,7 +7,8 @@ CREATE TABLE session
 (
     id CHAR(40) NOT NULL PRIMARY KEY,
     expire INTEGER,
-    data BYTEA
+    data BYTEA,
+    user_id BIGINT
 );
 
 

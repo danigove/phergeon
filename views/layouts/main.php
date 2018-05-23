@@ -46,6 +46,7 @@ AppAsset::register($this);
 
             .'</li>'),
             ['label' => 'Home', 'url' => ['/site/index']],
+            ['label' => Yii::$app->session->id, 'url' => ['#']],
             ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
             ['label' => 'Animales', 'url' => ['/animales/index']],
             ['label' => 'Adopciones', 'url' => ['/adopciones/index']],
