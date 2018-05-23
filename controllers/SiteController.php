@@ -5,14 +5,15 @@ namespace app\controllers;
 use app\models\Animales;
 use app\models\ContactForm;
 use app\models\LoginForm;
+use app\models\Session;
 use app\models\Usuarios;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\Response;
-use yii\helpers\Url;
 
 class SiteController extends Controller
 {
@@ -69,17 +70,16 @@ class SiteController extends Controller
     }
 
     /**
-    *
-    * @return [type] [description]
-    */
+     * @return [type] [description]
+     */
     public function actionAutenticar()
     {
         $usuario = Usuarios::findOne(Yii::$app->user->identity->id);
         $token_val = Yii::$app->security->generateRandomString();
         $usuario->token_val = $token_val;
         $usuario->save();
-        $enlace  = Url::to(['usuarios/asociacion', 'token' => $token_val], true);
-        $result = Yii::$app->mailer->compose('views/mail', ['nombre' => Yii::$app->user->identity->nombre_real , 'enlaceAutenticacion' => $enlace ,])
+        $enlace = Url::to(['usuarios/asociacion', 'token' => $token_val], true);
+        $result = Yii::$app->mailer->compose('views/mail', ['nombre' => Yii::$app->user->identity->nombre_real, 'enlaceAutenticacion' => $enlace])
             ->setFrom(Yii::$app->params['adminEmail'])
             ->setTo(Yii::$app->user->identity->email)
             ->setSubject('Autenticación de asociación animalista')
@@ -114,6 +114,8 @@ class SiteController extends Controller
             $usuario->posx = $model->posx;
             $usuario->posy = $model->posy;
             $usuario->save();
+            $sessiones = Session::deleteAll(['user_id' => Yii::$app->user->id]);
+
             return $this->goBack();
         }
 
