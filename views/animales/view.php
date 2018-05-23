@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 use kartik\detail\DetailView;
+use yii\grid\GridView;
+
 
 // use yii\widgets\DetailView;
 // use yii\helpers\Url;
@@ -15,7 +17,27 @@ $this->title = 'Perfil de ' . $model->nombre;
 $this->params['breadcrumbs'][] = ['label' => 'Animales', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
+$css = <<<EOT
+    #facturasAnimal div div{
+        display: none;
+    }
+EOT;
+
+$this->registerCss($css);
+
 $js = <<<EOT
+    $('#mostrarFac').on('click', function(e){
+        e.preventDefault();
+        $('#facturasAnimal div div').fadeToggle(600);
+        if($(this).text() === 'Ocultar formulario'){
+            $(this).text('Añadir nueva factura');
+        }else{
+            $(this).text('Ocultar formulario');
+        }
+    });
+
+
+
     $('.twitter').on('click', function(e){
         e.preventDefault();
         console.log(e.target);
@@ -53,16 +75,6 @@ EOT;
 
     $this->registerJs($js);
 }
-else {
-
-    $js = <<<EOT
-
-        alert('No porque vas de guest');
-EOT;
-
-    $this->registerJs($js);
-
-}
 
 ?>
 <div id="tweet-container">
@@ -71,39 +83,6 @@ EOT;
 <div class="animales-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
-
-    <!-- <?= $model->rutaAnimal($model->id) ?> -->
-<!--
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            [
-                'label' => 'Enviado por',
-                'format' => 'raw',
-                'value' => Html::a($model->usuario->nombre_usuario, ['usuarios/view', 'id' => $model->usuario->id]),
-            ],
-            'nombre',
-            [
-                'attribute' => 'tipo_animal',
-                'value' => $model->tipoAnimal->denominacion_tipo,
-            ],
-            [
-                'attribute' => 'raza',
-                'value' => $model->raza0->denominacion_raza,
-            ],
-            'descripcion',
-            'edad',
-            'sexo',
-            [
-                'attribute' => 'foto',
-                'value' => $model->rutaImagen,
-                'format' => 'image',
-            ],
-        ],
-    ]) ?> -->
-
 
     <?php
     echo DetailView::widget([
@@ -160,8 +139,8 @@ EOT;
 
     <?php if(Yii::$app->user->id == $model->usuario->id): ?>
         <p>
-            <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+            <?= Html::a('Modificar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a('Borrar', ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => 'Are you sure you want to delete this item?',
@@ -218,3 +197,55 @@ EOT;
         </div>
     </p>
 </div>
+
+
+<div class="cabecera">
+    <h3>Facturas que tiene el animal asociadas</h3>
+</div>
+
+
+<?= GridView::widget([
+    'dataProvider' => $facturas,
+    'columns' => [
+        // ['class' => 'yii\grid\SerialColumn'],
+        // 'id',
+        // 'id_animal',
+        'fecha_emision',
+        'centro_veterinario',
+        'descripcion',
+        'importe',
+
+        [
+            'class' => 'yii\grid\ActionColumn',
+            'template' => '{delete}',
+            'buttons' => [
+                'delete' => function ($url, $model, $key){
+                    if (!Yii::$app->user->isGuest &&
+                        ($model->animal->usuario->id == Yii::$app->user->identity->id)) {
+                        return Html::a('', ['facturas/delete', 'id' => $model->id], [
+                            'class' => 'glyphicon glyphicon-trash',
+                            'data' => [
+                                'confirm' => '¿Estás seguro que quieres borrar este envio?',
+                                'method' => 'post',
+                            ],
+                        ]);
+                    }
+                },
+            ],
+        ],
+    ],
+]); ?>
+
+<?php if($model->usuario->id === Yii::$app->user->identity->id): ?>
+
+<?= Html::a('Añadir nueva factura','',['id' => 'mostrarFac', 'class' => 'btn btn-primary']) ?>
+<div id="facturasAnimal">
+
+    <?= $this->render('_nuevaFactura', [
+        'id_animal' => $model->id,
+        'model' => $facturaNueva,
+    ]) ?>
+
+</div>
+
+<?php endif ?>

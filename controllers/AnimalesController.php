@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Animales;
 use app\models\AnimalesSearch;
+use app\models\Facturas;
 use app\models\SolicitarAdopcionForm;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -88,6 +89,12 @@ class AnimalesController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+        $factura = new Facturas();
+
+        $facturas = new ActiveDataProvider([
+               'query' => Facturas::find()->where(['id_animal' => $id]),
+           ]);
+
         \Yii::$app->view->registerMetaTag([
             'property' => 'og:url',
             'content' => $model->rutaAnimal($id),
@@ -115,6 +122,8 @@ class AnimalesController extends Controller
         ]);
 
         return $this->render('view', [
+            'facturaNueva' => $factura,
+            'facturas' => $facturas,
             'solicitarAdopcionForm' => $solicitarAdopcionForm,
             'model' => $model,
         ]);
