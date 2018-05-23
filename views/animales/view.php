@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 use kartik\detail\DetailView;
+use yii\grid\GridView;
+
 
 // use yii\widgets\DetailView;
 // use yii\helpers\Url;
@@ -218,3 +220,24 @@ EOT;
         </div>
     </p>
 </div>
+
+<?= GridView::widget([
+    'dataProvider' => $facturas,
+    'columns' => [
+        ['class' => 'yii\grid\SerialColumn'],
+
+        'id',
+        'id_animal',
+        'fecha_emision',
+        'centro_veterinario',
+        'descripcion',
+        //'importe',
+
+        ['class' => 'yii\grid\ActionColumn'],
+    ],
+]); ?>
+
+<?= $this->render('_nuevaFactura', [
+    'id_animal' => $model->id,
+    'model' => $facturaNueva,
+]) ?>

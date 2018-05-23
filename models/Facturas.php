@@ -2,7 +2,9 @@
 
 namespace app\models;
 
-use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "facturas".
@@ -41,6 +43,20 @@ class Facturas extends \yii\db\ActiveRecord
             [['id_animal'], 'exist', 'skipOnError' => true, 'targetClass' => Animales::className(), 'targetAttribute' => ['id_animal' => 'id']],
         ];
     }
+    public function behaviors()
+    {
+        return [
+                [
+                    'class' => TimestampBehavior::className(),
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['fecha_emision'],
+                    ],
+                    // if you're using datetime instead of UNIX timestamp:
+                    'value' => new Expression('NOW()'),
+                ],
+            ];
+    }
+
 
     /**
      * {@inheritdoc}
