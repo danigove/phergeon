@@ -2,9 +2,11 @@
 
 namespace app\controllers;
 
+use app\models\Animales;
 use app\models\Facturas;
 use app\models\FacturasSearch;
 use Yii;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -24,6 +26,30 @@ class FacturasController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['create', 'update', 'delete'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['create'],
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            return Animales::findOne($_POST['Facturas']['id_animal'])->id_usuario === Yii::$app->user->identity->id;
+                        },
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['delete'],
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            // var_dump($_GET);
+                            // die();
+                            return Facturas::findOne(['id' => $_GET['id']])->animal->usuario->id === Yii::$app->user->identity->id;
+                        },
+                    ],
                 ],
             ],
         ];
@@ -105,9 +131,12 @@ class FacturasController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $factura = $this->findModel($id);
+        $animal = $factura->animal;
+        $factura->delete();
 
-        return $this->redirect(['index']);
+        Yii::$app->session->setFlash('success', 'Factura eliminada correctamente');
+        return $this->redirect(['animales/view', 'id' => $animal->id]);
     }
 
     /**

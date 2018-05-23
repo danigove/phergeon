@@ -94,7 +94,6 @@ class AnimalesController extends Controller
         $facturas = new ActiveDataProvider([
                'query' => Facturas::find()->where(['id_animal' => $id]),
            ]);
-        // $facturas = Facturas::find(['id_animal' => $id])->all();
 
         \Yii::$app->view->registerMetaTag([
             'property' => 'og:url',

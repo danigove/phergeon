@@ -233,7 +233,24 @@ EOT;
         'descripcion',
         //'importe',
 
-        ['class' => 'yii\grid\ActionColumn'],
+        [
+            'class' => 'yii\grid\ActionColumn',
+            'template' => '{delete}',
+            'buttons' => [
+                'delete' => function ($url, $model, $key){
+                    if (!Yii::$app->user->isGuest &&
+                        ($model->animal->usuario->id == Yii::$app->user->identity->id)) {
+                        return Html::a('', ['facturas/delete', 'id' => $model->id], [
+                            'class' => 'glyphicon glyphicon-trash',
+                            'data' => [
+                                'confirm' => '¿Estás seguro que quieres borrar este envio?',
+                                'method' => 'post',
+                            ],
+                        ]);
+                    }
+                },
+            ],
+        ],
     ],
 ]); ?>
 
