@@ -17,7 +17,27 @@ $this->title = 'Perfil de ' . $model->nombre;
 $this->params['breadcrumbs'][] = ['label' => 'Animales', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
+$css = <<<EOT
+    #facturasAnimal div div{
+        display: none;
+    }
+EOT;
+
+$this->registerCss($css);
+
 $js = <<<EOT
+    $('#mostrarFac').on('click', function(e){
+        e.preventDefault();
+        $('#facturasAnimal div div').fadeToggle(600);
+        if($(this).text() === 'Ocultar formulario'){
+            $(this).text('Añadir nueva factura');
+        }else{
+            $(this).text('Ocultar formulario');
+        }
+    });
+
+
+
     $('.twitter').on('click', function(e){
         e.preventDefault();
         console.log(e.target);
@@ -162,8 +182,8 @@ EOT;
 
     <?php if(Yii::$app->user->id == $model->usuario->id): ?>
         <p>
-            <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+            <?= Html::a('Modificar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a('Borrar', ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => 'Are you sure you want to delete this item?',
@@ -221,17 +241,22 @@ EOT;
     </p>
 </div>
 
+
+<div class="cabecera">
+    <h3>Facturas que tiene el animal asociadas</h3>
+</div>
+
+
 <?= GridView::widget([
     'dataProvider' => $facturas,
     'columns' => [
-        ['class' => 'yii\grid\SerialColumn'],
-
-        'id',
-        'id_animal',
+        // ['class' => 'yii\grid\SerialColumn'],
+        // 'id',
+        // 'id_animal',
         'fecha_emision',
         'centro_veterinario',
         'descripcion',
-        //'importe',
+        'importe',
 
         [
             'class' => 'yii\grid\ActionColumn',
@@ -254,7 +279,16 @@ EOT;
     ],
 ]); ?>
 
-<?= $this->render('_nuevaFactura', [
-    'id_animal' => $model->id,
-    'model' => $facturaNueva,
-]) ?>
+<?php if($model->usuario->id === Yii::$app->user->identity->id): ?>
+
+<?= Html::a('Añadir nueva factura','',['id' => 'mostrarFac', 'class' => 'btn btn-primary']) ?>
+<div id="facturasAnimal">
+
+    <?= $this->render('_nuevaFactura', [
+        'id_animal' => $model->id,
+        'model' => $facturaNueva,
+    ]) ?>
+
+</div>
+
+<?php endif ?>
