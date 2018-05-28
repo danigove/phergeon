@@ -58,21 +58,25 @@ class AnimalesSearch extends Animales
                            'distancia' => SORT_ASC,
                        ],
                    ],
-            ]);
-
-
+                'pagination' => [
+                     'pageSize' => 4,
+                 ],
+               ]);
             $dataProvider->sort->attributes['distancia'] = [
                 'asc' => ["abs(($x-posx) - ($y-posy))" => SORT_ASC],
                 'desc' => ["abs(($x-posx) - ($y-posy))" => SORT_DESC],
             ];
         } else {
             $dataProvider = new ActiveDataProvider([
-                'query' => $query,
-                'sort' => [
-                       'defaultOrder' => [
-                           'nombre' => SORT_ASC,
-                       ],
-                   ],
+                'query' => $query->orderBy(['rol' => SORT_DESC]),
+                // 'sort' => [
+                //        'defaultOrder' => [
+                //            'rol' => SORT_DESC,
+                //        ],
+                //    ],
+                'pagination' => [
+                    'pageSize' => 18,
+                ],
             ]);
         }
 

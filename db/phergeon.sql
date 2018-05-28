@@ -117,7 +117,9 @@ INSERT INTO roles (denominacion)
 
 INSERT INTO usuarios (nombre_usuario, nombre_real, email, posx, posy,  password, created_at, rol)
     VALUES ('danigove', 'Daniel Gómez Vela', 'dani5002@hotmail.com', -3.2313 , 2.91823 ,crypt('danigove', gen_salt('bf', 13)), current_timestamp(0),1)
-          ,('briganimalista', 'Brigada Animalista Sanlúcar', 'brigada@gmail.com', 5.231 , -7.91 , crypt('brigada', gen_salt('bf', 13)), current_timestamp(0),2);
+    ,('briganimalista', 'Brigada Animalista Sanlúcar', 'brigada@gmail.com', 5.231 , -7.91 , crypt('brigada', gen_salt('bf', 13)), current_timestamp(0),2)
+    ,('dani1', 'Brigada Animalista Sanlúcar', 'brigada@gmail.com', 1.231 , -4.91 , crypt('brigada', gen_salt('bf', 13)), current_timestamp(0),1)
+    ,('dani2', 'Brigada Animalista Sanlúcar', 'brigada@gmail.com', 15.231 , -27.91 , crypt('brigada', gen_salt('bf', 13)), current_timestamp(0),2);
 
 
 INSERT INTO tipos (denominacion_tipo)
@@ -139,6 +141,7 @@ INSERT INTO animales (id_usuario, nombre, tipo_animal, raza, descripcion, edad, 
            (1, 'Batman', '2', '2', 'Precioso siames de 4 años', 1, 'Macho'),
            (2, 'Rafaela', '1', '3', 'Precioso mastín de 2 años', 2, 'Macho'),
            (2, 'Chawarma', '1', '1', 'Precioso perrete de 2 años', 2, 'Macho'),
-           (2, 'Ronaldinho', '1', '3', 'Precioso perrete de 6 años', 6, 'Macho'),
-           (2, 'Carla', '2', '2', 'Precioso gatete de 2 años', 2, 'Hembra'),
-           (2, 'Trinity', '3', '2', 'Precioso hurón de 2 años', 2, 'Hembra');
+           (3, 'Ronaldinho', '1', '3', 'Precioso perrete de 6 años', 6, 'Macho'),
+           (3, 'Carla', '2', '2', 'Precioso gatete de 2 años', 2, 'Hembra'),
+           (4, 'Trinity', '3', '2', 'Precioso hurón de 2 años', 2, 'Hembra'),
+           (4, 'Trinity', '3', '2', 'Prueba 2', 2, 'Hembra');

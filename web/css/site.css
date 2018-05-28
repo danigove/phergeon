@@ -124,6 +124,11 @@ a.desc:after {
     width: 10%;
 }
 
+.panel-animal {
+    width: 30%;
+    float: left;
+    margin: 2px;
+}
 /* .cabecera {
     height: 10%;
 } */

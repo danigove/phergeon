@@ -3,14 +3,18 @@
 namespace app\controllers;
 
 use app\models\Animales;
+use app\models\AnimalesSearch;
 use app\models\ContactForm;
 use app\models\LoginForm;
 use app\models\Session;
 use app\models\Usuarios;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\data\Pagination;
+use yii\data\Sort;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\Response;
@@ -66,7 +70,28 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $searchModel = new AnimalesSearch();
+
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+
+        // $dataProvider = new ActiveDataProvider([
+        //     'query' => Animales::find(),
+        //     'sort' => [
+        //         'defaultOrder' => ['nombre' => SORT_ASC],
+        //     ],
+        // ]);
+        //  $dataProvider->sort->attributes['animal.distancia'] = [
+        //     'asc' => ['animal.distancia' => SORT_ASC],
+        //     'desc' => ['animal.distancia' => SORT_DESC],
+        // ];
+
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            // 'pagination' => $pagination,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**
