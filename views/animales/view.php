@@ -236,7 +236,7 @@ EOT;
     ],
 ]); ?>
 
-<?php if($model->usuario->id === Yii::$app->user->identity->id): ?>
+<?php if(!(Yii::$app->user->isGuest) && $model->usuario->id === Yii::$app->user->identity->id): ?>
 
 <?= Html::a('Añadir nueva factura','',['id' => 'mostrarFac', 'class' => 'btn btn-primary']) ?>
 <div id="facturasAnimal">

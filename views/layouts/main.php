@@ -11,6 +11,7 @@ use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
 AppAsset::register($this);
+$this->title = Yii::$app->name;
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -27,6 +28,7 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 
 <div class="wrap">
+    <img src="">
     <?php
     NavBar::begin([
         'brandLabel' => Yii::$app->name,
@@ -46,15 +48,8 @@ AppAsset::register($this);
 
             .'</li>'),
             ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => Yii::$app->session->id, 'url' => ['#']],
             ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
             ['label' => 'Animales', 'url' => ['/animales/index']],
-            ['label' => 'Adopciones', 'url' => ['/adopciones/index']],
-            ['label' => 'Roles', 'url' => ['/roles/index']],
-            ['label' => 'Historiales', 'url' => ['/historiales/index']],
-            ['label' => 'Tipos', 'url' => ['/tipos/index']],
-            ['label' => 'Razas', 'url' => ['/razas/index']],
-            ['label' => 'Facturas', 'url' => ['/facturas/index']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
@@ -83,9 +78,13 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; <?=Yii::$app->name?> <?= date('Y') ?></p>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-right">Desarrollado por
+                <a href="https://github.com/danigove" target="_blank" >Daniel Gómez Vela</a>
+                <img class="logoGit" src="/imgpro/github.png"/>
+        </p>
+
     </div>
 </footer>
 
