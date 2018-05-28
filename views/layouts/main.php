@@ -26,6 +26,11 @@ $this->title = Yii::$app->name;
 </head>
 <body>
 <?php $this->beginBody() ?>
+<?php $this->registerJsFile(
+    '/js/comun.js',
+    ['depends' => [\yii\web\JqueryAsset::className()]]
+);
+?>
 
 <div class="wrap">
     <?php
@@ -40,8 +45,8 @@ $this->title = Yii::$app->name;
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ('<li>'.
-            Html::beginForm(['/site/buscar'], 'get').
-            Html::textInput('criterio', Yii::$app->request->get('criterio') , ['placeholder'=>'Busque aquí']).
+            Html::beginForm(['/site/buscar'], 'get', ['id' => 'formBusqueda']).
+            Html::textInput('criterio', Yii::$app->request->get('criterio') , ['placeholder'=>'Busque aquí', 'id' => 'inputBusqueda']).
             Html::submitButton('Buscar', ['class' => 'btn btn-link logout']) .
             Html::endForm()
 
@@ -49,7 +54,8 @@ $this->title = Yii::$app->name;
             ['label' => 'Inicio', 'url' => ['/site/index']],
             ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
             ['label' => 'Animales', 'url' => ['/animales/index']],
-            ['label' => 'Sobre nosotros', 'url' => ['/site/contact']],
+            ['label' => 'Sobre nosotros', 'url' => ['/site/about']],
+            Yii::$app->user->isGuest ? '' : ['label' => 'Mi perfil', 'url' => ['/usuarios/view', 'id'=> Yii::$app->user->identity->id]],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (

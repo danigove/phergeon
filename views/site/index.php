@@ -14,7 +14,7 @@ use yii\widgets\ListView;
 $this->title = '';
 ?>
 <div class="site-index">
-
+    <h2>Bienvenido a Phergeon</h2>
     <div class="body-content">
 
         <h1><?= Html::encode($this->title) ?></h1>
@@ -22,7 +22,7 @@ $this->title = '';
 
         <?php if(!Yii::$app->user->isGuest): ?>
         <p>
-            <?= Html::a('Nuevo animal', ['create'], ['class' => 'btn btn-success']) ?>
+            <?= Html::a('Nuevo animal', ['animales/create'], ['class' => 'btn btn-success']) ?>
         </p>
         <?php endif?>
 
