@@ -10,8 +10,6 @@ use app\models\Session;
 use app\models\Usuarios;
 use Yii;
 use yii\data\ActiveDataProvider;
-use yii\data\Pagination;
-use yii\data\Sort;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Html;
@@ -71,25 +69,10 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $searchModel = new AnimalesSearch();
-
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-
-        // $dataProvider = new ActiveDataProvider([
-        //     'query' => Animales::find(),
-        //     'sort' => [
-        //         'defaultOrder' => ['nombre' => SORT_ASC],
-        //     ],
-        // ]);
-        //  $dataProvider->sort->attributes['animal.distancia'] = [
-        //     'asc' => ['animal.distancia' => SORT_ASC],
-        //     'desc' => ['animal.distancia' => SORT_DESC],
-        // ];
-
 
         return $this->render('index', [
             'searchModel' => $searchModel,
-            // 'pagination' => $pagination,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -205,10 +188,16 @@ class SiteController extends Controller
 
         $dataProviderAso = new ActiveDataProvider([
                'query' => Usuarios::find()->joinWith('rol0')->where(['ilike', 'nombre_usuario', $criterio])->andWhere(['denominacion' => 'asociacion']),
+               'pagination' => [
+                   'pagesize' => 6,
+               ],
            ]);
 
         $dataProviderAni = new ActiveDataProvider([
             'query' => Animales::find()->joinWith(['raza0', 'tipoAnimal'])->where(['ilike', 'denominacion_raza', $criterio])->orWhere(['ilike', 'denominacion_tipo', $criterio]),
+            'pagination' => [
+                'pagesize' => 6,
+            ],
         ]);
 
 

@@ -132,3 +132,6 @@ a.desc:after {
 /* .cabecera {
     height: 10%;
 } */
+.summary {
+    display: none;
+}

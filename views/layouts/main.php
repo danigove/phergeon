@@ -30,7 +30,7 @@ $this->title = Yii::$app->name;
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Html::img('/imgpro/phergeon.png', ['class' => 'logoIcon']), 
+        'brandLabel' => Html::img('/imgpro/phergeon.png', ['class' => 'logoIcon']),
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top cabecera',
@@ -41,12 +41,12 @@ $this->title = Yii::$app->name;
         'items' => [
             ('<li>'.
             Html::beginForm(['/site/buscar'], 'get').
-            Html::textInput('criterio', Yii::$app->request->get('criterio') , ['placeholder'=>'Introduzca lo que quiere buscar aquí']).
+            Html::textInput('criterio', Yii::$app->request->get('criterio') , ['placeholder'=>'Busque aquí']).
             Html::submitButton('Buscar', ['class' => 'btn btn-link logout']) .
             Html::endForm()
 
             .'</li>'),
-            ['label' => 'Home', 'url' => ['/site/index']],
+            ['label' => 'Inicio', 'url' => ['/site/index']],
             ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
             ['label' => 'Animales', 'url' => ['/animales/index']],
             Yii::$app->user->isGuest ? (
