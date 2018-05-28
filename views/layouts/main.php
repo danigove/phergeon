@@ -49,6 +49,7 @@ $this->title = Yii::$app->name;
             ['label' => 'Inicio', 'url' => ['/site/index']],
             ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
             ['label' => 'Animales', 'url' => ['/animales/index']],
+            ['label' => 'Sobre nosotros', 'url' => ['/site/contact']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (

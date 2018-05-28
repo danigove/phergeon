@@ -124,8 +124,8 @@ a.desc:after {
     width: 10%;
 }
 
-.panel-animal {
-    width: 30%;
+.panel-animal, .panel-usuario {
+    width: 32%;
     float: left;
     margin: 2px;
 }
