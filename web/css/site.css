@@ -117,3 +117,13 @@ a.desc:after {
 .logoGit {
     width: 4%;
 }
+
+.logoIcon {
+    position:relative;
+    top: -39%;
+    width: 10%;
+}
+
+/* .cabecera {
+    height: 10%;
+} */

@@ -28,13 +28,12 @@ $this->title = Yii::$app->name;
 <?php $this->beginBody() ?>
 
 <div class="wrap">
-    <img src="">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        'brandLabel' => Html::img('/imgpro/phergeon.png', ['class' => 'logoIcon']), 
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
+            'class' => 'navbar-inverse navbar-fixed-top cabecera',
         ],
     ]);
     echo Nav::widget([
