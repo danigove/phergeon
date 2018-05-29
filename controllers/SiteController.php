@@ -119,9 +119,9 @@ class SiteController extends Controller
         // }
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             $usuario = $model->getUser();
-            $usuario->posx = $model->posx;
-            $usuario->posy = $model->posy;
-            $usuario->save();
+            // $usuario->posx = $model->posx;
+            // $usuario->posy = $model->posy;
+            // $usuario->save();
             $res = Session::find()->where(['user_id' => Yii::$app->user->id])->count();
             if ($res != 1) {
                 Yii::$app->session->setFlash('error', 'Tiene otras sessiones abiertas con esta cuenta, hemos decidido cerrarlas por un mejor functionamiento de la aplicación.');

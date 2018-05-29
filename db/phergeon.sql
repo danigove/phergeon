@@ -116,9 +116,9 @@ INSERT INTO roles (denominacion)
          , ('asociacion');
 
 INSERT INTO usuarios (nombre_usuario, nombre_real, email, posx, posy,  password, created_at, rol)
-    VALUES ('danigove', 'Daniel Gómez Vela', 'dani5002@hotmail.com', -3.2313 , 2.91823 ,crypt('danigove', gen_salt('bf', 13)), current_timestamp(0),1)
+    VALUES ('danigove', 'Daniel Gómez Vela', 'dani5002@hotmail.com', 36.753477 , -6.383452 ,crypt('danigove', gen_salt('bf', 13)), current_timestamp(0),1)
     ,('briganimalista', 'Brigada Animalista Sanlúcar', 'brigada@gmail.com', 5.231 , -7.91 , crypt('brigada', gen_salt('bf', 13)), current_timestamp(0),2)
-    ,('dani1', 'Brigada Animalista Sanlúcar', 'brigada@gmail.com', 1.231 , -4.91 , crypt('brigada', gen_salt('bf', 13)), current_timestamp(0),1)
+    ,('dani1', 'Brigada Animalista Sanlúcar', 'brigada@gmail.com',47.004076 , 22.835431 , crypt('brigada', gen_salt('bf', 13)), current_timestamp(0),1)
     ,('dani2', 'Brigada Animalista Sanlúcar', 'brigada@gmail.com', 15.231 , -27.91 , crypt('brigada', gen_salt('bf', 13)), current_timestamp(0),2);
 
 

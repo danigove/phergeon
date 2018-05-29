@@ -12,34 +12,34 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $js = <<<EOT
 
-
-    function getLocation(){
-        if(navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(obtenerPosicion, errorPosicion);
-        }else{
-            alert("quillo esto hace falta");
-        }
-    }
-
-    function errorPosicion(){
-        alert('Es necesario que permitas el acceso al localizador para que la aplicacion funcione correctamente, por favor, recarga la pagina y acepta los permisos.')
-    }
-
-    function obtenerPosicion(position) {
-        if(position != null){
-            $('#login-posy').attr('value', position.coords.latitude);
-            $('#login-posx').attr('value', position.coords.longitude);
-            $('.btn-success').submit();
-
-        }else{
-            console.log(position);
-        }
-    }
-
-    $('#login').on('click', function(e){
-        e.preventDefault();
-        getLocation();
-    })
+    // 
+    // function getLocation(){
+    //     if(navigator.geolocation) {
+    //         navigator.geolocation.getCurrentPosition(obtenerPosicion, errorPosicion);
+    //     }else{
+    //         alert("quillo esto hace falta");
+    //     }
+    // }
+    //
+    // function errorPosicion(){
+    //     alert('Es necesario que permitas el acceso al localizador para que la aplicacion funcione correctamente, por favor, recarga la pagina y acepta los permisos.')
+    // }
+    //
+    // function obtenerPosicion(position) {
+    //     if(position != null){
+    //         $('#login-posy').attr('value', position.coords.latitude);
+    //         $('#login-posx').attr('value', position.coords.longitude);
+    //         $('.btn-success').submit();
+    //
+    //     }else{
+    //         console.log(position);
+    //     }
+    // }
+    //
+    // $('#login').on('click', function(e){
+    //     e.preventDefault();
+    //     getLocation();
+    // })
 
 EOT;
 

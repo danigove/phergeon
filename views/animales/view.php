@@ -282,15 +282,18 @@ var destinationB = {lat: 50.087, lng: 14.421};
      <div id="output"></div>
    </div>
    <div id="map"></div>
+   <?php if(!Yii::$app->user->isGuest):
+       // var_dump($model->usuario->posy) ; die();
+       ?>
    <script>
      function initMap() {
        var bounds = new google.maps.LatLngBounds;
        var markersArray = [];
 
-       var origin1 = {lat: 55.93, lng: -3.118};
+       var origin1 = {lat: <?= Yii::$app->user->identity->posx ?>, lng: <?= Yii::$app->user->identity->posy ?> };
        var origin2 = 'Greenwich, England';
        var destinationA = 'Stockholm, Sweden';
-       var destinationB = {lat: 50.087, lng: 14.421};
+       var destinationB = {lat: <?= $model->usuario->posx ?>, lng: <?= $model->usuario->posy ?> };
 
        var destinationIcon = 'https://chart.googleapis.com/chart?' +
            'chst=d_map_pin_letter&chld=D|FF0000|000000';
@@ -298,7 +301,7 @@ var destinationB = {lat: 50.087, lng: 14.421};
            'chst=d_map_pin_letter&chld=O|FFFF00|000000';
        var map = new google.maps.Map(document.getElementById('map'), {
          center: {lat: 55.53, lng: 9.4},
-         zoom: 10
+         zoom: 2
        });
        var geocoder = new google.maps.Geocoder;
 
@@ -362,3 +365,4 @@ var destinationB = {lat: 50.087, lng: 14.421};
    <script async defer
    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlTnqeL2j1cn8edg8TISE4HdIxRAQguHI&callback=initMap">
    </script>
+    <?php endif?>
