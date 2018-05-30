@@ -145,3 +145,10 @@ a.desc:after {
 .breadcrumb {
     background-color: #bcfbbc;
 }
+
+.fotoUsuario {
+    width: 65%;
+    margin-bottom: 2px;
+    position: relative;
+    left: 15%;
+}
