@@ -35,7 +35,7 @@ CREATE TABLE usuarios
    ,posy double precision
    ,sesskey varchar(255)
    ,token_val varchar(255) UNIQUE
-   ,rol bigint NOT NULL REFERENCES roles (id) ON DELETE NO ACTION ON UPDATE CASCADE DEFAULT 1
+   ,rol bigint NOT NULL REFERENCES roles (id) on delete cascade ON UPDATE CASCADE DEFAULT 1
 
 );
 
@@ -56,7 +56,7 @@ DROP TABLE IF EXISTS razas CASCADE;
 CREATE TABLE razas
 (
     id bigserial PRIMARY KEY
-   ,tipo_animal bigint NOT NULL REFERENCES tipos (id) ON DELETE NO ACTION ON UPDATE CASCADE
+   ,tipo_animal bigint NOT NULL REFERENCES tipos (id) on delete cascade ON UPDATE CASCADE
    ,denominacion_raza varchar(255) NOT NULL UNIQUE
 );
 
@@ -65,10 +65,10 @@ DROP TABLE IF EXISTS animales CASCADE;
 CREATE TABLE animales
 (
     id bigserial PRIMARY KEY
-   ,id_usuario bigint NOT NULL REFERENCES usuarios (id) ON DELETE NO ACTION ON UPDATE CASCADE
+   ,id_usuario bigint NOT NULL REFERENCES usuarios (id) on delete cascade ON UPDATE CASCADE
    ,nombre varchar(255) NOT NULL
-   ,tipo_animal bigint NOT NULL REFERENCES tipos (id) ON DELETE NO ACTION ON UPDATE CASCADE
-   ,raza bigint NOT NULL REFERENCES razas (id) ON DELETE NO ACTION ON UPDATE CASCADE DEFAULT 1
+   ,tipo_animal bigint NOT NULL REFERENCES tipos (id) on delete cascade ON UPDATE CASCADE
+   ,raza bigint NOT NULL REFERENCES razas (id) on delete cascade ON UPDATE CASCADE DEFAULT 1
    ,descripcion varchar(255) NOT NULL
    ,edad varchar(255) NOT NULL
    ,sexo varchar(255) NOT NULL
@@ -82,7 +82,7 @@ DROP TABLE IF EXISTS facturas CASCADE;
 CREATE TABLE facturas
 (
     id bigserial PRIMARY KEY
-   ,id_animal bigint NOT NULL REFERENCES animales (id) ON DELETE NO ACTION ON UPDATE CASCADE
+   ,id_animal bigint NOT NULL REFERENCES animales (id) on delete cascade ON UPDATE CASCADE
    ,fecha_emision timestamp(0) NOT NULL DEFAULT localtimestamp
    ,centro_veterinario varchar(255) NOT NULL
    ,descripcion varchar(255) NOT NULL
@@ -94,7 +94,7 @@ DROP TABLE IF EXISTS historiales CASCADE;
 CREATE TABLE historiales
 (
     id bigserial PRIMARY KEY
-   ,id_animal bigint NOT NULL REFERENCES animales (id) ON DELETE NO ACTION ON UPDATE CASCADE
+   ,id_animal bigint NOT NULL REFERENCES animales (id) on delete cascade ON UPDATE CASCADE
    ,descripcion varchar(255) NOT NULL
 );
 
@@ -103,9 +103,9 @@ DROP TABLE IF EXISTS adopciones CASCADE;
 CREATE TABLE adopciones
 (
     id bigserial PRIMARY KEY
-   ,id_usuario_donante bigint NOT NULL REFERENCES usuarios (id) ON DELETE NO ACTION ON UPDATE CASCADE
-   ,id_usuario_adoptante bigint NOT NULL REFERENCES usuarios (id) ON DELETE NO ACTION ON UPDATE CASCADE
-   ,id_animal bigint NOT NULL REFERENCES animales (id) ON DELETE NO ACTION ON UPDATE CASCADE
+   ,id_usuario_donante bigint NOT NULL REFERENCES usuarios (id) on delete cascade ON UPDATE CASCADE
+   ,id_usuario_adoptante bigint NOT NULL REFERENCES usuarios (id) on delete cascade ON UPDATE CASCADE
+   ,id_animal bigint NOT NULL REFERENCES animales (id) on delete cascade ON UPDATE CASCADE
    ,aprobado bool NOT NULL DEFAULT FALSE
    ,fecha_adopcion timestamp(0) NOT NULL DEFAULT localtimestamp
    ,unique (id_usuario_donante, id_usuario_adoptante, id_animal)
