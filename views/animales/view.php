@@ -100,7 +100,7 @@ EOT;
 </div>
 <div class="animales-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1  id="cabecera"><?= Html::encode($this->title) ?></h1>
 
     <?php
     echo DetailView::widget([
@@ -222,6 +222,7 @@ EOT;
 </div>
 
 
+
 <?= GridView::widget([
     'dataProvider' => $facturas,
     'columns' => [
@@ -291,9 +292,7 @@ var destinationB = {lat: 50.087, lng: 14.421};
        var markersArray = [];
 
        var origin1 = {lat: <?= Yii::$app->user->identity->posx ?>, lng: <?= Yii::$app->user->identity->posy ?> };
-       var origin2 = 'Greenwich, England';
-       var destinationA = 'Stockholm, Sweden';
-       var destinationB = {lat: <?= $model->usuario->posx ?>, lng: <?= $model->usuario->posy ?> };
+       var destinationA = {lat: <?= $model->usuario->posx ?>, lng: <?= $model->usuario->posy ?> };
 
        var destinationIcon = 'https://chart.googleapis.com/chart?' +
            'chst=d_map_pin_letter&chld=D|FF0000|000000';
@@ -307,8 +306,8 @@ var destinationB = {lat: 50.087, lng: 14.421};
 
        var service = new google.maps.DistanceMatrixService;
        service.getDistanceMatrix({
-         origins: [origin1, origin2],
-         destinations: [destinationA, destinationB],
+         origins: [origin1],
+         destinations: [destinationA],
          travelMode: 'DRIVING',
          unitSystem: google.maps.UnitSystem.METRIC,
          avoidHighways: false,
@@ -320,6 +319,7 @@ var destinationB = {lat: 50.087, lng: 14.421};
            var originList = response.originAddresses;
            var destinationList = response.destinationAddresses;
            var outputDiv = document.getElementById('output');
+           var cabecera = document.getElementById('cabecera');
            outputDiv.innerHTML = '';
            deleteMarkers(markersArray);
 
@@ -346,7 +346,7 @@ var destinationB = {lat: 50.087, lng: 14.421};
              for (var j = 0; j < results.length; j++) {
                geocoder.geocode({'address': destinationList[j]},
                    showGeocodedAddressOnMap(true));
-               outputDiv.innerHTML += originList[i] + ' to ' + destinationList[j] +
+               cabecera.innerHTML += originList[i] + ' to ' + destinationList[j] +
                    ': ' + results[j].distance.text + ' in ' +
                    results[j].duration.text + '<br>';
              }
