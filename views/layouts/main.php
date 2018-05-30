@@ -45,8 +45,8 @@ $this->title = Yii::$app->name;
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ('<li>'.
-            Html::beginForm(['/site/buscar'], 'get', ['id' => 'formBusqueda']).
-            Html::textInput('criterio', Yii::$app->request->get('criterio') , ['placeholder'=>'Busque aquí', 'id' => 'inputBusqueda']).
+            Html::beginForm(['/site/buscar'], 'get', ['id' => 'formBusqueda', ]).
+            Html::textInput('criterio', Yii::$app->request->get('criterio') , ['class' => 'form-inline','placeholder'=>'Busque aquí', 'id' => 'inputBusqueda']).
             Html::submitButton('Buscar', ['class' => 'btn btn-link logout']) .
             Html::endForm()
 

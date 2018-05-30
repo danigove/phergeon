@@ -135,3 +135,13 @@ a.desc:after {
 .summary {
     display: none;
 }
+
+#login-form{
+    width: 60%;
+}
+.loginIcon{
+    width: 9%;
+}
+.breadcrumb {
+    background-color: #bcfbbc;
+}

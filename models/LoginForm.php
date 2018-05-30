@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use app\models\Usuarios;
+
 use Yii;
 use yii\base\Model;
 
@@ -44,12 +46,18 @@ class LoginForm extends Model
     public function rules()
     {
         return [
-            // username and password are both required
-            [['username', 'password', 'posx', 'posy'], 'safe'],
-            // rememberMe must be a boolean value
+            [['username','password'], 'required'],
+            ['username', 'exist', 'targetClass' => Usuarios::class, 'targetAttribute' => ['username' => 'nombre_usuario']],
             ['rememberMe', 'boolean'],
-            // password is validated by validatePassword()
             ['password', 'validatePassword'],
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Usuario',
+            'password' => 'Contraseña',
         ];
     }
 
@@ -66,14 +74,14 @@ class LoginForm extends Model
             $user = $this->getUser();
 
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, 'Contraseña incorrecta.');
             }
         }
     }
 
     /**
-     * Logs in a user using the provided username and password.
-     * @return bool whether the user is logged in successfully
+     * Valida la contraseña
+     * @return bool Cuando se loguea correctamente
      */
     public function login()
     {
@@ -84,7 +92,7 @@ class LoginForm extends Model
     }
 
     /**
-     * Finds user by [[username]].
+     * Busca usuarios por el nombre_usuario.
      *
      * @return User|null
      */
