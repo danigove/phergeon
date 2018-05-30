@@ -66,6 +66,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             [['nombre_usuario', 'nombre_real', 'email'], 'required'],
+            ['email', 'email'],
             [['password', 'password_repeat'], 'required', 'on' => self::ESCENARIO_CREATE],
             [['created_at', 'posx', 'posy'], 'safe'],
             [
@@ -107,7 +108,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             'nombre_usuario' => 'Nombre Usuario',
             'nombre_real' => 'Nombre Real',
             'email' => 'Email',
-            'password' => 'Password',
+            'password' => 'Contraseña',
             'password_repeat' => 'Repetir contraseña',
             'created_at' => 'Created At',
             'posx' => 'Coordenada X',

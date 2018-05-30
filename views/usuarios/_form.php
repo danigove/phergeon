@@ -44,27 +44,42 @@ $this->registerJs($js);
 
 ?>
 <div id="demo">
-    a
 </div>
 <div class="usuarios-form">
-
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'nombre_usuario')->textInput(['maxlength' => true]) ?>
+    <div class="row">
+        <div class="col-md-4">
+            <?= $form->field($model, 'nombre_usuario')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'nombre_real')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-4">
+            <?= $form->field($model, 'nombre_real')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-4">
+            <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
+        </div>
 
-    <?= $form->field($model, 'password_repeat')->passwordInput(['maxlength' => true]) ?>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <?= $form->field($model, 'foto')->fileInput() ?>
+        </div>
+        <div class="col-md-4">
+            <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-4">
+            <?= $form->field($model, 'password_repeat')->passwordInput(['maxlength' => true]) ?>
+        </div>
 
+    </div>
+    
     <?= $form->field($model, 'posx')->hiddenInput(['maxlength' => true])->label(false) ?>
 
     <?= $form->field($model, 'posy')->hiddenInput(['maxlength' => true])->label(false) ?>
 
-    <?= $form->field($model, 'foto')->fileInput() ?>
 
     <!-- <?= $form->field($model, 'created_at')->textInput() ?> -->
 
@@ -75,7 +90,7 @@ $this->registerJs($js);
     <!-- <?= $form->field($model, 'rol')->textInput() ?> -->
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
