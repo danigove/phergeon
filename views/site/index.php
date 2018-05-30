@@ -12,6 +12,8 @@ use yii\widgets\ListView;
 /* @var $this yii\web\View */
 
 $this->title = '';
+$this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="site-index">
     <h2>Bienvenido a Phergeon</h2>

@@ -102,58 +102,91 @@ EOT;
 
     <h1  id="cabecera"><?= Html::encode($this->title) ?></h1>
 
-    <?php
-    echo DetailView::widget([
-    'model'=>$model,
-    'condensed'=>false,
-    'responsive' => true,
-    'hover'=>true,
-    'mode'=>DetailView::MODE_VIEW,
-    'attributes'=>[
-       [
-           'group'=>true,
-           'label'=>'Información general del animal',
-           'rowOptions'=>['class'=>'info']
-       ],
-       [
-           'columns' => [
+    <div class="row">
+        <div class="col-md-4">
+
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+              <!-- Indicators -->
+              <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+              </ol>
+
+              <!-- Wrapper for slides -->
+              <div class="carousel-inner">
+                <div class="item active">
+                  <img src="<?=$model->rutaImagen?>" alt="Los Angeles">
+                </div>
+
+                <div class="item">
+                  <img src="<?=$model->rutaImagen?>" alt="Chicago">
+                </div>
+
+                <div class="item">
+                  <img src="<?=$model->rutaImagen?>" alt="New York">
+                </div>
+              </div>
+
+              <!-- Left and right controls -->
+              <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <?php
+            echo DetailView::widget([
+            'model'=>$model,
+            'condensed'=>false,
+            'responsive' => true,
+            'hover'=>true,
+            'mode'=>DetailView::MODE_VIEW,
+            'attributes'=>[
                [
-                   'attribute' => 'foto',
-                   'value' => $model->rutaImagen,
-                   'format' => 'image',
+                   'group'=>true,
+                   'label'=>'Información general del animal',
+                   'rowOptions'=>['class'=>'info']
                ],
-                   'nombre',
+               'nombre',
+               'descripcion',
+                [
+                    'label' => 'Enviado por',
+                    'format' => 'raw',
+                    'value' => Html::a($model->usuario->nombre_usuario, ['usuarios/view', 'id' => $model->usuario->id]),
+                ],
+                [
+                    'attribute' => 'tipo_animal',
+                    'value' => $model->tipoAnimal->denominacion_tipo,
+                ],
+                [
+                    'attribute' => 'raza',
+                    'value' => $model->raza0->denominacion_raza,
+                ],
+                [
+                    'label' => 'Edad',
+                    'value' => $model->edad . ' años.',
+                ],
+                [
+                    'label' => 'Distancia por metodo',
+                    'value' => $model->distancia() . ' kms.',
+                ],
+                'distancia',
 
-           ],
-       ],
-       'descripcion',
-        [
-            'label' => 'Enviado por',
-            'format' => 'raw',
-            'value' => Html::a($model->usuario->nombre_usuario, ['usuarios/view', 'id' => $model->usuario->id]),
-        ],
-        [
-            'attribute' => 'tipo_animal',
-            'value' => $model->tipoAnimal->denominacion_tipo,
-        ],
-        [
-            'attribute' => 'raza',
-            'value' => $model->raza0->denominacion_raza,
-        ],
-        [
-            'label' => 'Edad',
-            'value' => $model->edad . ' años.',
-        ],
-        [
-            'label' => 'Distancia por metodo',
-            'value' => $model->distancia() . ' kms.',
-        ],
-        'distancia',
+            ]
+            ]);
 
-    ]
-    ]);
+            ?>
 
-    ?>
+        </div>
+    </div>
+
+
 
     <?php if(Yii::$app->user->id == $model->usuario->id): ?>
         <p>
@@ -170,13 +203,16 @@ EOT;
 
     <p>
         <h3>Operaciones:</h3>
-        <button class="twitter" data-href='https://twitter.com/share?url=https%3A%2F%2Fdev.twitter.com%2Fweb%2Ftweet-button
+        <div class="button-group">
+
+        <button class="" data-href='https://twitter.com/share?url=https%3A%2F%2Fdev.twitter.com%2Fweb%2Ftweet-button
         &via=Phergeon
         &related=Phergeon%2Ctwitter
         &hashtags=<?= urlencode($model->etiquetasAnimal())?>
         &text=<?= urlencode("Ayudame a encontrarle una familia a $model->nombre ") .  urlencode($model->rutaAnimal($model->id))?>'>
-        Twitter
+        <span class="icon icon-twitter"></span><span> Twitter</span>
         </button>
+
         <div id="fb-root"></div>
         <script>(function(d, s, id) {
           var js, fjs = d.getElementsByTagName(s)[0];
@@ -188,7 +224,7 @@ EOT;
         <div class="fb-share-button"
             data-href="<?= $model->rutaAnimal($model->id) ?>"
              data-layout="button"
-             data-size="small"
+             data-size="large"
              data-mobile-iframe="true">
                 <a target="_blank"
                    href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"
@@ -214,6 +250,7 @@ EOT;
 
         </div>
     </p>
+</div>
 </div>
 
 
@@ -269,7 +306,7 @@ EOT;
 
 <?php endif ?>
 <div id="right-panel">
-     <div id="inputs">
+     <!-- <div id="inputs">
        <pre>
 var origin1 = {lat: 55.930, lng: -3.118};
 var origin2 = 'Greenwich, England';
@@ -279,7 +316,7 @@ var destinationB = {lat: 50.087, lng: 14.421};
      </div>
      <div>
        <strong>Results</strong>
-     </div>
+     </div> -->
      <div id="output"></div>
    </div>
    <div id="map"></div>
