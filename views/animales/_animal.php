@@ -3,7 +3,7 @@ use yii\helpers\Html;
 
 $css = <<<EOT
 div img {
-    max-width : 25%;
+    max-width : 100%;
 }
 EOT;
 
