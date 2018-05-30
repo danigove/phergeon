@@ -46,11 +46,13 @@ $this->registerJs($js);
 <div id="demo">
 </div>
 <div class="usuarios-form">
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(
+        ['id' => 'registration-form']
+    ); ?>
 
     <div class="row">
         <div class="col-md-4">
-            <?= $form->field($model, 'nombre_usuario')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'nombre_usuario')->textInput(['maxlength' => true, 'enableAjaxValidation' => true]) ?>
 
         </div>
         <div class="col-md-4">
@@ -75,7 +77,7 @@ $this->registerJs($js);
         </div>
 
     </div>
-    
+
     <?= $form->field($model, 'posx')->hiddenInput(['maxlength' => true])->label(false) ?>
 
     <?= $form->field($model, 'posy')->hiddenInput(['maxlength' => true])->label(false) ?>
