@@ -93,7 +93,7 @@ $this->registerCss($css);
 
     <div class="row">
         <div class="col-md-4">
-            <?= $form->field($model, 'nombre_usuario')->textInput(['maxlength' => true, 'enableAjaxValidation' => true]) ?>
+            <?= $form->field($model, 'nombre_usuario', ['enableAjaxValidation' => true])->textInput(['maxlength' => true]) ?>
 
         </div>
         <div class="col-md-4">
