@@ -2,6 +2,17 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\web\View;
+
+$this->registerJsFile(
+    '@web/js/password_strength_lightweight.js',
+    ['depends' => [\yii\web\JqueryAsset::className()], 'position' => View::POS_HEAD]
+);
+
+
+$this->registerCssFile("@web/css/password_strength.css", [
+    'depends' => [\yii\bootstrap\BootstrapAsset::className()],
+]);
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Usuarios */
@@ -36,12 +47,42 @@ $js = <<<EOT
     $('.btn-success').on('click', function(e){
         e.preventDefault();
         getLocation();
-    })
+    });
+
+    $('#myPassword').strength_meter({
+          //  CSS selectors
+     strengthWrapperClass: 'strength_wrapper',
+     // inputClass: 'strength_input',
+     strengthMeterClass: 'strength_meter',
+      // toggleButtonClass: 'button_strength',
+
+      // text for show / hide password links
+     // showPasswordText: 'Show Password',
+     // hidePasswordText: 'Hide Password'
+
+    });
+
+
 
 EOT;
 
+
 $this->registerJs($js);
 
+
+
+$css = <<<EOT
+// #myPassword div:not {
+//     display: none !important;
+// }
+.strength_input, .button_strength{
+    display:none;
+    height: 0px;
+    width: 0px;
+}
+EOT;
+
+$this->registerCss($css);
 ?>
 <div id="demo">
 </div>
@@ -69,7 +110,7 @@ $this->registerJs($js);
         <div class="col-md-4">
             <?= $form->field($model, 'foto')->fileInput() ?>
         </div>
-        <div class="col-md-4">
+        <div  id="myPassword" class="col-md-4">
             <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-4">
