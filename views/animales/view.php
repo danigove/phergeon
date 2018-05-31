@@ -44,7 +44,7 @@ $css = <<<EOT
           padding: 0;
         }
         #map {
-          height: 100%;
+          height: 30em;
           width: 50%;
         }
         #right-panel {
