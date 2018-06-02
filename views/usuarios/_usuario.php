@@ -3,14 +3,14 @@ use yii\helpers\Html;
 
 $css = <<<EOT
 div img {
-    width : 10%;
+    max-width : 100%;
 }
 EOT;
 
 $this->registerCss($css);
 
 ?>
-<div class='panel panel-primary'>
+<div class='panel panel-primary panel-usuario'>
     <div class='panel-heading'>
         <span><?= $model->nombre_usuario ?></span>
     </div>

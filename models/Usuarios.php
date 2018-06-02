@@ -20,7 +20,7 @@ use yii\web\IdentityInterface;
  * @property string $created_at
  * @property float $posx
  * @property float $posy
- * @property string $sesskey
+
  * @property string $token_val
  * @property int $rol
  *
@@ -50,7 +50,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
      * Variable en la que el usuario tendrá guardada la foto de perfil.
      * @var [type]
      */
-    public $foto;
+    // public $foto;
     /**
      * {@inheritdoc}
      */
@@ -66,6 +66,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             [['nombre_usuario', 'nombre_real', 'email'], 'required'],
+            ['email', 'email'],
             [['password', 'password_repeat'], 'required', 'on' => self::ESCENARIO_CREATE],
             [['created_at', 'posx', 'posy'], 'safe'],
             [
@@ -78,7 +79,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             [['foto'], 'file', 'extensions' => 'jpg'],
             [['rol'], 'default', 'value' => 1],
             [['rol'], 'integer'],
-            [['nombre_usuario', 'nombre_real', 'email', 'password', 'sesskey', 'token_val'], 'string', 'max' => 255],
+            [['nombre_usuario', 'nombre_real', 'email', 'password',  'token_val'], 'string', 'max' => 255],
             [['nombre_usuario'], 'unique'],
             [['rol'], 'exist', 'skipOnError' => true, 'targetClass' => Roles::className(), 'targetAttribute' => ['rol' => 'id']],
         ];
@@ -91,7 +92,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             [
                 'posx',
                 'posy',
-                'foto',
+                // 'foto',
                 'password_repeat',
             ]
         );
@@ -107,12 +108,12 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             'nombre_usuario' => 'Nombre Usuario',
             'nombre_real' => 'Nombre Real',
             'email' => 'Email',
-            'password' => 'Password',
+            'password' => 'Contraseña',
             'password_repeat' => 'Repetir contraseña',
             'created_at' => 'Created At',
             'posx' => 'Coordenada X',
             'posy' => 'Coordenada Y',
-            'sesskey' => 'Sesskey',
+            // 'sesskey' => 'Sesskey',
             'token_val' => 'Token Val',
             'rol' => 'Rol',
             'foto' => 'Foto de perfil',
@@ -166,7 +167,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         if ($this->foto === null) {
             return true;
         }
-        $nombre = Yii::getAlias('@uploads/') . $this->id . '.jpg';
+        $nombre = Yii::getAlias('@uploads/') . Yii::$app->security->generateRandomString() . '-usuario.jpg';
         // $nombre = './uploads/' . $this->id . '.jpg';
         $res = $this->foto->saveAs($nombre);
         if ($res) {
@@ -179,9 +180,10 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
 
         $res = $client->createSharedLinkWithSettings($nombre, ['requested_visibility' => 'public']);
 
+
         $url = $res['url'][mb_strlen($res['url']) - 1] = 1;
-        // $this->foto = $res['url'];
-        // $this->save();
+        $this->foto = $res['url'];
+        $this->save();
         return $res;
     }
 

@@ -2,6 +2,17 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\web\View;
+
+$this->registerJsFile(
+    '@web/js/password_strength_lightweight.js',
+    ['depends' => [\yii\web\JqueryAsset::className()], 'position' => View::POS_HEAD]
+);
+
+
+$this->registerCssFile("@web/css/password_strength.css", [
+    'depends' => [\yii\bootstrap\BootstrapAsset::className()],
+]);
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Usuarios */
@@ -36,46 +47,92 @@ $js = <<<EOT
     $('.btn-success').on('click', function(e){
         e.preventDefault();
         getLocation();
-    })
+    });
+
+    $('#myPassword').strength_meter({
+          //  CSS selectors
+     strengthWrapperClass: 'strength_wrapper',
+     // inputClass: 'strength_input',
+     strengthMeterClass: 'strength_meter',
+      // toggleButtonClass: 'button_strength',
+
+      // text for show / hide password links
+     // showPasswordText: 'Show Password',
+     // hidePasswordText: 'Hide Password'
+
+    });
+
+
 
 EOT;
 
+
 $this->registerJs($js);
 
+
+
+$css = <<<EOT
+// #myPassword div:not {
+//     display: none !important;
+// }
+.strength_input, .button_strength{
+    display:none;
+    height: 0px;
+    width: 0px;
+}
+EOT;
+
+$this->registerCss($css);
 ?>
 <div id="demo">
-    a
 </div>
 <div class="usuarios-form">
+    <?php $form = ActiveForm::begin(
+        ['id' => 'registration-form']
+    ); ?>
 
-    <?php $form = ActiveForm::begin(); ?>
+    <div class="row">
+        <div class="col-md-4">
+            <?= $form->field($model, 'nombre_usuario', ['enableAjaxValidation' => true])->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'nombre_usuario')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-4">
+            <?= $form->field($model, 'nombre_real')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'nombre_real')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-4">
+            <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+        </div>
 
-    <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <?= $form->field($model, 'foto')->fileInput() ?>
+        </div>
+        <div  id="myPassword" class="col-md-4">
+            <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-4">
+            <?= $form->field($model, 'password_repeat')->passwordInput(['maxlength' => true]) ?>
+        </div>
 
-    <?= $form->field($model, 'password_repeat')->passwordInput(['maxlength' => true]) ?>
+    </div>
 
     <?= $form->field($model, 'posx')->hiddenInput(['maxlength' => true])->label(false) ?>
 
     <?= $form->field($model, 'posy')->hiddenInput(['maxlength' => true])->label(false) ?>
 
-    <?= $form->field($model, 'foto')->fileInput() ?>
 
     <!-- <?= $form->field($model, 'created_at')->textInput() ?> -->
 
-    <!-- <?= $form->field($model, 'sesskey')->textInput(['maxlength' => true]) ?> -->
 
     <!-- <?= $form->field($model, 'token_val')->textInput(['maxlength' => true]) ?> -->
 
     <!-- <?= $form->field($model, 'rol')->textInput() ?> -->
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

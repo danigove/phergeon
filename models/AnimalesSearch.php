@@ -46,33 +46,37 @@ class AnimalesSearch extends Animales
      */
     public function search($params)
     {
-        $query = Animales::find()->joinWith('usuario');
+        $query = Animales::find()->joinWith(['usuario', 'adopciones'])->where(['aprobado' => null])->orWhere(['aprobado' => false]);
 
         if (!Yii::$app->user->isGuest) {
             $x = Yii::$app->user->identity->posx;
             $y = Yii::$app->user->identity->posy;
             $dataProvider = new ActiveDataProvider([
-                'query' => $query,
+                'query' => $query->andWhere(['!=', 'id_usuario', Yii::$app->user->identity->id]),
                 'sort' => [
                        'defaultOrder' => [
                            'distancia' => SORT_ASC,
                        ],
                    ],
-            ]);
-
-
+                'pagination' => [
+                     'pageSize' => 18,
+                 ],
+               ]);
             $dataProvider->sort->attributes['distancia'] = [
                 'asc' => ["abs(($x-posx) - ($y-posy))" => SORT_ASC],
                 'desc' => ["abs(($x-posx) - ($y-posy))" => SORT_DESC],
             ];
         } else {
             $dataProvider = new ActiveDataProvider([
-                'query' => $query,
-                'sort' => [
-                       'defaultOrder' => [
-                           'nombre' => SORT_ASC,
-                       ],
-                   ],
+                'query' => $query->orderBy(['rol' => SORT_DESC]),
+                // 'sort' => [
+                //        'defaultOrder' => [
+                //            'rol' => SORT_DESC,
+                //        ],
+                //    ],
+                'pagination' => [
+                    'pageSize' => 18,
+                ],
             ]);
         }
 

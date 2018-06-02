@@ -11,6 +11,7 @@ use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
 AppAsset::register($this);
+$this->title = Yii::$app->name;
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -25,36 +26,36 @@ AppAsset::register($this);
 </head>
 <body>
 <?php $this->beginBody() ?>
+<?php $this->registerJsFile(
+    '/js/comun.js',
+    ['depends' => [\yii\web\JqueryAsset::className()]]
+);
+?>
 
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        'brandLabel' => Html::img('/imgpro/phergeon.png', ['class' => 'logoIcon']),
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
+            'class' => 'navbar-inverse navbar-fixed-top cabecera',
         ],
     ]);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ('<li>'.
-            Html::beginForm(['/site/buscar'], 'get').
-            Html::textInput('criterio', Yii::$app->request->get('criterio') , ['placeholder'=>'Introduzca lo que quiere buscar aquí']).
+            Html::beginForm(['/site/buscar'], 'get', ['id' => 'formBusqueda', ]).
+            Html::textInput('criterio', Yii::$app->request->get('criterio') , ['class' => 'form-inline','placeholder'=>'Busque aquí', 'id' => 'inputBusqueda']).
             Html::submitButton('Buscar', ['class' => 'btn btn-link logout']) .
             Html::endForm()
 
             .'</li>'),
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => Yii::$app->session->id, 'url' => ['#']],
+            ['label' => 'Inicio', 'url' => ['/site/index']],
             ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
             ['label' => 'Animales', 'url' => ['/animales/index']],
-            ['label' => 'Adopciones', 'url' => ['/adopciones/index']],
-            ['label' => 'Roles', 'url' => ['/roles/index']],
-            ['label' => 'Historiales', 'url' => ['/historiales/index']],
-            ['label' => 'Tipos', 'url' => ['/tipos/index']],
-            ['label' => 'Razas', 'url' => ['/razas/index']],
-            ['label' => 'Facturas', 'url' => ['/facturas/index']],
+            ['label' => 'Sobre nosotros', 'url' => ['/site/about']],
+            Yii::$app->user->isGuest ? '' : ['label' => 'Mi perfil', 'url' => ['/usuarios/view', 'id'=> Yii::$app->user->identity->id]],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
@@ -83,9 +84,13 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; <?=Yii::$app->name?> <?= date('Y') ?></p>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-right">Desarrollado por
+                <a href="https://github.com/danigove" target="_blank" >Daniel Gómez Vela</a>
+                <img class="logoGit" src="/imgpro/github.png"/>
+        </p>
+
     </div>
 </footer>
 

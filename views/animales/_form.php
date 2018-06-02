@@ -47,13 +47,13 @@ $this->registerJs($js);
 
 <div class="animales-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <!-- <?= $form->field($model, 'id_usuario')->textInput() ?> -->
 
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'foto')->fileInput() ?>
+    <?= $form->field($model, 'foto')->fileInput(['multiple' => true, 'accept' => 'image/*']) ?>
 
     <?= $form->field($model, 'tipo_animal')->dropDownList($model->tipos) ?>
 

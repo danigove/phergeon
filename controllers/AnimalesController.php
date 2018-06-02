@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Animales;
 use app\models\AnimalesSearch;
 use app\models\Facturas;
+use app\models\Fotosanimal;
 use app\models\SolicitarAdopcionForm;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -121,8 +122,11 @@ class AnimalesController extends Controller
             'id_animal' => $model->id,
         ]);
 
+        $fotos = Fotosanimal::findAll(['id_animal' => $id]);
+
         return $this->render('view', [
             'facturaNueva' => $factura,
+            'fotos' => $fotos,
             'facturas' => $facturas,
             'solicitarAdopcionForm' => $solicitarAdopcionForm,
             'model' => $model,
@@ -141,8 +145,12 @@ class AnimalesController extends Controller
         $model->id_usuario = Yii::$app->user->id;
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->foto = UploadedFile::getInstance($model, 'foto');
+            $model->foto = UploadedFile::getInstances($model, 'foto');
+            // var_dump($model->foto);
+            // die();
             if ($model->save() && $model->upload()) {
+                // $fotoanimal = new Fotosanimal(['id_animal' => $model->id, 'link' => $model->foto]);
+                // $fotoanimal->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }

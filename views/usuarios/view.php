@@ -39,54 +39,61 @@ $this->registerJs($js);
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?php if($_GET['id'] == Yii::$app->user->id): ?>
-        <?= Html::a('Actualizar perfil', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a('Darte de baja', ['delete', 'id' => $model->id], [
-                'class' => 'btn btn-danger',
-                'data' => [
-                    'confirm' => '¿Seguro que quieres darte de baja de la plataforma?
-                                  Recuerda que los animales que has subido a la plataforma también se borrarán.',
-                    'method' => 'post',
+
+    <div class="row">
+
+        <div class="col-md-4">
+            <?=Html::img($model->foto , ['class'=>'fotoUsuario img-circle']);?>
+            <p>
+                <?php if($_GET['id'] == Yii::$app->user->id): ?>
+                <?= Html::a('Actualizar perfil', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+                    <?= Html::a('Darte de baja', ['delete', 'id' => $model->id], [
+                        'class' => 'btn btn-danger',
+                        'data' => [
+                            'confirm' => '¿Seguro que quieres darte de baja de la plataforma?
+                                          Recuerda que los animales que has subido a la plataforma también se borrarán.',
+                            'method' => 'post',
+                        ],
+                    ]) ?>
+                    <?php if($model->rol0->id != 2): ?>
+                        <?= Html::a('Autentícate', ['site/autenticar'], ['class' => 'btn btn-success']) ?>
+                    <?php endif ?>
+
+                    <?php if($model->getNumSolicitudes($model->id) >= 0) : ?>
+                        <?= Html::a('Tienes ' . $model->getNumSolicitudes($model->id) . ' solicitudes de adopcion pendientes.', ['solicitudes', 'id' => $model->id], ['class' => 'btn btn-warning']) ?>
+                    <?php else: ?>
+                        <?= '<span>No tienes solicitudes ahora mismo.</span>' ?>
+                    <?php endif ?>
+                <?php else: ?>
+                <?= '' ?>
+                <?php endif ?>
+
+            </p>
+        </div>
+        <div class="col-md-8">
+            <?= DetailView::widget([
+                'model' => $model,
+                'attributes' => [
+                    // 'id',
+                    'nombre_usuario',
+                    'nombre_real',
+                    'email:email',
+                    // 'password',
+                    // 'created_at',
+                    'foto',
+                    // 'token_val',
+                    'posx',
+                    'posy',
+                    [
+                        'attribute' => 'rol',
+                        'value' => $model->rol0->denominacion,
+                    ],
                 ],
             ]) ?>
-            <?= Html::a('Autentícate', ['site/autenticar'], ['class' => 'btn btn-success']) ?>
-            <?php if($model->getNumSolicitudes($model->id) >= 0) : ?>
-                <?= Html::a('Tienes ' . $model->getNumSolicitudes($model->id) . ' solicitudes de adopcion pendientes.', ['solicitudes', 'id' => $model->id], ['class' => 'btn info']) ?>
-            <?php else: ?>
-                <?= '<span>No tienes solicitudes ahora mismo.</span>' ?>
-            <?php endif ?>
-        <?php else: ?>
-        <?= '' ?>
-        <?php endif ?>
+        </div>
 
-    </p>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'nombre_usuario',
-            'nombre_real',
-            'email:email',
-            'password',
-            'created_at',
-            'sesskey',
-            'token_val',
-            'posx',
-            'posy',
-            [
-                'attribute' => 'rol',
-                'value' => $model->rol0->denominacion,
-            ],
-            [
-                'attribute' => 'foto',
-                'value' => $model->rutaImagen,
-                'format' => 'image',
-            ],
-        ],
-    ]) ?>
-
+    </div>
 </div>
 
 <?php if(count($animales) > 0): ?>

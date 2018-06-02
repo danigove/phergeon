@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Animales;
+use app\models\AnimalesSearch;
 use app\models\ContactForm;
 use app\models\LoginForm;
 use app\models\Session;
@@ -11,6 +12,7 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\Response;
@@ -66,7 +68,13 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $searchModel = new AnimalesSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**
@@ -111,9 +119,13 @@ class SiteController extends Controller
         // }
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             $usuario = $model->getUser();
-            $usuario->posx = $model->posx;
-            $usuario->posy = $model->posy;
-            $usuario->save();
+            // $usuario->posx = $model->posx;
+            // $usuario->posy = $model->posy;
+            // $usuario->save();
+            $res = Session::find()->where(['user_id' => Yii::$app->user->id])->count();
+            if ($res != 1) {
+                Yii::$app->session->setFlash('error', 'Tiene otras sessiones abiertas con esta cuenta, hemos decidido cerrarlas por un mejor functionamiento de la aplicación.');
+            }
             $sessiones = Session::deleteAll(['user_id' => Yii::$app->user->id]);
 
             return $this->goBack();
@@ -176,10 +188,16 @@ class SiteController extends Controller
 
         $dataProviderAso = new ActiveDataProvider([
                'query' => Usuarios::find()->joinWith('rol0')->where(['ilike', 'nombre_usuario', $criterio])->andWhere(['denominacion' => 'asociacion']),
+               'pagination' => [
+                   'pagesize' => 6,
+               ],
            ]);
 
         $dataProviderAni = new ActiveDataProvider([
             'query' => Animales::find()->joinWith(['raza0', 'tipoAnimal'])->where(['ilike', 'denominacion_raza', $criterio])->orWhere(['ilike', 'denominacion_tipo', $criterio]),
+            'pagination' => [
+                'pagesize' => 6,
+            ],
         ]);
 
 

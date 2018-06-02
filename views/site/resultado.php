@@ -10,33 +10,37 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-about">
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?php if ($string != ''):?>
-            <p>
-                Resultados de la búsqueda con <?= $string ?>
-            </p>
-        <?php endif ?>
-        <?php if(count($dataProviderAso)>0): ?>
-            <?= ListView::widget([
-                'dataProvider' => $dataProviderAso,
-                'itemView' => '../usuarios/_usuario',
-                'summary' => 'Usuarios',
-            ]); ?>
-        <?php endif?>
-    </p>
-    <p>
-        <?php if ($string != ''):?>
-            <p>
-                Resultados de la búsqueda con <?= $string ?>
-            </p>
-        <?php endif ?>
-        <?php if(count($dataProviderAso)>0): ?>
-            <?= ListView::widget([
-                'dataProvider' => $dataProviderAni,
-                'itemView' => '../animales/_animal',
-                'summary' => 'Animales',
-            ]); ?>
-        <?php endif?>
-    </p>
+    <div>
+        <p>
+            <?php if ($string != ''):?>
+                <p>
+                    Resultados de la búsqueda con <?= $string ?>
+                </p>
+            <?php endif ?>
+            <?php if(count($dataProviderAso)>0): ?>
+                <?= ListView::widget([
+                    'dataProvider' => $dataProviderAso,
+                    'itemView' => '../usuarios/_usuario',
+                    'summary' => '<h3 class="resultado-usuarios">Usuarios con coincidencias</h3>',
+                ]); ?>
+            <?php endif?>
+        </p>
+    </div>
+    <hr>
+    <div>
+        <p>
+            <?php if ($string != ''):?>
+                <p>
+                    Resultados de la búsqueda con <?= $string ?>
+                </p>
+            <?php endif ?>
+            <?php if(count($dataProviderAso)>0): ?>
+                <?= ListView::widget([
+                    'dataProvider' => $dataProviderAni,
+                    'itemView' => '../animales/_animal',
+                    'summary' => '<h3 class="resultado-animales">Animales con coincidencias</h3>',
+                ]); ?>
+            <?php endif?>
+        </p>
+    </div>
 </div>

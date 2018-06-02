@@ -2,10 +2,8 @@
 
 namespace app\models;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Usuarios;
 
 /**
  * UsuariosSearch represents the model behind the search form of `app\models\Usuarios`.
@@ -19,7 +17,7 @@ class UsuariosSearch extends Usuarios
     {
         return [
             [['id', 'rol'], 'integer'],
-            [['nombre_usuario', 'nombre_real', 'email', 'password', 'created_at', 'sesskey', 'token_val'], 'safe'],
+            [['nombre_usuario', 'nombre_real', 'email', 'password', 'created_at', 'token_val'], 'safe'],
         ];
     }
 
@@ -33,7 +31,7 @@ class UsuariosSearch extends Usuarios
     }
 
     /**
-     * Creates data provider instance with search query applied
+     * Creates data provider instance with search query applied.
      *
      * @param array $params
      *
@@ -68,7 +66,6 @@ class UsuariosSearch extends Usuarios
             ->andFilterWhere(['ilike', 'nombre_real', $this->nombre_real])
             ->andFilterWhere(['ilike', 'email', $this->email])
             ->andFilterWhere(['ilike', 'password', $this->password])
-            ->andFilterWhere(['ilike', 'sesskey', $this->sesskey])
             ->andFilterWhere(['ilike', 'token_val', $this->token_val]);
 
         return $dataProvider;

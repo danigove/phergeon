@@ -113,3 +113,59 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+.logoGit {
+    width: 4%;
+}
+
+.logoIcon {
+    position:relative;
+    top: -39%;
+    width: 10%;
+}
+
+.panel-animal, .panel-usuario {
+    width: 32%;
+    float: left;
+    margin: 2px;
+}
+/* .cabecera {
+    height: 10%;
+} */
+.summary {
+    display: none;
+}
+
+#login-form{
+    width: 60%;
+}
+.loginIcon{
+    width: 9%;
+}
+.breadcrumb {
+    background-color: #bcfbbc;
+}
+
+.fotoUsuario {
+    width: 65%;
+    margin-bottom: 2px;
+    position: relative;
+    left: 15%;
+}
+.fin-panel {
+    display: flex;
+    justify-content: space-between;
+}
+
+.fin-panel .donante {
+    margin-bottom: 10px;
+    margin-left: 5px;
+}
+.fin-panel .seeAnimal {
+    margin-top: -8px;
+    margin-right: 4px;
+}
+
+.carousel {
+    min-height: 360px;
+}
