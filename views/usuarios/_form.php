@@ -126,7 +126,6 @@ $this->registerCss($css);
 
     <!-- <?= $form->field($model, 'created_at')->textInput() ?> -->
 
-    <!-- <?= $form->field($model, 'sesskey')->textInput(['maxlength' => true]) ?> -->
 
     <!-- <?= $form->field($model, 'token_val')->textInput(['maxlength' => true]) ?> -->
 

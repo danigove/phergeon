@@ -12,8 +12,8 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\web\UploadedFile;
 use yii\web\Response;
+use yii\web\UploadedFile;
 use yii\widgets\ActiveForm;
 
 /**
@@ -122,7 +122,7 @@ class UsuariosController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->foto = UploadedFile::getInstance($model, 'foto');
-            if ($model->save() && $model->upload()) {
+            if ($model->upload() && $model->save()) {
                 return $this->goHome();
             }
         }

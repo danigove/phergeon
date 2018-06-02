@@ -33,7 +33,7 @@ CREATE TABLE usuarios
    ,created_at timestamp(0)
    ,posx double precision
    ,posy double precision
-   ,sesskey varchar(255)
+   ,foto varchar(255)
    ,token_val varchar(255) UNIQUE
    ,rol bigint NOT NULL REFERENCES roles (id) on delete cascade ON UPDATE CASCADE DEFAULT 1
 

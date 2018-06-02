@@ -43,7 +43,7 @@ $this->registerJs($js);
     <div class="row">
 
         <div class="col-md-4">
-            <?=Html::img($model->rutaimagen, ['class'=>'fotoUsuario img-circle']);?>
+            <?=Html::img($model->foto , ['class'=>'fotoUsuario img-circle']);?>
             <p>
                 <?php if($_GET['id'] == Yii::$app->user->id): ?>
                 <?= Html::a('Actualizar perfil', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -80,10 +80,10 @@ $this->registerJs($js);
                     'email:email',
                     // 'password',
                     // 'created_at',
-                    // 'sesskey',
+                    'foto',
                     // 'token_val',
-                    // 'posx',
-                    // 'posy',
+                    'posx',
+                    'posy',
                     [
                         'attribute' => 'rol',
                         'value' => $model->rol0->denominacion,
