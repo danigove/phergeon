@@ -74,6 +74,15 @@ CREATE TABLE animales
    ,sexo varchar(255) NOT NULL
 );
 
+DROP TABLE IF EXISTS fotosAnimal CASCADE;
+
+CREATE TABLE fotosAnimal
+(
+    id bigserial PRIMARY KEY
+   ,id_animal bigint NOT NULL REFERENCES animales (id) on delete cascade on update CASCADE
+   ,link varchar(255)
+);
+
 CREATE INDEX idx_animales_sexo ON animales (sexo);
 CREATE INDEX idx_animales_sexo ON animales (edad);
 
