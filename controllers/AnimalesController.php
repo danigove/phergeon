@@ -145,10 +145,12 @@ class AnimalesController extends Controller
         $model->id_usuario = Yii::$app->user->id;
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->foto = UploadedFile::getInstance($model, 'foto');
-            if ($model->upload() && $model->save()) {
-                $fotoanimal = new Fotosanimal(['id_animal' => $model->id, 'link' => $model->foto]);
-                $fotoanimal->save();
+            $model->foto = UploadedFile::getInstances($model, 'foto');
+            // var_dump($model->foto);
+            // die();
+            if ($model->save() && $model->upload()) {
+                // $fotoanimal = new Fotosanimal(['id_animal' => $model->id, 'link' => $model->foto]);
+                // $fotoanimal->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }

@@ -56,7 +56,7 @@ class Animales extends \yii\db\ActiveRecord
             [['nombre', 'tipo_animal', 'raza', 'descripcion', 'edad', 'sexo'], 'required'],
             [['id_usuario', 'tipo_animal', 'raza'], 'default', 'value' => null],
             [['id_usuario', 'tipo_animal', 'raza'], 'integer'],
-            [['foto'], 'file', 'extensions' => 'jpg'],
+            [['foto'], 'file', 'extensions' => 'jpg', 'maxFiles' => 4],
             [['nombre', 'descripcion', 'edad', 'sexo'], 'string', 'max' => 255],
             [['raza'], 'exist', 'skipOnError' => true, 'targetClass' => Razas::className(), 'targetAttribute' => ['raza' => 'id']],
             [['tipo_animal'], 'exist', 'skipOnError' => true, 'targetClass' => Tipos::className(), 'targetAttribute' => ['tipo_animal' => 'id']],
@@ -103,22 +103,29 @@ class Animales extends \yii\db\ActiveRecord
         if ($this->foto === null) {
             return true;
         }
-        $nombre = Yii::getAlias('@uploads/') . 'animales-' . Yii::$app->security->generateRandomString() . '.jpg';
-        // $nombre = './uploads/' . $this->id . '.jpg';
-        $res = $this->foto->saveAs($nombre);
-        if ($res) {
-            Image::thumbnail($nombre, 80, null)->save($nombre);
+
+        $id_animal = self::find()->orderBy(['id' => SORT_DESC])->one();
+        $id_animal = $id_animal->id;
+
+        foreach ($this->foto as $fo) {
+            $nombre = Yii::getAlias('@uploads/') . 'fotoanimal-' . Yii::$app->security->generateRandomString() . '.jpg';
+            $res = $fo->saveAs($nombre);
+
+            if ($res) {
+                Image::thumbnail($nombre, 80, null)->save($nombre);
+            }
+
+            $client = new \Spatie\Dropbox\Client(getenv('DROPBOX_TOKEN'));
+
+            $client->upload($nombre, file_get_contents($nombre), 'overwrite');
+
+            $res = $client->createSharedLinkWithSettings($nombre, ['requested_visibility' => 'public']);
+
+            $url = $res['url'][mb_strlen($res['url']) - 1] = 1;
+
+            $fotoAnimal = new Fotosanimal(['id_animal' => $id_animal, 'link' => $res['url']]);
+            $fotoAnimal->save();
         }
-
-        $client = new \Spatie\Dropbox\Client(getenv('DROPBOX_TOKEN'));
-
-        $client->upload($nombre, file_get_contents($nombre), 'overwrite');
-
-        $res = $client->createSharedLinkWithSettings($nombre, ['requested_visibility' => 'public']);
-
-        $url = $res['url'][mb_strlen($res['url']) - 1] = 1;
-        $this->foto = $res['url'];
-        $this->save();
         return $res;
     }
 
