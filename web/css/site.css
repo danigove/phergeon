@@ -165,3 +165,7 @@ a.desc:after {
     margin-top: -8px;
     margin-right: 4px;
 }
+
+.carousel {
+    min-height: 360px;
+}
