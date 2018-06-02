@@ -115,17 +115,20 @@ EOT;
 
               <!-- Wrapper for slides -->
               <div class="carousel-inner">
-                <div class="item active">
-                  <img src="<?=$model->rutaImagen?>" alt="Los Angeles">
-                </div>
 
-                <div class="item">
+                <?php for($i = 0 ; $i < count($fotos); $i++): ?>
+                 <div class="item <?= $i == 0 ? 'active' : '' ?>">
+                  <img src="<?=$fotos[$i]->link?>" alt="">
+                </div>
+                <?php endfor ?>
+
+                <!-- <div class="item">
                   <img src="<?=$model->rutaImagen?>" alt="Chicago">
-                </div>
+                </div> -->
 
-                <div class="item">
+                <!-- <div class="item">
                   <img src="<?=$model->rutaImagen?>" alt="New York">
-                </div>
+                </div> -->
               </div>
 
               <!-- Left and right controls -->

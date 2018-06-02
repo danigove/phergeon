@@ -103,7 +103,7 @@ class Animales extends \yii\db\ActiveRecord
         if ($this->foto === null) {
             return true;
         }
-        $nombre = Yii::getAlias('@uploads/') . 'animales-' . $this->id . '.jpg';
+        $nombre = Yii::getAlias('@uploads/') . 'animales-' . Yii::$app->security->generateRandomString() . '.jpg';
         // $nombre = './uploads/' . $this->id . '.jpg';
         $res = $this->foto->saveAs($nombre);
         if ($res) {
@@ -117,8 +117,8 @@ class Animales extends \yii\db\ActiveRecord
         $res = $client->createSharedLinkWithSettings($nombre, ['requested_visibility' => 'public']);
 
         $url = $res['url'][mb_strlen($res['url']) - 1] = 1;
-        // $this->foto = $res['url'];
-        // $this->save();
+        $this->foto = $res['url'];
+        $this->save();
         return $res;
     }
 
