@@ -98,7 +98,7 @@ $this->registerJs($js);
 
 <?php if(count($animales) > 0): ?>
     <div class="cabecera">
-        <h3>Animales que tiene o ha tenido el usuario.</h3>
+        <h3>Animales disponibles de este usuario</h3>
     </div>
     <?= Html::a('Mostrar','',['id' => 'mostrarAni', 'class' => 'btn btn-primary']) ?>
     <div id="animalesUsuario">

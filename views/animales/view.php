@@ -118,7 +118,7 @@ EOT;
 
                 <?php if(count($fotos) == 0): ?>
                     <div class="item active">
-                      <img src="<?=$model->rutaImagen?>" alt="Chicago">
+                      <img src="<?=$model->rutaImagen?>" alt="">
                     </div>
                 <?php else : ?>
                 <?php for($i = 0 ; $i < count($fotos); $i++): ?>

@@ -274,13 +274,21 @@ class Animales extends \yii\db\ActiveRecord
         return abs($restalong - $restalat);
     }
 
-    // public function getDistancia()
+    /**
+     * Metodo que determina si un animal está aprobado o no.
+     * @return bool Si está adoptado o no.
+     */
+    // public function estaAdoptado()
     // {
-    //     return 150;
-    // }
-
-    // public function afterFind()
-    // {
-    //     $this->distancia = $this->distancia();
+    //     $adops = Adopciones::find()->where(['id_animal' => 'id', 'aprobado' => false]);
+    //     // var_dump(($adops)); die();
+    //     if (count($adops) == 0) {
+    //         return "No esta adoptada";
+    //     } else {
+    //         return "Esta adoptada";
+    //     }
+    //
+    //     // if($aprobado == null) {
+    //     // }
     // }
 }

@@ -190,8 +190,9 @@ class AdopcionesController extends Controller
         if ($model->usuarioDonante->id == Yii::$app->user->id) {
             $model->aprobado = true;
             $model->save();
-            $solicitudes = Adopciones::deleteAll("id_animal = $model->id_animal and aprobado = false");
             Yii::$app->session->setFlash('success', '¡Enhorabuena, le has encontrado a ' . $model->animal->nombre . ' un buen hogar!');
+            $solicitudes = Adopciones::deleteAll("id_animal = $model->id_animal and aprobado = false");
+            $animales = Animales::deleteAll("id = $model->id_animal");
             $this->goBack();
         } else {
             Yii::$app->session->setFlash('error', 'No tienes permiso para aprobar esa adopción.');
