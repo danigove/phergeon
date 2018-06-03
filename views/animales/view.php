@@ -100,7 +100,7 @@ EOT;
 </div>
 <div class="animales-view">
 
-    <h1  id="cabecera"><?= Html::encode($this->title) ?></h1>
+    <h1  id=""><?= Html::encode($this->title) ?></h1>
 
     <div class="row">
         <div class="col-md-4">
@@ -118,7 +118,7 @@ EOT;
 
                 <?php if(count($fotos) == 0): ?>
                     <div class="item active">
-                      <img src="<?=$model->rutaImagen?>" alt="Chicago">
+                      <img src="<?=$model->rutaImagen?>" alt="">
                     </div>
                 <?php else : ?>
                 <?php for($i = 0 ; $i < count($fotos); $i++): ?>
@@ -178,11 +178,10 @@ EOT;
                     'value' => $model->edad . ' años.',
                 ],
                 [
-                    'label' => 'Distancia por metodo',
-                    'value' => $model->distancia() . ' kms.',
+                    'label' => 'Origen del interesado / destino',
+                    'format' => 'raw',
+                    'value' => '<span id="cabecera"></span>',
                 ],
-                'distancia',
-
             ]
             ]);
 
@@ -199,7 +198,7 @@ EOT;
             <?= Html::a('Borrar', ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
-                    'confirm' => 'Are you sure you want to delete this item?',
+                    'confirm' => '¿Seguro que quieres borrar al animal?',
                     'method' => 'post',
                 ],
             ]) ?>
@@ -210,7 +209,7 @@ EOT;
         <h3>Operaciones:</h3>
         <div class="button-group">
 
-        <button class="" data-href='https://twitter.com/share?url=https%3A%2F%2Fdev.twitter.com%2Fweb%2Ftweet-button
+        <button class="twitter" data-href='https://twitter.com/share?url=https%3A%2F%2Fdev.twitter.com%2Fweb%2Ftweet-button
         &via=Phergeon
         &related=Phergeon%2Ctwitter
         &hashtags=<?= urlencode($model->etiquetasAnimal())?>

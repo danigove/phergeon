@@ -9,6 +9,8 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use yii\helpers\Url;
+
 
 AppAsset::register($this);
 $this->title = Yii::$app->name;
@@ -53,8 +55,6 @@ $this->title = Yii::$app->name;
             .'</li>'),
             ['label' => 'Inicio', 'url' => ['/site/index']],
             ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
-            ['label' => 'Animales', 'url' => ['/animales/index']],
-            ['label' => 'Sobre nosotros', 'url' => ['/site/about']],
             Yii::$app->user->isGuest ? '' : ['label' => 'Mi perfil', 'url' => ['/usuarios/view', 'id'=> Yii::$app->user->identity->id]],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
@@ -84,7 +84,9 @@ $this->title = Yii::$app->name;
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; <?=Yii::$app->name?> <?= date('Y') ?></p>
+        <p class="pull-left">&copy; <?=Yii::$app->name?> <?= date('Y') ?>
+            <?= Html::a('¿Qué es Phergeon?', Url::to(['site/about'])) ?>
+        </p>
 
         <p class="pull-right">Desarrollado por
                 <a href="https://github.com/danigove" target="_blank" >Daniel Gómez Vela</a>

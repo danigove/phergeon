@@ -93,7 +93,7 @@ class AdopcionesController extends Controller
         $model = new Adopciones();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['animales/view', 'id' => $model->id_animal]);
         }
 
         return $this->render('create', [
@@ -132,7 +132,7 @@ class AdopcionesController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->goBack();
     }
 
     /**
@@ -170,8 +170,8 @@ class AdopcionesController extends Controller
                     return $this->goHome();
                 }
                 $model->save();
-
-                return $this->redirect(['view', 'id' => $model->id]);
+                Yii::$app->session->setFlash('success', '¡Has solicitado la adopción correctamente!');
+                return $this->redirect(['animales/view', 'id' => $model->id_animal]);
             }
             Yii::$app->session->setFlash('error', '¡Ya has solicitado este animal!');
             $this->redirect(['animales/view', 'id' => $id_animal]);
@@ -191,6 +191,8 @@ class AdopcionesController extends Controller
             $model->aprobado = true;
             $model->save();
             Yii::$app->session->setFlash('success', '¡Enhorabuena, le has encontrado a ' . $model->animal->nombre . ' un buen hogar!');
+            $solicitudes = Adopciones::deleteAll("id_animal = $model->id_animal and aprobado = false");
+            $animales = Animales::deleteAll("id = $model->id_animal");
             $this->goBack();
         } else {
             Yii::$app->session->setFlash('error', 'No tienes permiso para aprobar esa adopción.');
