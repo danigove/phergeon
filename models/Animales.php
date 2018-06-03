@@ -240,7 +240,7 @@ class Animales extends \yii\db\ActiveRecord
      */
     public function etiquetasAnimal()
     {
-        $string = 'perro,gato,meme';
+        $string = 'buscaAcogida,adopta,Phergeon';
         return $string;
     }
 
