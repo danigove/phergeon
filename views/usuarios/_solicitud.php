@@ -15,6 +15,7 @@ use yii\helpers\Html;
         <?= $model->animal->descripcion ?>
     </div>
     <div>
-        <?= Html::a('Aprobar la adopción', ['adopciones/aprobar', 'id' => $model->id], ['data-method' => 'POST', 'class' => 'btn']) ?>
+        <?= Html::a('Aprobar la adopción', ['adopciones/aprobar', 'id' => $model->id], ['data-method' => 'POST', 'class' => 'btn btn-success']) ?>
+        <?= Html::a('Denegar solicitud', ['adopciones/delete', 'id' => $model->id], ['data-method' => 'POST', 'class' => 'btn btn-danger']) ?>
     </div>
 </div>
