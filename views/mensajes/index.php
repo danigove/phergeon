@@ -30,6 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'id_emisor',
             'asunto',
             'mensaje',
+            'visto',
+            'created_at',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

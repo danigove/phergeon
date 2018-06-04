@@ -12,6 +12,8 @@ use Yii;
  * @property int $id_emisor
  * @property string $asunto
  * @property string $mensaje
+ * @property string $created_at
+ * @property bool $visto
  *
  * @property Usuarios $receptor
  * @property Usuarios $emisor
@@ -35,6 +37,8 @@ class Mensajes extends \yii\db\ActiveRecord
             [['id_receptor', 'id_emisor'], 'required'],
             [['id_receptor', 'id_emisor'], 'default', 'value' => null],
             [['id_receptor', 'id_emisor'], 'integer'],
+            [['created_at'], 'safe'],
+            [['visto'], 'boolean'],
             [['asunto'], 'string', 'max' => 100],
             [['mensaje'], 'string', 'max' => 2000],
             [['id_receptor'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['id_receptor' => 'id']],
@@ -53,6 +57,8 @@ class Mensajes extends \yii\db\ActiveRecord
             'id_emisor' => 'Id Emisor',
             'asunto' => 'Asunto',
             'mensaje' => 'Mensaje',
+            'created_at' => 'Created At',
+            'visto' => 'Visto',
         ];
     }
 

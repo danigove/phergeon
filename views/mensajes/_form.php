@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Mensajes */
@@ -10,9 +11,9 @@ use yii\widgets\ActiveForm;
 
 <div class="mensajes-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['action' => Url::to(['mensajes/create'])]); ?>
 
-    <?= $form->field($model, 'id_receptor')->hiddenInput(['value' => $id_receptor ])->label(false) ?>
+    <?= $form->field($model, 'id_receptor')->hiddenInput(['value' => $id_receptor])->label(false) ?>
 
     <!-- <?= $form->field($model, 'id_emisor')->textInput() ?> -->
 
