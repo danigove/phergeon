@@ -261,6 +261,16 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         return count($solicitudes);
     }
 
+    /**
+     * Metodo que nos devuelve el numero de mensajes sin ver del usuario.
+     * @return int Numero de mensajes sin leer.
+     */
+    public function getNumMensajesNuevos()
+    {
+        $mensajesSin = Mensajes::findAll(['id_receptor' => $this->id, 'visto' => false]);
+        return count($mensajesSin);
+    }
+
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
