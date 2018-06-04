@@ -244,6 +244,11 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return $this->hasOne(Roles::className(), ['id' => 'rol'])->inverseOf('usuarios');
     }
+
+    public function getMensajes0()
+    {
+        return $this->hasOne(Mensajes::className(), ['id_emisor' => 'id'])->inverseOf('usuarios');
+    }
     /**
      * Obtiene el numero de solicitudes que tiene el usuario.
      * @param  int $id  El id del usuario

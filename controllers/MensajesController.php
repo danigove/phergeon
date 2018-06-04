@@ -6,6 +6,8 @@ use Yii;
 use app\models\Mensajes;
 use app\models\MensajesSearch;
 use yii\web\Controller;
+use yii\filters\AccessControl;
+
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -26,6 +28,25 @@ class MensajesController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['update', 'create', 'delete'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['create'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        // 'allow' => true,
+                        // 'actions' => ['delete'],
+                        // 'roles' => ['@'],
+                        // 'matchCallback' => function ($rule, $action) {
+                        //     return $_GET['id'] == Yii::$app->user->id;
+                        // },
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -37,6 +58,12 @@ class MensajesController extends Controller
     {
         $searchModel = new MensajesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere(['id_receptor'=>Yii::$app->user->id])->orderBy(['created_at' => SORT_DESC]);
+
+        foreach ($dataProvider->getModels() as $model) {
+            $model->visto = true;
+            $model->save();
+        }
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -68,7 +95,8 @@ class MensajesController extends Controller
         $model->id_emisor = Yii::$app->user->identity->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            Yii::$app->session->setFlash('success', 'Mensaje enviado correctamente');
+            return $this->goBack();
         }
 
         return $this->render('create', [

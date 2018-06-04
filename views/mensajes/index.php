@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\MensajesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Mensajes';
+$this->title = 'Mis mensajes';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mensajes-index">
@@ -15,22 +15,18 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Create Mensajes', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        // 'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            // ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'id_receptor',
-            'id_emisor',
+            // 'id',
+            'emisor.nombre_usuario',
             'asunto',
             'mensaje',
-            'visto',
+            // 'visto',
             'created_at',
 
             ['class' => 'yii\grid\ActionColumn'],

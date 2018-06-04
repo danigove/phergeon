@@ -3,6 +3,9 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "mensajes".
@@ -45,6 +48,20 @@ class Mensajes extends \yii\db\ActiveRecord
             [['id_emisor'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['id_emisor' => 'id']],
         ];
     }
+    public function behaviors()
+    {
+        return [
+                [
+                    'class' => TimestampBehavior::className(),
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['created_at'],
+                    ],
+                    // if you're using datetime instead of UNIX timestamp:
+                    'value' => new Expression('NOW()'),
+                ],
+            ];
+    }
+
 
     /**
      * {@inheritdoc}
