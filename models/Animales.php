@@ -112,7 +112,7 @@ class Animales extends \yii\db\ActiveRecord
             $res = $fo->saveAs($nombre);
 
             if ($res) {
-                Image::thumbnail($nombre, 360, 360, null)->save($nombre);
+                Image::thumbnail($nombre, 360, null)->save($nombre);
             }
 
             $client = new \Spatie\Dropbox\Client(getenv('DROPBOX_TOKEN'));
