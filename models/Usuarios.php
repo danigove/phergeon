@@ -189,19 +189,14 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
 
     /**
      * Método con el que accedemos a la ruta de la imagen de la fotografia.
-     * @return [type] [description]
+     * @return string ruta del enlace.
      */
     public function getRutaImagen()
     {
-        $nombre = Yii::getAlias('@uploads/') . $this->id . '.jpg';
-        // $nombre = Yii::getAlias();
-        if (file_exists($nombre)) {
-            // return Url::to('/uploads/') . $this->id . '.jpg';
-            return 'https://www.dropbox.com/s/p2wk6t5r6vphtgd/' . $this->id . '.jpg?dl=1';
-            // https://www.dropbox.com/s//3.jpg?dl=0
+        if ($this->foto != null) {
+            return $this->foto;
         }
         return 'https://www.dropbox.com/s/qq1kje0eet6gwrg/default.jpg?dl=1';
-        // return Url::to('/uploads/') . 'default.jpg';
     }
 
 

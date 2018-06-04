@@ -68,8 +68,6 @@ $this->registerJs($js);
     <div class="form-group">
         <?= Html::submitButton('Subir', ['class' => 'btn btn-success']) ?>
     </div>
-    <?= Html::a('¡Registrate!', ['razas/razasion'], ['class' => 'btn btn-success']) ?>
-
     <?php ActiveForm::end(); ?>
 
 </div>

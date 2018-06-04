@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\helpers\Url;
 use yii\imagine\Image;
+use app\models\Fotosanimal;
 
 /**
  * This is the model class for table "animales".
@@ -131,19 +132,17 @@ class Animales extends \yii\db\ActiveRecord
 
     /**
      * Método con el que accedemos a la ruta de la imagen de la fotografia del animal.
-     * @return [type] [description]
+     * @return string enlace de la imagen de la foto.
      */
     public function getRutaImagen()
     {
-        $nombre = Yii::getAlias('@uploads/') . 'animales-' . $this->id . '.jpg';
-        // $nombre = Yii::getAlias();
-        if (file_exists($nombre)) {
-            // return Url::to('/uploads/') . $this->id . '.jpg';
-            return 'https://www.dropbox.com/s/p2wk6t5r6vphtgd/' . 'animales-' . $this->id . '.jpg?dl=1';
+        $fotos = FotosAnimal::findAll(['id_animal' => $this->id]);
+
+        if (count($fotos) > 0) {
+            return $fotos[0]->link;
+        } else {
+            return 'https://www.dropbox.com/s/aek3h7057e88v2d/animal-default.jpg?dl=1';
         }
-        return 'https://www.dropbox.com/s/aek3h7057e88v2d/animal-default.jpg?dl=1';
-        // https://www.dropbox.com/s/qq1kje0eet6gwrg/animal-default.jpg?dl=1';
-        // return Url::to('/uploads/') . 'default.jpg';
     }
     /**
      * @return \yii\db\ActiveQuery

@@ -332,8 +332,8 @@ var destinationB = {lat: 50.087, lng: 14.421};
        var bounds = new google.maps.LatLngBounds;
        var markersArray = [];
 
-       var origin1 = {lat: <?= Yii::$app->user->identity->posx ?>, lng: <?= Yii::$app->user->identity->posy ?> };
-       var destinationA = {lat: <?= $model->usuario->posx ?>, lng: <?= $model->usuario->posy ?> };
+       var origin1 = {lat: <?= Yii::$app->user->identity->posy ?>, lng: <?= Yii::$app->user->identity->posx ?> };
+       var destinationA = {lat: <?= $model->usuario->posy ?>, lng: <?= $model->usuario->posx ?> };
 
        var destinationIcon = 'https://chart.googleapis.com/chart?' +
            'chst=d_map_pin_letter&chld=D|FF0000|000000';
