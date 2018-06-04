@@ -109,8 +109,8 @@ class AnimalesController extends Controller
             'content' => 'Ayudalo',
         ]);
         \Yii::$app->view->registerMetaTag([
-            'property' => 'og:url',
-            'content' => $model->rutaAnimal($id),
+            'property' => 'og:image',
+            'content' => $model->rutaImagen,
         ]);
         \Yii::$app->view->registerMetaTag([
             'property' => 'og:description',
