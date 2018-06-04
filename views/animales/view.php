@@ -211,7 +211,7 @@ EOT;
             'toggleButton' => ['label' => 'Contactar'],
         ]);
         echo  $this->render('../mensajes/_form', [
-            'id_receptor' => $model->id_usuario,
+            'animal' => $model,
             'model' => $mensaje,
         ]);
 

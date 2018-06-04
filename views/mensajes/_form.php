@@ -13,11 +13,11 @@ use yii\helpers\Url;
 
     <?php $form = ActiveForm::begin(['action' => Url::to(['mensajes/create'])]); ?>
 
-    <?= $form->field($model, 'id_receptor')->hiddenInput(['value' => $id_receptor])->label(false) ?>
+    <?= $form->field($model, 'id_receptor')->hiddenInput(['value' => $animal->usuario->id])->label(false) ?>
 
     <!-- <?= $form->field($model, 'id_emisor')->textInput() ?> -->
 
-    <?= $form->field($model, 'asunto')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'asunto')->textInput(['maxlength' => true, 'value' => 'Preguntando por ' . $animal->nombre, 'readonly' => 'readonly']) ?>
 
     <?= $form->field($model, 'mensaje')->textInput(['maxlength' => true]) ?>
 
