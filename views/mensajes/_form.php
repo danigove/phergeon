@@ -12,16 +12,16 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'id_receptor')->textInput() ?>
+    <?= $form->field($model, 'id_receptor')->hiddenInput(['value' => $id_receptor ])->label(false) ?>
 
-    <?= $form->field($model, 'id_emisor')->textInput() ?>
+    <!-- <?= $form->field($model, 'id_emisor')->textInput() ?> -->
 
     <?= $form->field($model, 'asunto')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'mensaje')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Enviar', ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

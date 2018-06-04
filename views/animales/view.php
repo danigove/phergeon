@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+use yii\bootstrap\Modal;
 use kartik\detail\DetailView;
 use yii\grid\GridView;
 
@@ -203,6 +204,19 @@ EOT;
                 ],
             ]) ?>
         </p>
+    <?php endif ?>
+    <?php if(!Yii::$app->user->isGuest): ?>
+        <?php Modal::begin([
+            'header' => '<h4>Mensaje para '. $model->usuario->nombre_usuario.'</h4>',
+            'toggleButton' => ['label' => 'Contactar'],
+        ]);
+        echo  $this->render('../mensajes/_form', [
+            'id_receptor' => $model->id_usuario,
+            'model' => $mensaje,
+        ]);
+
+        Modal::end();
+        ?>
     <?php endif ?>
 
     <p>

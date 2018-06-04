@@ -129,6 +129,9 @@ CREATE TABLE mensajes
    ,id_emisor bigint NOT NULL REFERENCES usuarios (id) ON DELETE CASCADE ON UPDATE CASCADE
    ,asunto varchar(100)
    ,mensaje varchar(2000)
+   ,created_at timestamp(0)
+   ,visto bool DEFAULT false
+
 );
 
 INSERT INTO roles (denominacion)
