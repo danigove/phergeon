@@ -53,7 +53,7 @@ $this->registerJs($js);
 
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'foto')->fileInput(['multiple' => true, 'accept' => 'image/*']) ?>
+    <?= $form->field($model, 'foto[]')->fileInput(['multiple' => true, 'accept' => 'image/*']) ?>
 
     <?= $form->field($model, 'tipo_animal')->dropDownList($model->tipos) ?>
 

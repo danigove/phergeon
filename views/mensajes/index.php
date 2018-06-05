@@ -35,17 +35,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template' => '{view} {responder} {delete}',
                 'buttons' => [
                     'responder' => function ($url, $model, $key) {
-                        //     if (!Yii::$app->user->isGuest &&
-                        //         ($model->receptor->id == Yii::$app->user->identity->id)) {
-                        //         Modal::begin([
-                        //             'header' => '<h4>Mensaje para '. $model->emisor->nombre_usuario.'</h4>',
-                        //             'toggleButton' => ['label' => 'Responder'],
-                        //         ]);
-                        //         echo  $this->render('../mensajes/_formRespuesta', [
-                        //             'model' => $model,
-                        //         ]);
-                        //     Modal::end();
-                        // }
+                        if (!Yii::$app->user->isGuest &&
+                            ($model->receptor->id == Yii::$app->user->identity->id)) {
+                             Modal::begin([
+                                'header' => '<h4>Mensaje para '. $model->emisor->nombre_usuario.'</h4>',
+                                'toggleButton' => ['label' => 'Responder'],
+                            ]);
+                            echo $this->render('../mensajes/_formRespuesta', [
+                                'model' => $model,
+                            ]);
+                            $modal  = Modal::end();
+                        }
                     },
                     'delete' => function ($url, $model, $key){
                             if (!Yii::$app->user->isGuest &&
