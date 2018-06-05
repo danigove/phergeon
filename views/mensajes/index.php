@@ -31,38 +31,52 @@ $this->params['breadcrumbs'][] = $this->title;
             'created_at',
 
             [
-                            'class' => 'yii\grid\ActionColumn',
-                            'template' => '{view} {update} {delete}',
-                            'buttons' => [
-                                'update' => function ($url, $model, $key) {
-                                    if (!Yii::$app->user->isGuest &&
-                                        ($model->receptor->id == Yii::$app->user->identity->id)) {
-                                        Modal::begin([
-                                            'header' => '<h4>Mensaje para '. $model->emisor->nombre_usuario.'</h4>',
-                                            'toggleButton' => ['label' => 'Contactar'],
-                                        ]);
-                                        echo  $this->render('../mensajes/_formRespuesta', [
-                                            'model' => $model,
-                                        ]);
-
-                                        Modal::end();
-                                    }
-                                },
-                                'delete' => function ($url, $model, $key){
-                                    if (!Yii::$app->user->isGuest &&
-                                        ($model->receptor->id == Yii::$app->user->identity->id)) {
-                                        return Html::a('', ['delete', 'id' => $model->id], [
-                                            'class' => 'glyphicon glyphicon-trash',
-                                            'data' => [
-                                                'confirm' => '¿Estás seguro que quieres borrar este envio?',
-                                                'method' => 'post',
-                                            ],
-                                        ]);
-                                    }
-                                },
-
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {responder} {delete}',
+                'buttons' => [
+                    'responder' => function ($url, $model, $key) {
+                        //     if (!Yii::$app->user->isGuest &&
+                        //         ($model->receptor->id == Yii::$app->user->identity->id)) {
+                        //         Modal::begin([
+                        //             'header' => '<h4>Mensaje para '. $model->emisor->nombre_usuario.'</h4>',
+                        //             'toggleButton' => ['label' => 'Responder'],
+                        //         ]);
+                        //         echo  $this->render('../mensajes/_formRespuesta', [
+                        //             'model' => $model,
+                        //         ]);
+                        //     Modal::end();
+                        // }
+                    },
+                    'delete' => function ($url, $model, $key){
+                            if (!Yii::$app->user->isGuest &&
+                                ($model->receptor->id == Yii::$app->user->identity->id)) {
+                            return Html::a('', ['delete', 'id' => $model->id], [
+                                'class' => 'glyphicon glyphicon-trash',
+                                'data' => [
+                                'confirm' => '¿Estás seguro que quieres borrar este mensaje?',
+                                'method' => 'post',
                             ],
-                        ],
+                        ]);
+                    }
+                },
+            ],
         ],
-    ]); ?>
+        [
+                'label' => 'Número de movimientos',
+                'value' => function($model, $key, $index, $column){
+                    if (!Yii::$app->user->isGuest &&
+                    ($model->receptor->id == Yii::$app->user->identity->id)) {
+                    Modal::begin([
+                        'header' => '<h4>Mensaje para '. $model->emisor->nombre_usuario.'</h4>',
+                        'toggleButton' => ['label' => 'Responder'],
+                    ]);
+                    echo  $this->render('../mensajes/_formRespuesta', [
+                        'model' => $model,
+                    ]);
+
+                    Modal::end();
+                }
+        }],
+    ],
+]); ?>
 </div>

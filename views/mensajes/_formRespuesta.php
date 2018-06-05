@@ -17,9 +17,9 @@ use yii\helpers\Url;
 
     <!-- <?= $form->field($model, 'id_emisor')->textInput() ?> -->
 
-    <?= $form->field($model, 'asunto')->textInput(['maxlength' => true, 'value' => '(RE) Preguntando por ' . $model->asunto, 'readonly' => 'readonly']) ?>
+    <?= $form->field($model, 'asunto')->textInput(['maxlength' => true, 'value' => '(RE)' . $model->asunto, 'readonly' => 'readonly']) ?>
 
-    <?= $form->field($model, 'mensaje')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'mensaje')->textInput(['maxlength' => true , 'value' => '']) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Enviar', ['class' => 'btn btn-primary']) ?>
