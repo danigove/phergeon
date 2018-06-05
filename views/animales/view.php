@@ -129,9 +129,9 @@ EOT;
                     <?php endfor ?>
                 <?php endif ?>
 
-                <!-- <div class="item">
+                <div class="item">
                   <img src="<?=$model->rutaImagen?>" alt="New York">
-                </div> -->
+                </div>
               </div>
 
               <!-- Left and right controls -->
