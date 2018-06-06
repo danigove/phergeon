@@ -23,7 +23,7 @@ use yii\helpers\Html;
              ]);
      Modal::end();
      ?>
-         <?php if($model->receptor->id == Yii::$app->user->id): ?>
+         <?php if($model->receptor->id == Yii::$app->user->id || $model->emisor->id == Yii::$app->user->id): ?>
              <?= Html::a('Ignorar', ['delete', 'id' => $model->id], [
                  'class' => 'btn btn-danger botResp',
                  'data' => [

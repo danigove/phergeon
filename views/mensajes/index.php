@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\bootstrap\Modal;
 use yii\widgets\ListView;
+use yii\bootstrap\Tabs;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\MensajesSearch */
@@ -16,10 +17,25 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <?= ListView::widget([
-        'dataProvider' => $dataProvider,
-        'itemView' => 'mensaje',
+    <?= Tabs::widget([
+        'items' => [
+            [
+                'label' => 'Recibidos',
+                'content' => ListView::widget([
+                    'dataProvider' => $dataProvider,
+                    'itemView' => 'mensaje',
+                ]),
+                'active' => true
+            ],
+            [
+                'label' => 'Enviados',
+                'content' => ListView::widget([
+                    'dataProvider' => $dataProviderResp,
+                    'itemView' => 'mensaje',
+                ]),
+                'active' => false,
+            ],
+        ],
     ]); ?>
 
 </div>

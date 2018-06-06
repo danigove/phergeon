@@ -58,7 +58,9 @@ class MensajesController extends Controller
     {
         $searchModel = new MensajesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProviderResp = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->andWhere(['id_receptor' => Yii::$app->user->id])->orderBy(['created_at' => SORT_DESC]);
+        $dataProviderResp->query->andWhere(['id_emisor' => Yii::$app->user->id])->orderBy(['created_at' => SORT_DESC]);
 
         foreach ($dataProvider->getModels() as $model) {
             $model->visto = true;
@@ -68,6 +70,7 @@ class MensajesController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'dataProviderResp' => $dataProviderResp,
         ]);
     }
 
