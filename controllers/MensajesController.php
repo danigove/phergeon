@@ -2,9 +2,11 @@
 
 namespace app\controllers;
 
+use app\models\Adopciones;
 use app\models\Mensajes;
 use app\models\MensajesSearch;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -61,7 +63,12 @@ class MensajesController extends Controller
         $dataProviderResp = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->andWhere(['id_receptor' => Yii::$app->user->id])->orderBy(['created_at' => SORT_DESC]);
         $dataProviderResp->query->andWhere(['id_emisor' => Yii::$app->user->id])->orderBy(['created_at' => SORT_DESC]);
-
+        $dataProviderSoli = new ActiveDataProvider([
+            'query' => Adopciones::find()->joinWith(['animal', 'usuarioAdoptante'])->where(['id_usuario_donante' => Yii::$app->user->id, 'aprobado' => false]),
+            'sort' => [
+                'defaultOrder' => ['id_usuario_adoptante' => SORT_DESC],
+            ],
+        ]);
         foreach ($dataProvider->getModels() as $model) {
             $model->visto = true;
             $model->save();
@@ -71,6 +78,7 @@ class MensajesController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'dataProviderResp' => $dataProviderResp,
+            'dataProviderSoli' => $dataProviderSoli,
         ]);
     }
 

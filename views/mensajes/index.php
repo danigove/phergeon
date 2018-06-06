@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= Tabs::widget([
         'items' => [
             [
-                'label' => 'Recibidos',
+                'label' => 'Recibidos ' . count($dataProvider->getModels()),
                 'content' => ListView::widget([
                     'dataProvider' => $dataProvider,
                     'itemView' => 'mensaje',
@@ -32,6 +32,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'content' => ListView::widget([
                     'dataProvider' => $dataProviderResp,
                     'itemView' => 'mensaje',
+                ]),
+                'active' => false,
+            ],
+            [
+                'label' => 'Solicitudes',
+                'content' => ListView::widget([
+                    'dataProvider' => $dataProviderSoli,
+                    'itemView' => '_solicitud',
                 ]),
                 'active' => false,
             ],
