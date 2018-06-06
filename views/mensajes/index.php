@@ -10,7 +10,7 @@ use yii\bootstrap\Tabs;
 /* @var $searchModel app\models\MensajesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Mis mensajes';
+$this->title = 'Mis notificaciones';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mensajes-index">
@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'active' => false,
             ],
             [
-                'label' => 'Solicitudes',
+                'label' => 'Solicitudes ' . Yii::$app->user->identity->getNumSolicitudes(Yii::$app->user->id),
                 'content' => ListView::widget([
                     'dataProvider' => $dataProviderSoli,
                     'itemView' => '_solicitud',

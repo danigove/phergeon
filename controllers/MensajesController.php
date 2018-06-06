@@ -107,7 +107,7 @@ class MensajesController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', 'Mensaje enviado correctamente');
-            return $this->goBack();
+            return $this->redirect(Yii::$app->request->referrer);
         }
 
         return $this->render('create', [

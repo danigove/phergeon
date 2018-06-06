@@ -54,9 +54,8 @@ $this->title = Yii::$app->name;
 
             .'</li>'),
             ['label' => 'Inicio', 'url' => ['/site/index']],
-            ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
-            Yii::$app->user->isGuest ? '' : ['label' => 'Mi perfil ('.Yii::$app->user->identity->getNumSolicitudes(Yii::$app->user->id) .')', 'url' => ['/usuarios/view', 'id'=> Yii::$app->user->identity->id]],
-            Yii::$app->user->isGuest ? '' : ['label' => 'Mis mensajes (' . Yii::$app->user->identity->getNumMensajesNuevos() . ')' , 'url' => ['/mensajes/index']],
+            Yii::$app->user->isGuest ? '' : ['label' => 'Mi perfil ', 'url' => ['/usuarios/view', 'id'=> Yii::$app->user->identity->id]],
+            Yii::$app->user->isGuest ? '' : ['label' => 'Mis notificaciones (' . (Yii::$app->user->identity->getNumMensajesNuevos() + Yii::$app->user->identity->getNumSolicitudes(Yii::$app->user->id)). ')' , 'url' => ['/mensajes/index']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
