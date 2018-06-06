@@ -221,12 +221,12 @@ EOT;
 
         <div class="button-group">
 
-        <button class="twitter" data-href='https://twitter.com/share?url=https%3A%2F%2Fdev.twitter.com%2Fweb%2Ftweet-button
+        <button class="twitter btn btn-info" data-href='https://twitter.com/share?url=https%3A%2F%2Fdev.twitter.com%2Fweb%2Ftweet-button
         &via=Phergeon
         &related=Phergeon%2Ctwitter
         &hashtags=<?= urlencode($model->etiquetasAnimal())?>
         &text=<?= urlencode("Ayudame a encontrarle una familia a $model->nombre ") .  urlencode($model->rutaAnimal($model->id))?>'>
-        <span class="icon icon-twitter"></span><span> Twitter</span>
+        <span class="glyphicon glyphicon-retweet"></span> Twitter
         </button>
 
         <div id="fb-root"></div>
