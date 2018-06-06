@@ -53,13 +53,13 @@ $this->registerJs($js);
 
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'foto[]')->fileInput(['multiple' => true, 'accept' => 'image/*']) ?>
+    <?= $form->field($model, 'foto[]')->fileInput(['multiple' => true, 'accept' => 'image/*', 'class' => "form-control-file"]) ?>
 
     <?= $form->field($model, 'tipo_animal')->dropDownList($model->tipos) ?>
 
     <?= $form->field($model, 'raza')->dropDownList($model->tipos) ?>
 
-    <?= $form->field($model, 'descripcion')?>
+    <?= $form->field($model, 'descripcion')->textArea(['maxlength' => 255])?>
 
     <?= $form->field($model, 'edad')->textInput(['type' => 'number', 'min'=>0]) ?>
 

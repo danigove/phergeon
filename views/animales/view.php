@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $css = <<<EOT
     #facturasAnimal div div{
-        // display: none;
+        display: none;
     }
     #right-panel {
           font-family: 'Roboto','sans-serif';
@@ -205,10 +205,10 @@ EOT;
             ]) ?>
         </p>
     <?php endif ?>
-    <?php if(!Yii::$app->user->isGuest): ?>
+    <?php if(!Yii::$app->user->isGuest && Yii::$app->user->id != $model->usuario->id): ?>
         <?php Modal::begin([
             'header' => '<h4>Mensaje para '. $model->usuario->nombre_usuario.'</h4>',
-            'toggleButton' => ['label' => 'Contactar'],
+            'toggleButton' => ['label' => 'Contactar', 'class' => 'btn btn-info' ],
         ]);
         echo  $this->render('../mensajes/_form', [
             'animal' => $model,
@@ -220,7 +220,6 @@ EOT;
     <?php endif ?>
 
     <p>
-        <h3>Operaciones:</h3>
         <div class="button-group">
 
         <button class="twitter" data-href='https://twitter.com/share?url=https%3A%2F%2Fdev.twitter.com%2Fweb%2Ftweet-button
