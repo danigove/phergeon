@@ -16,11 +16,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="mensajes-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
     <?= Tabs::widget([
         'items' => [
             [
-                'label' => 'Recibidos ' . count($dataProvider->getModels()),
+                'label' => 'Recibidos',
                 'content' => ListView::widget([
                     'dataProvider' => $dataProvider,
                     'itemView' => 'mensaje',
@@ -36,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'active' => false,
             ],
             [
-                'label' => 'Solicitudes ' . Yii::$app->user->identity->getNumSolicitudes(Yii::$app->user->id),
+                'label' => 'Solicitudes (' . Yii::$app->user->identity->getNumSolicitudes(Yii::$app->user->id).')',
                 'content' => ListView::widget([
                     'dataProvider' => $dataProviderSoli,
                     'itemView' => '_solicitud',

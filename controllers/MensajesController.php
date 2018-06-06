@@ -105,6 +105,11 @@ class MensajesController extends Controller
         $model = new Mensajes();
         $model->id_emisor = Yii::$app->user->identity->id;
 
+        if (Yii::$app->request->post()['Mensajes']['id_receptor'] == Yii::$app->user->identity->id) {
+            Yii::$app->session->setFlash('error', 'No te puedes mandar mensajes a ti mismo');
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', 'Mensaje enviado correctamente');
             return $this->redirect(Yii::$app->request->referrer);
