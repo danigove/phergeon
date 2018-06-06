@@ -2,14 +2,13 @@
 
 namespace app\controllers;
 
-use Yii;
 use app\models\Mensajes;
 use app\models\MensajesSearch;
-use yii\web\Controller;
+use Yii;
 use yii\filters\AccessControl;
-
-use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 /**
  * MensajesController implements the CRUD actions for Mensajes model.
@@ -38,12 +37,13 @@ class MensajesController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        // 'allow' => true,
-                        // 'actions' => ['delete'],
-                        // 'roles' => ['@'],
-                        // 'matchCallback' => function ($rule, $action) {
-                        //     return $_GET['id'] == Yii::$app->user->id;
-                        // },
+                        'allow' => true,
+                        'actions' => ['delete'],
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            $mensaje = Mensajes::findOne(Yii::$app->request->get('id'));
+                            return $mensaje->id_emisor == Yii::$app->user->id || $mensaje->id_receptor == Yii::$app->user->id;
+                        },
                     ],
                 ],
             ],
@@ -58,7 +58,7 @@ class MensajesController extends Controller
     {
         $searchModel = new MensajesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andWhere(['id_receptor'=>Yii::$app->user->id])->orderBy(['created_at' => SORT_DESC]);
+        $dataProvider->query->andWhere(['id_receptor' => Yii::$app->user->id])->orderBy(['created_at' => SORT_DESC]);
 
         foreach ($dataProvider->getModels() as $model) {
             $model->visto = true;
@@ -73,7 +73,7 @@ class MensajesController extends Controller
 
     /**
      * Displays a single Mensajes model.
-     * @param integer $id
+     * @param int $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -107,7 +107,7 @@ class MensajesController extends Controller
     /**
      * Updates an existing Mensajes model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
+     * @param int $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -127,7 +127,7 @@ class MensajesController extends Controller
     /**
      * Deletes an existing Mensajes model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * @param int $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -141,7 +141,7 @@ class MensajesController extends Controller
     /**
      * Finds the Mensajes model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
+     * @param int $id
      * @return Mensajes the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
