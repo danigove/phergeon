@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+use yii\bootstrap\Modal;
 use kartik\detail\DetailView;
 use yii\grid\GridView;
 
@@ -19,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $css = <<<EOT
     #facturasAnimal div div{
-        // display: none;
+        display: none;
     }
     #right-panel {
           font-family: 'Roboto','sans-serif';
@@ -45,7 +46,7 @@ $css = <<<EOT
         }
         #map {
           height: 30em;
-          width: 50%;
+          width: 100%;
         }
         #right-panel {
           float: right;
@@ -127,10 +128,6 @@ EOT;
                     </div>
                     <?php endfor ?>
                 <?php endif ?>
-
-                <!-- <div class="item">
-                  <img src="<?=$model->rutaImagen?>" alt="New York">
-                </div> -->
               </div>
 
               <!-- Left and right controls -->
@@ -191,6 +188,8 @@ EOT;
     </div>
 
 
+    <div class="row">
+        <div class="col-md-4">
 
     <?php if(Yii::$app->user->id == $model->usuario->id): ?>
         <p>
@@ -204,9 +203,22 @@ EOT;
             ]) ?>
         </p>
     <?php endif ?>
+    <?php if(!Yii::$app->user->isGuest && Yii::$app->user->id != $model->usuario->id): ?>
+        <?php Modal::begin([
+            'header' => '<h4>Mensaje para '. $model->usuario->nombre_usuario.'</h4>',
+            'toggleButton' => ['label' => 'Contactar', 'class' => 'btn btn-info' ],
+        ]);
+        echo  $this->render('../mensajes/_form', [
+            'animal' => $model,
+            'model' => $mensaje,
+        ]);
+
+        Modal::end();
+        ?>
+    <?php endif ?>
 
     <p>
-        <h3>Operaciones:</h3>
+
         <div class="button-group">
 
         <button class="twitter" data-href='https://twitter.com/share?url=https%3A%2F%2Fdev.twitter.com%2Fweb%2Ftweet-button
@@ -238,22 +250,31 @@ EOT;
         </div>
         <!-- <?= Html::a('Adóptame', ['adopciones/create'], ['class' => 'btn btn-primary']) ?> -->
         <div>
-            <?php $form = ActiveForm::begin([
-             'id' => 'solicitar-adopcion-form',
-             'method' => 'post',
-             'action' => ['adopciones/solicitar'],
-             ])
-             ?>
-             <?= $form->field($solicitarAdopcionForm, 'id_donante')->hiddenInput(['value'=> $model->id_usuario])->label(false) ?>
-             <?= $form->field($solicitarAdopcionForm, 'id_animal')->hiddenInput(['value'=> $model->id])->label(false) ?>
-             <div class="form-group">
-                 <?= Html::submitButton($model->estaSolicitado($model->id) ? 'Ya has solicitado este animal' : 'Adóptame', ['class' => 'btn btn-success']) ?>
-             </div>
-         <?php ActiveForm::end() ?>
+            <?php if (Yii::$app->user->id != $model->usuario->id): ?>
+                <?php $form = ActiveForm::begin([
+                 'id' => 'solicitar-adopcion-form',
+                 'method' => 'post',
+                 'action' => ['adopciones/solicitar'],
+                 ])
+                 ?>
+                 <?= $form->field($solicitarAdopcionForm, 'id_donante')->hiddenInput(['value'=> $model->id_usuario])->label(false) ?>
+                 <?= $form->field($solicitarAdopcionForm, 'id_animal')->hiddenInput(['value'=> $model->id])->label(false) ?>
+                 <div class="form-group">
+                     <?= Html::submitButton($model->estaSolicitado($model->id) ? 'Ya has solicitado este animal' : 'Adóptame', ['class' => 'btn btn-success']) ?>
+                 </div>
+             <?php ActiveForm::end() ?>
+            <?php endif ?>
 
 
         </div>
     </p>
+</div>
+</div>
+<div class="col-md-8">
+
+    <div id="map"></div>
+</div>
+
 </div>
 </div>
 
@@ -323,7 +344,6 @@ var destinationB = {lat: 50.087, lng: 14.421};
      </div> -->
      <div id="output"></div>
    </div>
-   <div id="map"></div>
    <?php if(!Yii::$app->user->isGuest):
        // var_dump($model->usuario->posy) ; die();
        ?>
@@ -387,8 +407,8 @@ var destinationB = {lat: 50.087, lng: 14.421};
              for (var j = 0; j < results.length; j++) {
                geocoder.geocode({'address': destinationList[j]},
                    showGeocodedAddressOnMap(true));
-               cabecera.innerHTML += originList[i] + ' to ' + destinationList[j] +
-                   ': ' + results[j].distance.text + ' in ' +
+               cabecera.innerHTML += 'Origen: ' + originList[i] + ' <br> Destino: ' + destinationList[j] +
+                   '<br> a ' + results[j].distance.text + ' en ' +
                    results[j].duration.text + '<br>';
              }
            }

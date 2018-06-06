@@ -120,6 +120,20 @@ CREATE TABLE adopciones
    ,unique (id_usuario_donante, id_usuario_adoptante, id_animal)
 );
 
+DROP TABLE IF EXISTS mensajes CASCADE;
+
+CREATE TABLE mensajes
+(
+    id bigserial PRIMARY KEY
+   ,id_receptor bigint NOT NULL REFERENCES usuarios (id) ON DELETE CASCADE ON UPDATE CASCADE
+   ,id_emisor bigint NOT NULL REFERENCES usuarios (id) ON DELETE CASCADE ON UPDATE CASCADE
+   ,asunto varchar(100)
+   ,mensaje varchar(2000)
+   ,created_at timestamp(0)
+   ,visto bool DEFAULT false
+
+);
+
 INSERT INTO roles (denominacion)
     VALUES ('usuario')
          , ('asociacion');

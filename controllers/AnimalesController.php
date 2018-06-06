@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Animales;
 use app\models\AnimalesSearch;
 use app\models\Facturas;
+use app\models\Mensajes;
 use app\models\Fotosanimal;
 use app\models\SolicitarAdopcionForm;
 use Yii;
@@ -91,6 +92,7 @@ class AnimalesController extends Controller
     {
         $model = $this->findModel($id);
         $factura = new Facturas();
+        $mensaje = new Mensajes();
 
         $facturas = new ActiveDataProvider([
                'query' => Facturas::find()->where(['id_animal' => $id]),
@@ -128,6 +130,7 @@ class AnimalesController extends Controller
             'facturaNueva' => $factura,
             'fotos' => $fotos,
             'facturas' => $facturas,
+            'mensaje' => $mensaje,
             'solicitarAdopcionForm' => $solicitarAdopcionForm,
             'model' => $model,
         ]);

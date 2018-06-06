@@ -244,6 +244,16 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return $this->hasOne(Roles::className(), ['id' => 'rol'])->inverseOf('usuarios');
     }
+
+    public function getMensajes0()
+    {
+        return $this->hasOne(Mensajes::className(), ['id_emisor' => 'id'])->inverseOf('usuarios');
+    }
+
+    public function getMensajes()
+    {
+        return $this->hasOne(Mensajes::className(), ['id_emisor' => 'id'])->inverseOf('usuarios');
+    }
     /**
      * Obtiene el numero de solicitudes que tiene el usuario.
      * @param  int $id  El id del usuario
@@ -254,6 +264,16 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         // $solicitudes = Adopciones::find(['id_usuario_donante' => 'id', 'aprobado' => false]);
         $solicitudes = Adopciones::findAll(['id_usuario_donante' => $id, 'aprobado' => false]);
         return count($solicitudes);
+    }
+
+    /**
+     * Metodo que nos devuelve el numero de mensajes sin ver del usuario.
+     * @return int Numero de mensajes sin leer.
+     */
+    public function getNumMensajesNuevos()
+    {
+        $mensajesSin = Mensajes::findAll(['id_receptor' => $this->id, 'visto' => false]);
+        return count($mensajesSin);
     }
 
     public function beforeSave($insert)

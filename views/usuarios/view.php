@@ -58,12 +58,6 @@ $this->registerJs($js);
                     <?php if($model->rol0->id != 2): ?>
                         <?= Html::a('Autentícate', ['site/autenticar'], ['class' => 'btn btn-success']) ?>
                     <?php endif ?>
-
-                    <?php if($model->getNumSolicitudes($model->id) >= 0) : ?>
-                        <?= Html::a('Tienes ' . $model->getNumSolicitudes($model->id) . ' solicitudes de adopcion pendientes.', ['solicitudes', 'id' => $model->id], ['class' => 'btn btn-warning']) ?>
-                    <?php else: ?>
-                        <?= '<span>No tienes solicitudes ahora mismo.</span>' ?>
-                    <?php endif ?>
                 <?php else: ?>
                 <?= '' ?>
                 <?php endif ?>
@@ -80,10 +74,10 @@ $this->registerJs($js);
                     'email:email',
                     // 'password',
                     // 'created_at',
-                    'foto',
+                    // 'foto',
                     // 'token_val',
-                    'posx',
-                    'posy',
+                    // 'posx',
+                    // 'posy',
                     [
                         'attribute' => 'rol',
                         'value' => $model->rol0->denominacion,

@@ -169,3 +169,7 @@ a.desc:after {
 .carousel {
     min-height: 360px;
 }
+.botResp {
+    margin-left: 2px;
+    margin-bottom: 2px;
+}
