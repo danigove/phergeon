@@ -6,7 +6,11 @@ use yii\helpers\Html;
 ?>
 <div class='panel panel-success'>
     <div class='panel-heading'>
-        <?= $model->emisor->nombre_usuario . ' : ' . $model->asunto ?>
+        <?php if($model->emisor->nombre_usuario===Yii::$app->user->identity->nombre_usuario):?>
+            <?= 'Este es un mensaje es tuyo para ' . $model->receptor->nombre_usuario   ?>
+        <?php else: ?>
+            <?= $model->emisor->nombre_usuario . ' : ' . $model->asunto ?>
+        <?php endif ?>
     </div>
 
     <div class='panel-body'>

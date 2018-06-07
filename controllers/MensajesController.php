@@ -31,11 +31,16 @@ class MensajesController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['update', 'create', 'delete'],
+                'only' => ['update', 'create', 'delete', 'index'],
                 'rules' => [
                     [
                         'allow' => true,
                         'actions' => ['create'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['index'],
                         'roles' => ['@'],
                     ],
                     [

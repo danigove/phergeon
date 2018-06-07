@@ -85,14 +85,17 @@ EOT;
 $this->registerJs($js);
 
 
-if(!Yii::$app->user->isGuest){
+if(Yii::$app->user->isGuest){
 
     $js = <<<EOT
+    #map {
+        display: none;
+    }
 
 
 EOT;
 
-    $this->registerJs($js);
+    $this->registerCss($js);
 }
 
 ?>
@@ -177,7 +180,7 @@ EOT;
                 [
                     'label' => 'Origen del interesado / destino',
                     'format' => 'raw',
-                    'value' => '<span id="cabecera"></span>',
+                    'value' => '<span id="cabecera">'. Yii::$app->user->isGuest ? 'Para saber a que distancia esta necesita estar logueado ': ''.'</span>',
                 ],
             ]
             ]);
@@ -189,7 +192,7 @@ EOT;
 
 
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4 botones">
 
     <?php if(Yii::$app->user->id == $model->usuario->id): ?>
         <p>
@@ -219,7 +222,7 @@ EOT;
 
     <p>
 
-        <div class="button-group">
+        <div class="button-group botones">
 
         <button class="twitter btn btn-info" data-href='https://twitter.com/share?url=https%3A%2F%2Fdev.twitter.com%2Fweb%2Ftweet-button
         &via=Phergeon
@@ -248,7 +251,6 @@ EOT;
                    Compartir
                </a>
         </div>
-        <!-- <?= Html::a('Adóptame', ['adopciones/create'], ['class' => 'btn btn-primary']) ?> -->
         <div>
             <?php if (Yii::$app->user->id != $model->usuario->id): ?>
                 <?php $form = ActiveForm::begin([
@@ -259,8 +261,15 @@ EOT;
                  ?>
                  <?= $form->field($solicitarAdopcionForm, 'id_donante')->hiddenInput(['value'=> $model->id_usuario])->label(false) ?>
                  <?= $form->field($solicitarAdopcionForm, 'id_animal')->hiddenInput(['value'=> $model->id])->label(false) ?>
+                 <?php $options = ['class' => 'btn btn-success'];
+                        $solicitado = $model->estaSolicitado($model->id);
+                  ?>
+                 <?php if($solicitado):
+                        $options['disabled'] = 'disabled';
+                        endif
+                ?>
                  <div class="form-group">
-                     <?= Html::submitButton($model->estaSolicitado($model->id) ? 'Ya has solicitado este animal' : 'Adóptame', ['class' => 'btn btn-success']) ?>
+                     <?= Html::submitButton( $solicitado ? 'Ya has solicitado este animal' : 'Adóptame', $options) ?>
                  </div>
              <?php ActiveForm::end() ?>
             <?php endif ?>
