@@ -1,0 +1,24 @@
+@keyframes cabeceras {
+    from {
+        left: 100%;
+        opacity:0;
+        font-size: 14px;
+    }
+
+    to {
+        left:0%;
+        opacity: 1;
+    }
+}
+
+/* The element to apply the animation to */
+h3 {
+    position: relative;
+    animation-name: cabeceras;
+    animation-duration: 3s;
+}
+
+video {
+    height: 20em;
+    width: 100%;
+}
