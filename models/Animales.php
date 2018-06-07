@@ -127,7 +127,7 @@ class Animales extends \yii\db\ActiveRecord
             $fotoAnimal = new Fotosanimal(['id_animal' => $id_animal, 'link' => $res['url']]);
             $fotoAnimal->save();
         }
-        return $res;
+        return true;
     }
 
     /**
