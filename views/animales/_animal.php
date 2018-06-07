@@ -10,15 +10,17 @@ EOT;
 $this->registerCss($css);
 
 ?>
-<div class='panel panel-primary panel-animal'>
-    <div class='panel-heading'>
+<div class='panel panel-primary panel-animal col-lg-4 col-md-4 col-xs-6'>
+
+    <div class='panel-heading col-md-12 col-cs-12'>
         <span><?= $model->nombre ?></span>
     </div>
+    <div class="borde">
 
     <div class='panel-body'>
         <div class="row">
             <div class="col-md-4">
-                <img src="<?=$model->rutaImagen?>"/>
+                <img class="imAnimal" src="<?=$model->rutaImagen?>"/>
             </div>
             <div class="col-md-8">
                 <p>
@@ -47,4 +49,6 @@ $this->registerCss($css);
         </span>
 
     </div>
+</div>
+
 </div>
