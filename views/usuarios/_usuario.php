@@ -19,8 +19,6 @@ $this->registerCss($css);
         <img src="<?=$model->rutaImagen?>"/>
     </div>
     <div>
-        <span>Subido por <?=$model->nombre_usuario ?></span>
-        <?= Html::a('Ver', ['usuarios/view', 'id' => $model->id]) ?>
-
+        <?= Html::a('Ver', ['usuarios/view', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
     </div>
 </div>
