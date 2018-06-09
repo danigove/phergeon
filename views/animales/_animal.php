@@ -20,7 +20,7 @@ $this->registerCss($css);
         <div class='panel-body'>
             <div class="row">
                 <div class="col-md-4 col-xs-12">
-                    <img class="imAnimal" src="<?=$model->rutaImagen?>"/>
+                    <img class="imAnimal" src="<?=$model->rutaImagen?>" alt="imagenAni"/>
                 </div>
                 <div class="col-md-8 col-xs-12 cuerAni">
                     <p>

@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h2>Bienvenido a Phergeon</h2>
     <div class="body-content">
 
-        <h1><?= Html::encode($this->title) ?></h1>
+        <!-- <h1><?= Html::encode('Animales buscando hogar') ?></h1> -->
         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
         <?php if(!Yii::$app->user->isGuest): ?>
