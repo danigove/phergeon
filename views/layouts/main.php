@@ -37,7 +37,7 @@ $this->title = Yii::$app->name;
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Html::img('/imgpro/phergeon.png', ['class' => 'logoIcon']),
+        'brandLabel' => 'Phergeon',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top cabecera',

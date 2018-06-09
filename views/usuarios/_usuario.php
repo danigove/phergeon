@@ -10,7 +10,7 @@ EOT;
 $this->registerCss($css);
 
 ?>
-<div class='panel panel-primary panel-usuario'>
+<div class='panel panel-primary panel-usuario col-md-4 col-xs-6'>
     <div class='panel-heading'>
         <span><?= $model->nombre_usuario ?></span>
     </div>

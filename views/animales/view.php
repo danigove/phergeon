@@ -180,7 +180,7 @@ EOT;
                 [
                     'label' => 'Origen del interesado / destino',
                     'format' => 'raw',
-                    'value' => '<span id="cabecera">'. Yii::$app->user->isGuest ? 'Para saber a que distancia esta necesita estar logueado ': ''.'</span>',
+                    'value' => '<span id="cabecera"></span>',
                 ],
             ]
             ]);
