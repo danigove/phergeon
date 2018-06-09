@@ -83,7 +83,7 @@ $this->title = Yii::$app->name;
 </div>
 
 <footer class="footer">
-    <div class="container col-xs-12">
+    <div class="container">
         <p class="pull-left">&copy; <?=Yii::$app->name?> <?= date('Y') ?>
             <?= Html::a('¿Qué es Phergeon?', Url::to(['site/about'])) ?>
         </p>
