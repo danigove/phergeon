@@ -11,6 +11,9 @@ use yii\widgets\ActiveForm;
 $url = Url::to(['razas/razasion']);
 $js = <<<EOT
 $('.field-animales-raza').hide();
+$('.field-animales-raza').on('change', function(){
+    $('#errorCreate').remove();
+});
 $('#animales-tipo_animal').on('change', function(){
     $.ajax({
         url: "$url",
@@ -25,18 +28,23 @@ $('#animales-tipo_animal').on('change', function(){
                 console.log(longitud[i] + ' - ' +data[longitud[i]]);
                 $('#animales-raza').append('<option value="'+longitud[i]+'">' + data[longitud[i]] +' </option>');
             }
-
-
-
         },
         error: function(error){
             console.log(error);
         }
     });
-
-
 });
 
+$('#formSubmit').on('click', function(e){
+    $('.errorCreate').remove();
+    e.preventDefault();
+    if($('#animales-raza').val() == null){
+        console.log($('#animales-raza').val());
+        $('.form-group:last').prepend('<div class="errorCreate"><p>Tiene que seleccionar una raza y un tipo de animal validos.</p><div>');
+    }else{
+        $(this).submit();
+    }
+})
 
 
 
@@ -55,9 +63,11 @@ $this->registerJs($js);
 
     <?= $form->field($model, 'foto[]')->fileInput(['multiple' => true, 'accept' => 'image/*', 'class' => "form-control-file"]) ?>
 
-    <?= $form->field($model, 'tipo_animal')->dropDownList($model->tipos) ?>
+    <?php $tipos = array_merge(array('0' => 'Seleccione un tipo de animal'),$model->tipos); ?>
 
-    <?= $form->field($model, 'raza')->dropDownList($model->tipos) ?>
+    <?= $form->field($model, 'tipo_animal')->dropDownList($tipos,['options' => [0 => ['selected' => 'true' ,'disabled' => true]]]) ?>
+
+    <?= $form->field($model, 'raza')->dropDownList([]) ?>
 
     <?= $form->field($model, 'descripcion')->textArea(['maxlength' => 255])?>
 
@@ -66,7 +76,7 @@ $this->registerJs($js);
     <?= $form->field($model, 'sexo')->dropDownList($model->sexosPosibles) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Subir', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Subir', ['class' => 'btn btn-success', 'id' => 'formSubmit']) ?>
     </div>
     <?php ActiveForm::end(); ?>
 
