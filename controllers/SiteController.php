@@ -200,6 +200,10 @@ class SiteController extends Controller
             ],
         ]);
 
+        if (!Yii::$app->user->isGuest) {
+            $dataProviderAni->query->andWhere(['!=', 'id_usuario', Yii::$app->user->identity->id]);
+        }
+
 
         return $this->render('resultado', [
             'string' => $criterio,
