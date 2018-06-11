@@ -300,7 +300,7 @@ EOT;
         // ['class' => 'yii\grid\SerialColumn'],
         // 'id',
         // 'id_animal',
-        'fecha_emision',
+        // 'fecha_emision',
         'centro_veterinario',
         'descripcion',
         'importe',

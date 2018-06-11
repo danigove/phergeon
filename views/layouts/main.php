@@ -40,7 +40,7 @@ $this->title = Yii::$app->name;
         'brandLabel' => 'Phergeon',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top cabecera',
+            'class' => 'navbar-default navbar-fixed-top cabecera',
         ],
     ]);
     echo Nav::widget([
