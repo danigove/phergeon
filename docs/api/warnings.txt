@@ -212,7 +212,7 @@ Array
 
     [30] => Array
         (
-            [line] => 46
+            [line] => 47
             [file] => ./models/Facturas.php
             [message] => No docblock for element 'behaviors'
         )
@@ -408,70 +408,70 @@ Array
 
     [58] => Array
         (
-            [line] => 88
+            [line] => 93
             [file] => ./models/Usuarios.php
             [message] => No docblock for element 'attributes'
         )
 
     [59] => Array
         (
-            [line] => 123
+            [line] => 128
             [file] => ./models/Usuarios.php
             [message] => No docblock for element 'behaviors'
         )
 
     [60] => Array
         (
-            [line] => 137
+            [line] => 142
             [file] => ./models/Usuarios.php
             [message] => No docblock for element 'findIdentity'
         )
 
     [61] => Array
         (
-            [line] => 142
+            [line] => 147
             [file] => ./models/Usuarios.php
             [message] => No docblock for element 'findIdentityByAccessToken'
         )
 
     [62] => Array
         (
-            [line] => 146
+            [line] => 151
             [file] => ./models/Usuarios.php
             [message] => No docblock for element 'getId'
         )
 
     [63] => Array
         (
-            [line] => 151
+            [line] => 156
             [file] => ./models/Usuarios.php
             [message] => No docblock for element 'getAuthKey'
         )
 
     [64] => Array
         (
-            [line] => 156
+            [line] => 161
             [file] => ./models/Usuarios.php
             [message] => No docblock for element 'validateAuthKey'
         )
 
     [65] => Array
         (
-            [line] => 248
+            [line] => 253
             [file] => ./models/Usuarios.php
             [message] => No docblock for element 'getMensajes0'
         )
 
     [66] => Array
         (
-            [line] => 253
+            [line] => 258
             [file] => ./models/Usuarios.php
             [message] => No docblock for element 'getMensajes'
         )
 
     [67] => Array
         (
-            [line] => 279
+            [line] => 284
             [file] => ./models/Usuarios.php
             [message] => No docblock for element 'beforeSave'
         )

@@ -59,7 +59,7 @@ Subir un nuevo animal
 En la página principal de la aplicación, cuando estemos logueados con nuestra respectiva cuenta, aparecerá un botón de "Crear nuevo animal", pues pulsamos en ese botón y dicha acción nos llevará a un formulario en el cual tendremos que llenar con los datos correspondientes cada uno de los distintos campos que determinan características del animal (Raza, edad, etc)
 Una vez terminemos pulsamos el botón de subir y nuestro animal ya tendrá sus datos en la plataforma a la espera de que alguien se fije en él/ella.
 
-![Crear Animal](images/Crearanimal.jpg)
+![Crear Animal](images/Crearanimal.png)
 
 -----------------------------------------------
 
