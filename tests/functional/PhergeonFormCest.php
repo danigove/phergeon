@@ -9,6 +9,7 @@ class PhergeonFormCest
 
     public function openAnimalesPage(\FunctionalTester $I)
     {
+        $I->amOnPage('site/index');
         $I->see('Bienvenido a Phergeon', 'h2');
 
     }
@@ -24,8 +25,8 @@ class PhergeonFormCest
     // demonstrates `amLoggedInAs` method
     public function internalLoginByInstance(\FunctionalTester $I)
     {
-        $I->amLoggedInAs(\app\models\User::findOne(['nombre_usuario' => 'danigove']));
-        $I->amOnPage('/');
+        $I->amLoggedInAs(\app\models\Usuarios::findOne(['nombre_usuario' => 'danigove']));
+        $I->amOnPage('site/index');
         $I->see('Logout (danigove)');
     }
 
