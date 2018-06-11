@@ -39,6 +39,7 @@ class Facturas extends \yii\db\ActiveRecord
             [['id_animal'], 'integer'],
             [['fecha_emision'], 'safe'],
             [['importe'], 'number'],
+            [['importe'], 'match', 'pattern' => '/[0-9]{3}\.[0-9]{1,2}/', 'message' => 'Necesitas marcar los decimales'],
             [['centro_veterinario', 'descripcion'], 'string', 'max' => 255],
             [['id_animal'], 'exist', 'skipOnError' => true, 'targetClass' => Animales::className(), 'targetAttribute' => ['id_animal' => 'id']],
         ];
