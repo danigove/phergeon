@@ -67,6 +67,11 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         return [
             [['nombre_usuario', 'nombre_real', 'email'], 'required'],
             ['email', 'email'],
+            [['password'], function ($attributes, $params, $validador) {
+                if (mb_strlen($this->$attributes) < 6) {
+                    $this->addError($attributes, 'La contraseña debe ser de al menos 6 caracteres');
+                }
+            }],
             [['password', 'password_repeat'], 'required', 'on' => self::ESCENARIO_CREATE],
             [['created_at', 'posx', 'posy'], 'safe'],
             [
