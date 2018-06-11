@@ -24,9 +24,9 @@ class PhergeonFormCest
     // demonstrates `amLoggedInAs` method
     public function internalLoginByInstance(\FunctionalTester $I)
     {
-        $I->amLoggedInAs(\app\models\User::findByUsername('admin'));
+        $I->amLoggedInAs(\app\models\User::findOne(['nombre_usuario' => 'danigove']));
         $I->amOnPage('/');
-        $I->see('Logout (admin)');
+        $I->see('Logout (danigove)');
     }
 
     public function loginWithEmptyCredentials(\FunctionalTester $I)
