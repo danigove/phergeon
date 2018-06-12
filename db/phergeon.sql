@@ -185,5 +185,5 @@ INSERT INTO razas (tipo_animal, denominacion_raza)
 
 INSERT INTO animales (id_usuario, nombre, tipo_animal, raza, descripcion, edad, sexo)
     VALUES (1, 'Toby', '1', '2', 'Por favor necesito a alguien para este animalito pobre que me encontre en la carretera', 2, 'Macho'),
-           (2, 'Batman', '2', '2', 'Por favor necesito a alguien para este animalito pobre que me encontre en la carretera', 1, 'Macho'),
-           (2, 'Trinity', '3', '2', 'Por favor necesito a alguien para este animalito pobre que me encontre en la carretera', 2, 'Hembra');
+           (2, 'Batman', '2', '21', 'Por favor necesito a alguien para este animalito pobre que me encontre en la carretera', 1, 'Macho'),
+           (2, 'Trinity', '3', '30', 'Por favor necesito a alguien para este animalito pobre que me encontre en la carretera', 2, 'Hembra');
