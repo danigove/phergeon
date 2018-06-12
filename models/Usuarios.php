@@ -291,6 +291,9 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
                 }
             } else {
                 if ($this->scenario === self::ESCENARIO_UPDATE) {
+                    if ($this->foto === '') {
+                        $this->foto = $this->getOldAttribute('foto');
+                    }
                     if ($this->password === '') {
                         $this->password = $this->getOldAttribute('password');
                     } else {

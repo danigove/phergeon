@@ -24,7 +24,7 @@ $this->registerCss($css);
                 </div>
                 <div class="col-md-8 col-xs-12 cuerAni">
                     <p>
-                        <?= $model->raza0->denominacion_raza ?>
+                        <?= Html::encode($model->raza0->denominacion_raza) ?>
                     </p>
                     <p>
                         <?= $model->edad > 0 ? $model->edad . ' años.' : 'Menos de un año.'  ?>
@@ -36,7 +36,7 @@ $this->registerCss($css);
             </div>
         </div>
         <div class='fin-panel'>
-            <span class="donante">Subido por <?=$model->usuario->nombre_usuario ?></span>
+            <span class="donante">Subido por <?=Html::encode($model->usuario->nombre_usuario) ?></span>
             <span >
                 <?= Html::a('Ver', ['animales/view', 'id' => $model->id], ['class'=>'btn btn-primary seeAnimal']) ?>
             </span>
