@@ -138,11 +138,9 @@ INSERT INTO roles (denominacion)
     VALUES ('usuario')
          , ('asociacion');
 
-INSERT INTO usuarios (nombre_usuario, nombre_real, email, posx, posy,  password, created_at, rol)
-    VALUES ('danigove', 'Daniel Gómez Vela', 'dani5002@hotmail.com', 36.753477 , -6.383452 ,crypt('danigove', gen_salt('bf', 13)), current_timestamp(0),1)
-    ,('briganimalista', 'Brigada Animalista Sanlúcar', 'brigada@gmail.com', 5.231 , -7.91 , crypt('brigada', gen_salt('bf', 13)), current_timestamp(0),2)
-    ,('dani1', 'Brigada Animalista Sanlúcar', 'brigada@gmail.com',47.004076 , 22.835431 , crypt('brigada', gen_salt('bf', 13)), current_timestamp(0),1)
-    ,('dani2', 'Brigada Animalista Sanlúcar', 'brigada@gmail.com', 15.231 , -27.91 , crypt('brigada', gen_salt('bf', 13)), current_timestamp(0),2);
+INSERT INTO usuarios (nombre_usuario, nombre_real, email, posx, posy,  password, created_at, rol, foto)
+    VALUES ('danigove', 'Daniel Gómez Vela', 'dani5002@hotmail.com',-6.383452 , 36.753477 , crypt('danigove', gen_salt('bf', 13)), current_timestamp(0),1, 'https://www.dropbox.com/s/47flnyzf928oa32/tragabuche.jpg?dl=1')
+    ,('briganimalista', 'Brigada Animalista Sanlúcar', 'brigada@gmail.com',  -6.439270 , 36.729657, crypt('brigada', gen_salt('bf', 13)), current_timestamp(0),2, 'https://www.dropbox.com/s/nhs96ybwnby5gkg/brigada.jpg?dl=1');
 
 
 INSERT INTO tipos (denominacion_tipo)
@@ -186,11 +184,6 @@ INSERT INTO razas (tipo_animal, denominacion_raza)
             ('3', 'Otros');
 
 INSERT INTO animales (id_usuario, nombre, tipo_animal, raza, descripcion, edad, sexo)
-    VALUES (1, 'Toby', '1', '2', 'Precioso labrador de 2 años', 2, 'Macho'),
-           (1, 'Batman', '2', '2', 'Precioso siames de 4 años', 1, 'Macho'),
-           (2, 'Rafaela', '1', '3', 'Precioso mastín de 2 años', 2, 'Macho'),
-           (2, 'Chawarma', '1', '1', 'Precioso perrete de 2 años', 2, 'Macho'),
-           (3, 'Ronaldinho', '1', '3', 'Precioso perrete de 6 años', 6, 'Macho'),
-           (3, 'Carla', '2', '2', 'Precioso gatete de 2 años', 2, 'Hembra'),
-           (4, 'Trinity', '3', '2', 'Precioso hurón de 2 años', 2, 'Hembra'),
-           (4, 'Trinity', '3', '2', 'Prueba 2', 2, 'Hembra');
+    VALUES (1, 'Toby', '1', '2', 'Por favor necesito a alguien para este animalito pobre que me encontre en la carretera', 2, 'Macho'),
+           (2, 'Batman', '2', '2', 'Por favor necesito a alguien para este animalito pobre que me encontre en la carretera', 1, 'Macho'),
+           (2, 'Trinity', '3', '2', 'Por favor necesito a alguien para este animalito pobre que me encontre en la carretera', 2, 'Hembra');

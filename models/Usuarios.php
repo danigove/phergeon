@@ -176,7 +176,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         // $nombre = './uploads/' . $this->id . '.jpg';
         $res = $this->foto->saveAs($nombre);
         if ($res) {
-            Image::thumbnail($nombre, 80, null)->save($nombre);
+            Image::thumbnail($nombre, 300, null)->save($nombre);
         }
 
         $client = new \Spatie\Dropbox\Client(getenv('DROPBOX_TOKEN'));
