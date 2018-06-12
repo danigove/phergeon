@@ -1,6 +1,7 @@
 [![Waffle.io - Columns and their card count](https://badge.waffle.io/danigove/phergeon.svg?columns=all)](https://waffle.io/danigove/phergeon)
 
-###Phergeon 
+
+##Phergeon 
 
 Aplicación destinada a la facilitación de acogida de animales.
 
