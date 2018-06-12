@@ -6,7 +6,6 @@ use yii\helpers\Html;
 /* @var $model app\models\Usuarios */
 
 $this->title = 'Modificar perfil';
-$this->params['breadcrumbs'][] = ['label' => 'Usuarios', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => 'Perfil de ' . $model->nombre_real , 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Modificar';
 ?>

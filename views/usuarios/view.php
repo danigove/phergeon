@@ -9,7 +9,6 @@ use yii\widgets\ListView;
 /* @var $model app\models\Usuarios */
 
 $this->title = 'Perfil de ' . $model->nombre_usuario;
-$this->params['breadcrumbs'][] = ['label' => 'Usuarios', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 $css = <<<EOT
